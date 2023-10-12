@@ -1,51 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, TextInput, View, } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import React from 'react';
+import {useEffect, useState} from 'react';
+import { AppLoading } from 'expo'; 
+import Navigator from './routes/homeStack';
+
+//testing
+import Login from './screens/login';
+import Signup from './screens/signup';
+import Home from './screens/home';
+import Group from './screens/group';
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
 
-      <Text>Making Meal prepping Easier</Text>
+  //splash screen
 
-      <View style={styles.input}>
-        <TextInput placeholder="Email/Username" />
-      </View>
+  //navigation
+   //<Navigator />
 
-      <View style={styles.input}>
-        <TextInput placeholder="Password" />
-      </View>
+  //testing
+   <Login /> 
+   //<Signup />
+   //<Home />
+   //<Group />
 
-      <View style={styles.Login_button}>
-        <Button
-          title="Login" />
-      </View>
-
-      <Text> Don't have an account? Sign Up</Text>
-
-
-    </View >
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#9DC183',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    backgroundColor: 'white',
-    margin: 10,
-    borderWidth: 1,
-    padding: 16,
-    width: 210,
-
-  },
-
-  Login_button: {
-    backgroundColor: 'white',
-    alignItems: 'center',
-  },
-
-});
