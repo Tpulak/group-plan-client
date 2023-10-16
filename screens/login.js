@@ -7,8 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 export default function Login() {
   const navigation = useNavigation();
 
+  //NAV: Signup -> Signup Page
   const handleSignUpPress = () => {
     navigation.navigate('signup'); // 'SignUp' should be the name of your sign-up screen
+  };
+
+  //NAV: Login -> Homepage
+  const handleLogInPress = () => {
+    navigation.navigate('Home'); 
   };
 
   return (
@@ -42,10 +48,11 @@ export default function Login() {
 
 
       <View style={styles.Login_button}>
-        <Button
+        <Button 
           title="Login"
           color="green"
-          onPress={() => Alert.alert('Button pressed')}
+          onPress={handleLogInPress}
+          // onPress={() => Alert.alert('Button pressed')}
         />
       </View>
 

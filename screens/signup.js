@@ -1,7 +1,17 @@
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Signup() {
+
+  //NAV
+  const navigation = useNavigation();
+    
+  //NAV: SignUp -> Homepage
+  const handleSignUpPress = () => {
+  navigation.navigate('Home'); 
+  };
+  
   return (
     <View style={styles.container}>
 
@@ -48,7 +58,7 @@ export default function Signup() {
         <Button
           title="Sign Up"
           color="green"
-          onPress={() => Alert.alert('Button pressed')}
+          onPress={handleSignUpPress}
         />
       </View>
 
