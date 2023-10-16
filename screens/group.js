@@ -1,7 +1,21 @@
-import { Button, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Group() {
+
+    const navigation = useNavigation();
+
+    //NAV: Home Button -> Homepage
+    const handleHomePress = () => {
+      navigation.navigate('Home'); 
+    };
+
+    const handleMealPress = () => {
+        navigation.navigate('Meal'); 
+      };
+
+
     return (
         <View style={styles.container}>
             {/* TOP */}
@@ -11,39 +25,89 @@ export default function Group() {
 
             {/* MIDDLE */}
             <View style={styles.middleContainer}>
-                <Button title="Create Group" onPress={() => {}} />
+
                 <TextInput
                     style={styles.searchInput}
-                    placeholder="Search for existing groups"
+                    placeholder="Search for existing groups..."
                     onChangeText={(text) => {}}
                 />
+
+                <Button title="Create Group" color="green" onPress={() => {}} />
                 <View style={styles.groupRow}>
                     {/* Left side - Group Icon */}
                     {/* Replace 'GroupIcon' with your actual icon component */}
                     {/* <GroupIcon /> */}
+                    <TouchableOpacity style={styles.icon}>
+                        <Image
+                            source={require('../assets/icons/groupchat.png')}
+                            style={{ width: 75, height: 75 }}
+                        />
+                    </TouchableOpacity>                    
                     {/* Right side - Group Name */}
-                    <Text style={styles.groupName}>Group Name</Text>
+                    <Text style={styles.groupName}>Group 1</Text>
                 </View>
+
+                <View style={styles.groupRow}>
+                    {/* Left side - Group Icon */}
+                    {/* Replace 'GroupIcon' with your actual icon component */}
+                    {/* <GroupIcon /> */}
+                    <TouchableOpacity style={styles.icon}>
+                        <Image
+                            source={require('../assets/icons/groupchat.png')}
+                            style={{ width: 75, height: 75 }}
+                        />
+                    </TouchableOpacity>                    
+                    {/* Right side - Group Name */}
+                    <Text style={styles.groupName}>Group 2</Text>
+                </View>
+
+                <View style={styles.groupRow}>
+                    {/* Left side - Group Icon */}
+                    {/* Replace 'GroupIcon' with your actual icon component */}
+                    {/* <GroupIcon /> */}
+                    <TouchableOpacity style={styles.icon}>
+                        <Image
+                            source={require('../assets/icons/groupchat.png')}
+                            style={{ width: 75, height: 75 }}
+                        />
+                    </TouchableOpacity>                    
+                    {/* Right side - Group Name */}
+                    <Text style={styles.groupName}>Group 3</Text>
+                </View>
+
             </View>
 
             {/* BOTTOM */}
             <View style={styles.bottomContainer}>
-                {/* Icons */}
-                {/* Replace 'Icon1', 'Icon2', 'Icon3' with your actual icon components */}
-                <TouchableOpacity style={styles.icon}>
-                    {/* <Icon1 /> */}
+  
+                {/* MEAL ICON */}
+                <TouchableOpacity style={styles.icon} onPress={handleMealPress}>
+                <Image
+                    source={require('../assets/icons/meal.png')}
+                    style={{ width: 50, height: 50 }}
+                />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.icon}>
-                    {/* <Icon2 /> */}
+                
+                {/* HOME ICON */}
+                <TouchableOpacity style={styles.icon} onPress={handleHomePress}>
+                <Image
+                    source={require('../assets/icons/home.png')}
+                    style={{ width: 50, height: 50 }}
+                />
                 </TouchableOpacity>
+
+                {/* SHOP ICON */}
                 <TouchableOpacity style={styles.icon}>
-                    {/* <Icon3 /> */}
+                <Image
+                    source={require('../assets/icons/shop.png')}
+                    style={{ width: 50, height: 50 }}
+                />
                 </TouchableOpacity>
             </View>
-            <View style={styles.greenBottom}></View>
         </View>
     );
 }
+   
 
 const styles = StyleSheet.create({
     container: {
@@ -52,7 +116,7 @@ const styles = StyleSheet.create({
     },
     topContainer: {
         backgroundColor: 'green',
-        padding: 50,
+        padding: 40,
         alignItems: 'center',
     },
     title: {
@@ -85,16 +149,19 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         width: '100%',
-        backgroundColor: 'transparent', // To allow icons to overlay on green
+        backgroundColor: 'green',
+        padding: 20,
     },
     icon: {
         padding: 10,
     },
-    greenBottom: {
-        position: 'absolute',
-        bottom: 0,
-        width: '100%',
-        height: 100,
-        backgroundColor: 'green',
-    },
+
+    //dont think this is necessary
+    // greenBottom: {
+    //     position: 'absolute',
+    //     bottom: 0,
+    //     width: '100%',
+    //     height: 100,
+    //     backgroundColor: 'green',
+    // },
 });
