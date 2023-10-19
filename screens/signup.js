@@ -6,12 +6,12 @@ export default function Signup() {
 
   //NAV
   const navigation = useNavigation();
-    
+
   //NAV: SignUp -> Homepage
   const handleSignUpPress = () => {
-  navigation.navigate('Home'); 
+    navigation.navigate('Home');
   };
-  
+
   return (
     <View style={styles.container}>
 
@@ -48,6 +48,13 @@ export default function Signup() {
 
       <View style={{ alignItems: 'flex-start' }}>
         <Text style={{ textAlign: 'left' }}>Password </Text>
+        <View style={styles.input}>
+          <TextInput placeholder=" " />
+        </View>
+      </View>
+
+      <View style={{ alignItems: 'flex-start' }}>
+        <Text style={{ textAlign: 'left' }}>Confirm Password </Text>
         <View style={styles.input}>
           <TextInput placeholder=" " />
         </View>
