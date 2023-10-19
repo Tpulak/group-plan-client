@@ -14,7 +14,7 @@ export default function Login() {
 
   //NAV: Login -> Homepage
   const handleLogInPress = () => {
-    navigation.navigate('Home'); 
+    navigation.navigate('Home');
   };
 
   return (
@@ -33,7 +33,7 @@ export default function Login() {
 
 
       <View style={{ alignItems: 'flex-start' }}>
-        <Text style={{ textAlign: 'left' }}>Email</Text>
+        <Text style={{ textAlign: 'left' }}>Username</Text>
         <View style={styles.input}>
           <TextInput placeholder=" " />
         </View>
@@ -48,11 +48,11 @@ export default function Login() {
 
 
       <View style={styles.Login_button}>
-        <Button 
+        <Button
           title="Login"
           color="green"
           onPress={handleLogInPress}
-          // onPress={() => Alert.alert('Button pressed')}
+        // onPress={() => Alert.alert('Button pressed')}
         />
       </View>
 
