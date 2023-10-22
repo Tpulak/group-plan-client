@@ -7,6 +7,8 @@ export default function Signup() {
   //NAV
   const navigation = useNavigation();
 
+  //NAV: SignUp ->
+
   //NAV: SignUp -> Homepage
   const handleSignUpPress = () => {
     navigation.navigate('Home');
@@ -15,7 +17,7 @@ export default function Signup() {
   return (
     <View style={styles.container}>
 
-      <Text style={styles.title}> Create an account </Text>
+      <Text style={styles.title}> Create Account </Text>
 
 
       <View style={{ alignItems: 'flex-start' }}>
@@ -78,10 +80,10 @@ export default function Signup() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // #9DC183
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
 
   input: {

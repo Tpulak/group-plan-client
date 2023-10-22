@@ -8,12 +8,12 @@ export default function Home() {
 
     //NAV: Group Button -> Group Page
     const handleGroupPress = () => {
-      navigation.navigate('Group'); 
+        navigation.navigate('Group');
     };
 
     const handleMealPress = () => {
-        navigation.navigate('Meal'); 
-      };
+        navigation.navigate('Meal');
+    };
 
     return (
 
@@ -49,10 +49,10 @@ export default function Home() {
             <View style={styles.middleContainer}>
                 <Text style={styles.recommendedMeals}>Recommended Meals</Text>
                 <View style={styles.imageContainer}>
-                        <Image
-                            source={require('../assets/images/stockImage.jpg')}
-                            style={{ width: 300, height: 200 }}
-                        />
+                    <Image
+                        source={require('../assets/images/stockImage.jpg')}
+                        style={{ width: 300, height: 200 }}
+                    />
                     {/* Placeholder for the image */}
                     {/* Replace 'YourImageComponent' with your actual image component */}
                     {/* <StockImage /> */}
@@ -61,30 +61,30 @@ export default function Home() {
 
             {/* BOTTOM */}
             <View style={styles.bottomContainer}>
-                
+
                 {/* MEAL ICON */}
                 <TouchableOpacity style={styles.icon} onPress={handleMealPress}>
-                <Image
-                    source={require('../assets/icons/meal.png')}
-                    style={{ width: 50, height: 50 }}
-                />
+                    <Image
+                        source={require('../assets/icons/meal.png')}
+                        style={{ width: 50, height: 50 }}
+                    />
                 </TouchableOpacity>
-                
+
                 {/* HOME ICON */}
                 <TouchableOpacity style={styles.icon}>
-                <Image
-                    source={require('../assets/icons/home.png')}
-                    style={{ width: 50, height: 50 }}
-                />
+                    <Image
+                        source={require('../assets/icons/home.png')}
+                        style={{ width: 50, height: 50 }}
+                    />
                 </TouchableOpacity>
 
                 {/* SHOP ICON */}
                 <TouchableOpacity style={styles.icon}>
-                <Image
-                    source={require('../assets/icons/shop.png')}
-                    style={{ width: 50, height: 50 }}
-                />
-                </TouchableOpacity>                                           
+                    <Image
+                        source={require('../assets/icons/shop.png')}
+                        style={{ width: 50, height: 50 }}
+                    />
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -100,13 +100,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: 'green',
-        padding: 30,
+        padding: 25,
     },
     iconContainer: {
         flex: 1,
         alignItems: 'center',
-        width: 50, 
-        height: 50, 
+        width: 50,
+        height: 50,
     },
     title: {
         flex: 2,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'green',
         width: '100%',
-        padding: 30,
+        padding: 25,
     },
 
 });
