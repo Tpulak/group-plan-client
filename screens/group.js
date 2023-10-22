@@ -1,5 +1,5 @@
-import { Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
-import React from 'react';
+import { Button, StyleSheet, Text, TextInput, View, TouchableOpacity, Image, Alert } from 'react-native';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Group() {
@@ -8,13 +8,76 @@ export default function Group() {
 
     //NAV: Home Button -> Homepage
     const handleHomePress = () => {
-      navigation.navigate('Home'); 
+        navigation.navigate('Home');
     };
 
     const handleMealPress = () => {
-        navigation.navigate('Meal'); 
-      };
+        navigation.navigate('Meal');
+    };
 
+    //------------------FOR DISPLAYING PUBLIC/PRIVATE GROUPS -------------------------------------------------------------------------
+
+    // Array that holds the groups
+    const publicGroups = ['Public Group 1', 'Public Group 2', 'Public Group 3', 'Public Group 4'];
+    const privateGroups = ['Pescetarian', 'Vegan', 'Vegetarian'];
+
+    const [searchText, setSearchText] = useState('');
+
+    /* User uses search bar for private groups */
+    const handleTextChange = (text) => {
+        setSearchText(text.toLowerCase());
+    };
+
+    //Initially display public groups until user uses search bar 
+    const renderPublicGroups = () => {
+        return publicGroups.map((group, index) => (
+            <View key={index} style={styles.groupRow}>
+                <TouchableOpacity style={styles.icon}>
+                    <Image
+                        source={require('../assets/icons/groupchat.png')}
+                        style={{ width: 75, height: 75 }}
+                    />
+                </TouchableOpacity>
+                <Text style={styles.groupName}>{group}</Text>
+
+                <View style={styles.Join_button}>
+                    <Button
+                        title="Join"
+                        color="white"
+                        onPress={() => Alert.alert(`${group} joined`)}
+                    />
+                </View>
+            </View>
+        ));
+    };
+
+    /* Display the private groups once the user search*/
+    const renderPrivateGroups = () => {
+        const filteredGroups = privateGroups.filter(group => group.toLocaleLowerCase().includes(searchText));
+        return filteredGroups.map((group, index) => (
+            <View key={index} style={styles.groupRow}>
+
+                <TouchableOpacity style={styles.icon}>
+                    <Image
+                        source={require('../assets/icons/groupchat.png')}
+                        style={{ width: 75, height: 75 }}
+                    />
+                </TouchableOpacity>
+                {/* Right side - Group Name */}
+                <Text style={styles.groupName}>{group}</Text>
+                <View style={styles.Join_button}>
+                    <Button
+                        title="Request"
+                        color="white"
+                        disabled
+                        onPress={() => Alert.alert(`${group} Group Pending`)}
+
+                    />
+                </View>
+            </View>
+        ));
+    };
+    //------------------FOR DISPLAYING PUBLIC/PRIVATE GROUPS -------------------------------------------------------------------------
 
     return (
         <View style={styles.container}>
@@ -25,89 +88,134 @@ export default function Group() {
 
             {/* MIDDLE */}
             <View style={styles.middleContainer}>
-
                 <TextInput
                     style={styles.searchInput}
-                    placeholder="Search for existing groups..."
-                    onChangeText={(text) => {}}
+                    placeholder="Search for private groups..."
+                    onChangeText={handleTextChange}
+                    value={searchText}
                 />
 
-                <Button title="Create Group" color="green" onPress={() => {}} />
-                <View style={styles.groupRow}>
-                    {/* Left side - Group Icon */}
-                    {/* Replace 'GroupIcon' with your actual icon component */}
-                    {/* <GroupIcon /> */}
+                <Button title="Create Group" color="green" onPress={() => { }} />
+
+                <View>
+                    <Text style={styles.Recgroup}> Recommend Groups</Text>
+
+                    {/* if (searchText === '') {
+                        renderPublicGroups();
+                    } else {
+                        renderPrivateGroups();
+                    }; */}
+
+                    {/* if search text is empty display public groups else private on user input  */}
+                    {searchText === '' ? renderPublicGroups() : renderPrivateGroups()}
+
+
+                </View>
+
+
+                {/* <View style={styles.groupRow}>
                     <TouchableOpacity style={styles.icon}>
                         <Image
                             source={require('../assets/icons/groupchat.png')}
                             style={{ width: 75, height: 75 }}
                         />
-                    </TouchableOpacity>                    
-                    {/* Right side - Group Name */}
-                    <Text style={styles.groupName}>Group 1</Text>
+                    </TouchableOpacity>
+
+                    <Text style={styles.groupName}>Public Group 1</Text>
+
+                    <View style={styles.Join_button}>
+                        <Button
+                            title="Join"
+                            color="white"
+                            onPress={() => Alert.alert('PG1 success')}
+                        />
+                    </View>
                 </View>
 
                 <View style={styles.groupRow}>
-                    {/* Left side - Group Icon */}
-                    {/* Replace 'GroupIcon' with your actual icon component */}
-                    {/* <GroupIcon /> */}
                     <TouchableOpacity style={styles.icon}>
                         <Image
                             source={require('../assets/icons/groupchat.png')}
                             style={{ width: 75, height: 75 }}
                         />
-                    </TouchableOpacity>                    
-                    {/* Right side - Group Name */}
-                    <Text style={styles.groupName}>Group 2</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.groupName}>Public Group 2</Text>
+
+                    <View style={styles.Join_button}>
+                        <Button
+                            title="Join"
+                            color="white"
+                            onPress={() => Alert.alert('PG2 Success')}
+                        />
+                    </View>
                 </View>
 
                 <View style={styles.groupRow}>
-                    {/* Left side - Group Icon */}
-                    {/* Replace 'GroupIcon' with your actual icon component */}
-                    {/* <GroupIcon /> */}
                     <TouchableOpacity style={styles.icon}>
                         <Image
                             source={require('../assets/icons/groupchat.png')}
                             style={{ width: 75, height: 75 }}
                         />
-                    </TouchableOpacity>                    
-                    {/* Right side - Group Name */}
-                    <Text style={styles.groupName}>Group 3</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.groupName}>Public Group 3</Text>
+                    <View style={styles.Join_button}>
+                        <Button
+                            title="Join"
+                            color="white"
+                            onPress={() => Alert.alert('PG3 Sucess')}
+                        />
+                    </View>
                 </View>
 
-            </View>
+                <View style={styles.groupRow}>
+                    <TouchableOpacity style={styles.icon}>
+                        <Image
+                            source={require('../assets/icons/groupchat.png')}
+                            style={{ width: 75, height: 75 }}
+                        />
+                    </TouchableOpacity>
+                    <Text style={styles.groupName}>Public Group 4</Text>
+                    <View style={styles.Join_button}>
+                        <Button
+                            title="Join"
+                            color="white"
+                            onPress={() => Alert.alert('PG4 Sucess')}
+                        />
+                    </View>
+                </View> */}
+            </View >
 
             {/* BOTTOM */}
-            <View style={styles.bottomContainer}>
-  
+            < View style={styles.bottomContainer} >
+
                 {/* MEAL ICON */}
-                <TouchableOpacity style={styles.icon} onPress={handleMealPress}>
-                <Image
-                    source={require('../assets/icons/meal.png')}
-                    style={{ width: 50, height: 50 }}
-                />
-                </TouchableOpacity>
-                
+                < TouchableOpacity style={styles.icon} onPress={handleMealPress} >
+                    <Image
+                        source={require('../assets/icons/meal.png')}
+                        style={{ width: 50, height: 50 }}
+                    />
+                </TouchableOpacity >
+
                 {/* HOME ICON */}
-                <TouchableOpacity style={styles.icon} onPress={handleHomePress}>
-                <Image
-                    source={require('../assets/icons/home.png')}
-                    style={{ width: 50, height: 50 }}
-                />
-                </TouchableOpacity>
+                < TouchableOpacity style={styles.icon} onPress={handleHomePress} >
+                    <Image
+                        source={require('../assets/icons/home.png')}
+                        style={{ width: 50, height: 50 }}
+                    />
+                </TouchableOpacity >
 
                 {/* SHOP ICON */}
-                <TouchableOpacity style={styles.icon}>
-                <Image
-                    source={require('../assets/icons/shop.png')}
-                    style={{ width: 50, height: 50 }}
-                />
-                </TouchableOpacity>
-            </View>
-        </View>
+                < TouchableOpacity style={styles.icon} >
+                    <Image
+                        source={require('../assets/icons/shop.png')}
+                        style={{ width: 50, height: 50 }}
+                    />
+                </TouchableOpacity >
+            </View >
+        </View >
     );
 }
-   
+
 
 const styles = StyleSheet.create({
     container: {
@@ -116,7 +224,7 @@ const styles = StyleSheet.create({
     },
     topContainer: {
         backgroundColor: 'green',
-        padding: 40,
+        padding: 25,
         alignItems: 'center',
     },
     title: {
@@ -150,18 +258,25 @@ const styles = StyleSheet.create({
         bottom: 0,
         width: '100%',
         backgroundColor: 'green',
-        padding: 20,
+        padding: 10,
+        alignItems: 'center',
     },
     icon: {
         padding: 10,
     },
 
-    //dont think this is necessary
-    // greenBottom: {
-    //     position: 'absolute',
-    //     bottom: 0,
-    //     width: '100%',
-    //     height: 100,
-    //     backgroundColor: 'green',
-    // },
+    Join_button: {
+        margin: 30,
+        padding: 5,
+        borderRadius: 5,
+        backgroundColor: 'green',
+        marginLeft: 'auto',
+    },
+
+    Recgroup: {
+        fontSize: 19,
+        fontWeight: 'bold',
+    },
+
+
 });

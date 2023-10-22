@@ -42,7 +42,10 @@ export default function Login() {
       <View style={{ alignItems: 'flex-start' }}>
         <Text style={{ textAlign: 'left' }}>Password</Text>
         <View style={styles.input}>
-          <TextInput placeholder=" " />
+          <TextInput placeholder=" "
+            //hides password
+            secureTextEntry={true}
+          />
         </View>
       </View>
 
@@ -50,7 +53,7 @@ export default function Login() {
       <View style={styles.Login_button}>
         <Button
           title="Login"
-          color="green"
+          color="white"
           onPress={handleLogInPress}
         // onPress={() => Alert.alert('Button pressed')}
         />
@@ -89,7 +92,13 @@ const styles = StyleSheet.create({
   },
 
   Login_button: {
-    margin: 10,
+    // margin: 10,
+    margin: 15,
+    padding: 4,
+    borderRadius: 5,
+    backgroundColor: 'green',
+
+
   },
 }
 );
