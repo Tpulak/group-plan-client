@@ -66,7 +66,7 @@ export default function Login() {
             secureTextEntry={true}
             onChangeText={(passwordInput) => {
               setUserInfo((prevState) => {
-                return { ...prevState, username: usernameInput };
+                return { ...prevState, password: passwordInput };
               });
             }}
           />
