@@ -25,9 +25,14 @@ export default function Login() {
 
   //NAV: Login -> Homepage
   const handleLogInPress = () => {
-    // axios.get("http://localhost:8000/users/user/a").then((response) => {
-    //   console.log(response.data);
-    // });
+    axios
+      .post("http://localhost:8000/users/login/", (data = userInfo))
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     console.log(userInfo);
     // navigation.navigate("Home");
   };
