@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Platform
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -23,11 +24,13 @@ export default function Login() {
   const handleSignUpPress = () => {
     navigation.navigate("signup"); // 'SignUp' should be the name of your sign-up screen
   };
-
   //NAV: Login -> Homepage
   const handleLogInPress = () => {
+    //testing
+    // navigation.navigate("Home");
+
     axios
-      .post("http://10.0.2.2:8000/users/login/", (data = userInfo))
+      .post(`http://${Platform.OS === "ios" ? "localhost" : "10.0.2.2"}:8000/users/login/`, (data = userInfo))
       .then((response) => {
         console.log(response.data);
         if ("pk" in response.data) {
@@ -93,7 +96,7 @@ export default function Login() {
           title="Login"
           color="white"
           onPress={handleLogInPress}
-          // onPress={() => Alert.alert('Button pressed')}
+        // onPress={() => Alert.alert('Button pressed')}
         />
       </View>
 
