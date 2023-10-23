@@ -8,6 +8,7 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -25,11 +26,25 @@ export default function Login() {
 
   //NAV: Login -> Homepage
   const handleLogInPress = () => {
-    // axios.get("http://localhost:8000/users/user/a").then((response) => {
-    //   console.log(response.data);
-    // });
+    axios
+      .post("http://10.0.2.2:8000/users/login/", (data = userInfo))
+      .then((response) => {
+        console.log(response.data);
+        if ("pk" in response.data) {
+          navigation.navigate("Home");
+        } else {
+          Alert.alert("Log In Error", response.data["message"], [
+            {
+              text: "OK",
+              onPress: () => {
+                // do something
+              },
+            },
+          ]);
+        }
+      })
+      .catch((error) => console.log(error));
     console.log(userInfo);
-    // navigation.navigate("Home");
   };
 
   return (
