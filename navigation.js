@@ -14,13 +14,13 @@ const Navigation = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
-                <Stack.Screen name="signup" component={SignUp} options={{ headerShown: false }}/> 
-                <Stack.Screen name="Home" component={Home} options={{ headerShown: true }}/> 
-                <Stack.Screen name="Group" component={Group} options={{ headerShown: false }}/>
+                <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+                <Stack.Screen name="signup" component={SignUp} options={{ headerShown: true }} />
+                <Stack.Screen name="Home" component={Home} options={{ headerShown: true }} />
+                <Stack.Screen name="Group" component={Group} options={{ headerShown: false }} />
 
                 {/* Nav to meal screen not working */}
-                <Stack.Screen name="Meal" component={Meal} />
+                <Stack.Screen name="Meal" component={Meal} options={{ headerShown: true }} />
             </Stack.Navigator>
         </NavigationContainer>
     );
