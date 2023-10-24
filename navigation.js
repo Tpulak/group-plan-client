@@ -7,6 +7,8 @@ import SignUp from './screens/signup';
 import Home from './screens/home';
 import Group from './screens/group';
 import Meal from './screens/meal';
+import Settings from './screens/settings';
+import Shop from './screens/shop';
 
 const Stack = createStackNavigator();
 
@@ -19,8 +21,11 @@ const Navigation = () => {
                 <Stack.Screen name="Home" component={Home} options={{ headerShown: true }} />
                 <Stack.Screen name="Group" component={Group} options={{ headerShown: false }} />
 
-                {/* Nav to meal screen not working */}
+                
                 <Stack.Screen name="Meal" component={Meal} options={{ headerShown: true }} />
+
+                <Stack.Screen name="Settings" component={Settings} options={{ headerShown: true }} />
+                <Stack.Screen name="Shop" component={Shop} options={{ headerShown: true }} />
             </Stack.Navigator>
         </NavigationContainer>
     );
