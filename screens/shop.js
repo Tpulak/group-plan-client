@@ -1,49 +1,45 @@
-import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-
-
-export default function Meal() {
-    
-    // NAVIGATION
+export default function Shop() {
     const navigation = useNavigation();
+    const [ingredients, setIngredients] = useState([
+        { name: 'Example Ingredient 1', checked: false },
+        { name: 'Example Ingredient 2', checked: false },
+        { name: 'Example Ingredient 3', checked: false },
+    ]);
 
-    // Group Button -> Group Page
     const handleGroupPress = () => {
         navigation.navigate('Group');
     };
 
-    // Settings Button -> Settings Page
     const handleSettingPress = () => {
         navigation.navigate('Settings');
     };
 
-    // Home Button -> Homepage
     const handleHomePress = () => {
         navigation.navigate('Home');
     };
-    
-    // Meal Button -> Meal Page
+
     const handleMealPress = () => {
         navigation.navigate('Meal');
     };
 
-    // Shop Button -> Shop Page
     const handleShopPress = () => {
         navigation.navigate('Shop');
     };
 
-    // const handleAddMeal = () => {
-    //     // Add logic for adding a meal here
-    // };
+    const handleCheckboxToggle = (index) => {
+        const updatedIngredients = [...ingredients];
+        updatedIngredients[index].checked = !updatedIngredients[index].checked;
+        setIngredients(updatedIngredients);
+    };
 
     return (
-
         <View style={styles.container}>
             {/* TOP */}
             <View style={styles.topContainer}>
-
                 {/* GROUP ICON*/}
                 <View style={styles.iconContainer}>
                     <TouchableOpacity style={styles.icon} onPress={handleGroupPress}>
@@ -53,9 +49,7 @@ export default function Meal() {
                         />
                     </TouchableOpacity>
                 </View>
-
-                <Text style={styles.title}>Group Plan</Text>
-
+                <Text style={styles.title}>Meal</Text>
                 {/* SETTINGS ICON*/}
                 <View style={styles.iconContainer}>
                     <TouchableOpacity style={styles.icon} onPress={handleSettingPress}>
@@ -65,32 +59,27 @@ export default function Meal() {
                         />
                     </TouchableOpacity>
                 </View>
-
             </View>
 
             {/* MIDDLE */}
             <View style={styles.middleContainer}>
-                {/* onPress={handleAddMeal} */}
-                <TouchableOpacity style={styles.addButton} >
-                    <Text style={styles.addButtonText}>Add Meal</Text>
-                </TouchableOpacity>
-
-                <ScrollView style={styles.mealList}>
-                    {[1, 2, 3].map((meal) => (
-                        <TouchableOpacity style={styles.mealContainer} key={meal}>
-                            <View style={styles.mealNameContainer}>
-                                <Text style={styles.mealName}>Meal {meal}</Text>
-                            </View>
-                            <View style={styles.mealImagePlaceholder}></View>
-                        </TouchableOpacity>
+            <TouchableOpacity style={styles.importButton}>
+            <Text style={styles.importButtonText}>Import Meal</Text>
+            </TouchableOpacity>
+                <ScrollView style={styles.checklistContainer}>
+                    {ingredients.map((ingredient, index) => (
+                        <View style={styles.checklistItem} key={index}>
+                            <TouchableOpacity onPress={() => handleCheckboxToggle(index)}>
+                                <View style={ingredient.checked ? styles.checkboxChecked : styles.checkbox}></View>
+                            </TouchableOpacity>
+                            <Text style={styles.ingredientName}>{ingredient.name}</Text>
+                        </View>
                     ))}
                 </ScrollView>
             </View>
 
-
             {/* BOTTOM */}
             <View style={styles.bottomContainer}>
-
                 {/* MEAL ICON */}
                 <TouchableOpacity style={styles.icon} onPress={handleMealPress}>
                     <Image
@@ -98,7 +87,6 @@ export default function Meal() {
                         style={{ width: 50, height: 50 }}
                     />
                 </TouchableOpacity>
-
                 {/* HOME ICON */}
                 <TouchableOpacity style={styles.icon} onPress={handleHomePress}>
                     <Image
@@ -106,7 +94,6 @@ export default function Meal() {
                         style={{ width: 50, height: 50 }}
                     />
                 </TouchableOpacity>
-
                 {/* SHOP ICON */}
                 <TouchableOpacity style={styles.icon} onPress={handleShopPress}>
                     <Image
@@ -144,12 +131,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
     },
-    middleContainer: {
-        flex: 3,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-    },
+    // middleContainer: {
+    //     flex: 3,
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    //     backgroundColor: 'white',
+    // },
     recommendedMeals: {
         fontSize: 18,
         marginBottom: 10,
@@ -177,42 +164,44 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingHorizontal: 20,
     },
-    addButton: {
-        backgroundColor: 'green', // You can change the color as needed
+    checklistContainer: {
+        width: '100%',
+    },
+    checklistItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 30,
+    },
+    checkbox: {
+        width: 20,
+        height: 20,
+        borderWidth: 1,
+        borderColor: 'black',
+        marginRight: 10,
+    },
+    checkboxChecked: {
+        width: 20,
+        height: 20,
+        backgroundColor: 'green',
+        marginRight: 10,
+    },
+    ingredientName: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+
+    importButton: {
+        backgroundColor: 'green', 
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 10,
-        marginBottom: 20,
+        marginBottom: 30,
         marginTop: 30,
     },
-    addButtonText: {
+    importButtonText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center',
-    },
-    mealList: {
-        width: '100%',
-    },
-    mealContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 10,
-        backgroundColor: '#f0f0f0',
-        borderRadius: 10,
-        overflow: 'hidden',
-    },
-    mealNameContainer: {
-        flex: 1,
-        padding: 10,
-    },
-    mealName: {
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    mealImagePlaceholder: {
-        width: 100,
-        height: 100,
-        backgroundColor: '#ccc', // Gray color as a placeholder
     },
 });

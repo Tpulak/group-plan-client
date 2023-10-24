@@ -1,18 +1,35 @@
-import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {
-    //NAV
+
+    // NAVIGATION
     const navigation = useNavigation();
 
-    //NAV: Group Button -> Group Page
+    // Group Button -> Group Page
     const handleGroupPress = () => {
         navigation.navigate('Group');
     };
 
+    // Settings Button -> Settings Page
+    const handleSettingPress = () => {
+        navigation.navigate('Settings');
+    };
+
+    // Home Button -> Homepage
+    const handleHomePress = () => {
+        navigation.navigate('Home');
+    };
+    
+    // Meal Button -> Meal Page
     const handleMealPress = () => {
         navigation.navigate('Meal');
+    };
+
+    // Shop Button -> Shop Page
+    const handleShopPress = () => {
+        navigation.navigate('Shop');
     };
 
     return (
@@ -35,7 +52,7 @@ export default function Home() {
 
                 {/* SETTINGS ICON*/}
                 <View style={styles.iconContainer}>
-                    <TouchableOpacity style={styles.icon}>
+                    <TouchableOpacity style={styles.icon} onPress={handleSettingPress}>
                         <Image
                             source={require('../assets/icons/setting.png')}
                             style={{ width: 50, height: 50 }}
@@ -71,7 +88,7 @@ export default function Home() {
                 </TouchableOpacity>
 
                 {/* HOME ICON */}
-                <TouchableOpacity style={styles.icon}>
+                <TouchableOpacity style={styles.icon} onPress={handleHomePress}>
                     <Image
                         source={require('../assets/icons/home.png')}
                         style={{ width: 50, height: 50 }}
@@ -79,7 +96,7 @@ export default function Home() {
                 </TouchableOpacity>
 
                 {/* SHOP ICON */}
-                <TouchableOpacity style={styles.icon}>
+                <TouchableOpacity style={styles.icon} onPress={handleShopPress}>
                     <Image
                         source={require('../assets/icons/shop.png')}
                         style={{ width: 50, height: 50 }}

@@ -4,17 +4,35 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function Group() {
 
+    // NAVIGATION
     const navigation = useNavigation();
 
-    //NAV: Home Button -> Homepage
+    // Group Button -> Group Page
+    const handleGroupPress = () => {
+        navigation.navigate('Group');
+    };
+
+    // Settings Button -> Settings Page
+    const handleSettingPress = () => {
+        navigation.navigate('Settings');
+    };
+
+    // Home Button -> Homepage
     const handleHomePress = () => {
         navigation.navigate('Home');
     };
-
+    
+    // Meal Button -> Meal Page
     const handleMealPress = () => {
         navigation.navigate('Meal');
     };
 
+    // Shop Button -> Shop Page
+    const handleShopPress = () => {
+        navigation.navigate('Shop');
+    };
+
+    
     //------------------FOR DISPLAYING PUBLIC/PRIVATE GROUPS -------------------------------------------------------------------------
 
     // Array that holds the groups
@@ -205,7 +223,7 @@ export default function Group() {
                 </TouchableOpacity >
 
                 {/* SHOP ICON */}
-                < TouchableOpacity style={styles.icon} >
+                < TouchableOpacity style={styles.icon} onPress={handleShopPress} >
                     <Image
                         source={require('../assets/icons/shop.png')}
                         style={{ width: 50, height: 50 }}
