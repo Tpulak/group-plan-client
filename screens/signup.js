@@ -31,8 +31,8 @@ export default function Signup() {
     axios
       .post(`http://${Platform.OS === "ios" ? "localhost" : "10.0.2.2"}:8000/users/register/`, data = userInfo)
       .then((response) => {
-        console.log(response.data);
-        if ("message" in response.data) {
+        console.log(response.data[0]);
+        if ("fields" in response.data[0]) {
           navigation.navigate("Home");
         }
         else {
