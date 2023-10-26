@@ -21,7 +21,7 @@ export default function Home() {
     const handleHomePress = () => {
         navigation.navigate('Home');
     };
-    
+
     // Meal Button -> Meal Page
     const handleMealPress = () => {
         navigation.navigate('Meal');
@@ -45,6 +45,7 @@ export default function Home() {
                             source={require('../assets/icons/group.png')}
                             style={{ width: 50, height: 50 }}
                         />
+                        <Text style={styles.Icontxt}>GROUP</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -57,6 +58,7 @@ export default function Home() {
                             source={require('../assets/icons/setting.png')}
                             style={{ width: 50, height: 50 }}
                         />
+                        <Text style={styles.Icontxt}>SETTINGS</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -70,9 +72,7 @@ export default function Home() {
                         source={require('../assets/images/stockImage.jpg')}
                         style={{ width: 300, height: 200 }}
                     />
-                    {/* Placeholder for the image */}
-                    {/* Replace 'YourImageComponent' with your actual image component */}
-                    {/* <StockImage /> */}
+
                 </View>
             </View>
 
@@ -85,6 +85,7 @@ export default function Home() {
                         source={require('../assets/icons/meal.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>MEALS</Text>
                 </TouchableOpacity>
 
                 {/* HOME ICON */}
@@ -93,6 +94,7 @@ export default function Home() {
                         source={require('../assets/icons/home.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>HOME</Text>
                 </TouchableOpacity>
 
                 {/* SHOP ICON */}
@@ -101,6 +103,7 @@ export default function Home() {
                         source={require('../assets/icons/shop.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>SHOP</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -132,6 +135,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
     },
+    Icontxt: {
+        textAlign: 'center',
+    },
     middleContainer: {
         flex: 3,
         justifyContent: 'center',
@@ -157,5 +163,7 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 25,
     },
+
+
 
 });
