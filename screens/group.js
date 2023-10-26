@@ -21,7 +21,7 @@ export default function Group() {
     const handleHomePress = () => {
         navigation.navigate('Home');
     };
-    
+
     // Meal Button -> Meal Page
     const handleMealPress = () => {
         navigation.navigate('Meal');
@@ -32,7 +32,7 @@ export default function Group() {
         navigation.navigate('Shop');
     };
 
-    
+
     //------------------FOR DISPLAYING PUBLIC/PRIVATE GROUPS -------------------------------------------------------------------------
 
     // Array that holds the groups
@@ -212,6 +212,7 @@ export default function Group() {
                         source={require('../assets/icons/meal.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>HOME</Text>
                 </TouchableOpacity >
 
                 {/* HOME ICON */}
@@ -220,6 +221,7 @@ export default function Group() {
                         source={require('../assets/icons/home.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>HOME</Text>
                 </TouchableOpacity >
 
                 {/* SHOP ICON */}
@@ -228,6 +230,7 @@ export default function Group() {
                         source={require('../assets/icons/shop.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>SHOP</Text>
                 </TouchableOpacity >
             </View >
         </View >
@@ -294,6 +297,9 @@ const styles = StyleSheet.create({
     Recgroup: {
         fontSize: 19,
         fontWeight: 'bold',
+    },
+    Icontxt: {
+        textAlign: 'center',
     },
 
 

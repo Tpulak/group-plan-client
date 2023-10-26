@@ -47,6 +47,7 @@ export default function Shop() {
                             source={require('../assets/icons/group.png')}
                             style={{ width: 50, height: 50 }}
                         />
+                        <Text style={styles.Icontxt}>GROUP</Text>
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.title}>Meal</Text>
@@ -57,15 +58,16 @@ export default function Shop() {
                             source={require('../assets/icons/setting.png')}
                             style={{ width: 50, height: 50 }}
                         />
+                        <Text style={styles.Icontxt}>SETTINGS</Text>
                     </TouchableOpacity>
                 </View>
             </View>
 
             {/* MIDDLE */}
             <View style={styles.middleContainer}>
-            <TouchableOpacity style={styles.importButton}>
-            <Text style={styles.importButtonText}>Import Meal</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.importButton}>
+                    <Text style={styles.importButtonText}>Import Meal</Text>
+                </TouchableOpacity>
                 <ScrollView style={styles.checklistContainer}>
                     {ingredients.map((ingredient, index) => (
                         <View style={styles.checklistItem} key={index}>
@@ -86,6 +88,7 @@ export default function Shop() {
                         source={require('../assets/icons/meal.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>MEAL</Text>
                 </TouchableOpacity>
                 {/* HOME ICON */}
                 <TouchableOpacity style={styles.icon} onPress={handleHomePress}>
@@ -93,6 +96,7 @@ export default function Shop() {
                         source={require('../assets/icons/home.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>HOME</Text>
                 </TouchableOpacity>
                 {/* SHOP ICON */}
                 <TouchableOpacity style={styles.icon} onPress={handleShopPress}>
@@ -100,6 +104,7 @@ export default function Shop() {
                         source={require('../assets/icons/shop.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>SHOP</Text>
                 </TouchableOpacity>
             </View>
         </View >
@@ -191,7 +196,7 @@ const styles = StyleSheet.create({
     },
 
     importButton: {
-        backgroundColor: 'green', 
+        backgroundColor: 'green',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 10,
@@ -202,6 +207,9 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    Icontxt: {
         textAlign: 'center',
     },
 });

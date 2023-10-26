@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 export default function Meal() {
-    
+
     // NAVIGATION
     const navigation = useNavigation();
 
@@ -23,7 +23,7 @@ export default function Meal() {
     const handleHomePress = () => {
         navigation.navigate('Home');
     };
-    
+
     // Meal Button -> Meal Page
     const handleMealPress = () => {
         navigation.navigate('Meal');
@@ -51,6 +51,7 @@ export default function Meal() {
                             source={require('../assets/icons/group.png')}
                             style={{ width: 50, height: 50 }}
                         />
+                        <Text style={styles.Icontxt}>GROUP</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -63,6 +64,7 @@ export default function Meal() {
                             source={require('../assets/icons/setting.png')}
                             style={{ width: 50, height: 50 }}
                         />
+                        <Text style={styles.Icontxt}>SETTINGS</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -97,6 +99,7 @@ export default function Meal() {
                         source={require('../assets/icons/meal.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>MEALS</Text>
                 </TouchableOpacity>
 
                 {/* HOME ICON */}
@@ -105,6 +108,7 @@ export default function Meal() {
                         source={require('../assets/icons/home.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>HOME</Text>
                 </TouchableOpacity>
 
                 {/* SHOP ICON */}
@@ -113,6 +117,7 @@ export default function Meal() {
                         source={require('../assets/icons/shop.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>SHOP</Text>
                 </TouchableOpacity>
             </View>
         </View >
@@ -214,5 +219,8 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         backgroundColor: '#ccc', // Gray color as a placeholder
+    },
+    Icontxt: {
+        textAlign: 'center',
     },
 });

@@ -23,7 +23,7 @@ export default function Meal() {
     const handleHomePress = () => {
         navigation.navigate('Home');
     };
-    
+
     // Meal Button -> Meal Page
     const handleMealPress = () => {
         navigation.navigate('Meal');
@@ -52,6 +52,7 @@ export default function Meal() {
                             source={require('../assets/icons/group.png')}
                             style={{ width: 50, height: 50 }}
                         />
+                        <Text style={styles.Icontxt}>GROUP</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -64,6 +65,7 @@ export default function Meal() {
                             source={require('../assets/icons/setting.png')}
                             style={{ width: 50, height: 50 }}
                         />
+                        <Text style={styles.Icontxt}>SETTINGS</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -73,14 +75,14 @@ export default function Meal() {
             <View style={styles.middleContainer}>
 
                 <View style={styles.section}>
-                {/* <Text style={styles.sectionTitle}>Change Username</Text> */}
-                <Button
-                    title="Change Username"
-                    color="green"
-                    onPress={() => {
-                 // Add logic to handle username change here
-                 }}
-               />
+                    {/* <Text style={styles.sectionTitle}>Change Username</Text> */}
+                    <Button
+                        title="Change Username"
+                        color="green"
+                        onPress={() => {
+                            // Add logic to handle username change here
+                        }}
+                    />
                 </View>
                 <View style={styles.section}>
                     {/* <Text style={styles.sectionTitle}>Change Password</Text> */}
@@ -111,6 +113,7 @@ export default function Meal() {
                         source={require('../assets/icons/meal.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>MEALS</Text>
                 </TouchableOpacity>
 
                 {/* HOME ICON */}
@@ -118,7 +121,10 @@ export default function Meal() {
                     <Image
                         source={require('../assets/icons/home.png')}
                         style={{ width: 50, height: 50 }}
+
                     />
+                    <Text style={styles.Icontxt}>HOME</Text>
+
                 </TouchableOpacity>
 
                 {/* SHOP ICON */}
@@ -127,6 +133,7 @@ export default function Meal() {
                         source={require('../assets/icons/shop.png')}
                         style={{ width: 50, height: 50 }}
                     />
+                    <Text style={styles.Icontxt}>SHOP</Text>
                 </TouchableOpacity>
             </View>
         </View >
@@ -184,7 +191,7 @@ const styles = StyleSheet.create({
         padding: 25,
     },
 
-    
+
     middleContainer: {
         flex: 3,
         justifyContent: 'center',
@@ -238,11 +245,15 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
-    
-    
-    
-    
-    
-    
+    Icontxt: {
+        textAlign: 'center',
+    },
+
+
+
+
+
+
+
 
 });

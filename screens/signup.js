@@ -1,5 +1,14 @@
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Alert,
+  Platform,
+} from "react-native";
 import React from "react";
+import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Signup() {
@@ -14,30 +23,33 @@ export default function Signup() {
     password2: "",
   });
 
-  //NAV: SignUp ->
 
   //NAV: SignUp -> Homepage
   const handleSignUpPress = () => {
-    // axios
-    //   .post("http://10.0.2.2:8000/users/register/", (data = userInfo))
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     if ("pk" in response.data) {
-    //       navigation.navigate("Home");
-    //     } else {
-    //       Alert.alert("Log In Error", response.data["message"], [
-    //         {
-    //           text: "OK",
-    //           onPress: () => {
-    //             // do something
-    //           },
-    //         },
-    //       ]);
-    //     }
-    //   })
-    //   .catch((error) => console.log(error));
+
+
+    axios
+      .post(`http://${Platform.OS === "ios" ? "localhost" : "10.0.2.2"}:8000/users/register/`, data = userInfo)
+      .then((response) => {
+        console.log(response.data);
+        if ("message" in response.data) {
+          navigation.navigate("Home");
+        }
+        else {
+          Alert.alert("Sign Up Error", response.data["message"], [
+            {
+              text: "OK",
+              onPress: () => {
+                // do something
+              },
+            },
+          ]);
+        }
+      })
+      .catch((error) => console.log(error));
     console.log(userInfo);
-    // navigation.navigate("Home");
+
+
   };
 
   return (
