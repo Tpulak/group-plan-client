@@ -9,7 +9,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  Platform
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -30,7 +30,12 @@ export default function Login() {
     // navigation.navigate("Home");
 
     axios
-      .post(`http://${Platform.OS === "ios" ? "localhost" : "10.0.2.2"}:8000/users/login/`, (data = userInfo))
+      .post(
+        `http://${
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+        }:8000/users/login/`,
+        (data = userInfo)
+      )
       .then((response) => {
         console.log(response.data);
         if ("pk" in response.data) {
@@ -80,7 +85,6 @@ export default function Login() {
         <View style={styles.input}>
           <TextInput
             placeholder=" "
-
             //hides password
             secureTextEntry={true}
             onChangeText={(passwordInput) => {
@@ -97,7 +101,7 @@ export default function Login() {
           title="Login"
           color="white"
           onPress={handleLogInPress}
-        // onPress={() => Alert.alert('Button pressed')}
+          // onPress={() => Alert.alert('Button pressed')}
         />
       </View>
 
@@ -138,5 +142,4 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: "green",
   },
-
 });
