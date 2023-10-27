@@ -1,169 +1,56 @@
-import { Button, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import HomeMealCard from "../components/HomeMealCard";
+import TopNav from "../components/topNav";
+import BottomNav from "../components/bottomNav";
 
 export default function Home() {
+  const [meals, setMeals] = useState([]);
 
-    // NAVIGATION
-    const navigation = useNavigation();
+  useEffect(() => {
+    axios
+      .get(
+        "https://www.themealdb.com/api/json/v1/1/filter.php?a=American&c=Pasta"
+      )
+      .then((response) => {
+        const meals = response.data.meals;
 
-    // Group Button -> Group Page
-    const handleGroupPress = () => {
-        navigation.navigate('Group');
-    };
+        console.log(meals[0].strMeal);
+        setMeals(meals);
+        console.log(meals);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
-    // Settings Button -> Settings Page
-    const handleSettingPress = () => {
-        navigation.navigate('Settings');
-    };
+  return (
+    <View style={styles.container}>
+      {/* TOP */}
+      <TopNav />
 
-    // Home Button -> Homepage
-    const handleHomePress = () => {
-        navigation.navigate('Home');
-    };
+      {/* MIDDLE */}
+      <ScrollView>
+        {meals.map((element) => {
+          return (
+            <HomeMealCard
+              name={element.strMeal}
+              id={element.idMeal}
+              key={element.idMeal}
+              image={element.strMealThumb}
+            />
+          );
+        })}
+      </ScrollView>
 
-    // Meal Button -> Meal Page
-    const handleMealPress = () => {
-        navigation.navigate('Meal');
-    };
-
-    // Shop Button -> Shop Page
-    const handleShopPress = () => {
-        navigation.navigate('Shop');
-    };
-
-    return (
-
-        <View style={styles.container}>
-            {/* TOP */}
-            <View style={styles.topContainer}>
-
-                {/* GROUP ICON*/}
-                <View style={styles.iconContainer}>
-                    <TouchableOpacity style={styles.icon} onPress={handleGroupPress}>
-                        <Image
-                            source={require('../assets/icons/group.png')}
-                            style={{ width: 50, height: 50 }}
-                        />
-                        <Text style={styles.Icontxt}>GROUP</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <Text style={styles.title}>Group Plan</Text>
-
-                {/* SETTINGS ICON*/}
-                <View style={styles.iconContainer}>
-                    <TouchableOpacity style={styles.icon} onPress={handleSettingPress}>
-                        <Image
-                            source={require('../assets/icons/setting.png')}
-                            style={{ width: 50, height: 50 }}
-                        />
-                        <Text style={styles.Icontxt}>SETTINGS</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
-
-            {/* MIDDLE */}
-            <View style={styles.middleContainer}>
-                <Text style={styles.recommendedMeals}>Recommended Meals</Text>
-                <View style={styles.imageContainer}>
-                    <Image
-                        source={require('../assets/images/stockImage.jpg')}
-                        style={{ width: 300, height: 200 }}
-                    />
-
-                </View>
-            </View>
-
-            {/* BOTTOM */}
-            <View style={styles.bottomContainer}>
-
-                {/* MEAL ICON */}
-                <TouchableOpacity style={styles.icon} onPress={handleMealPress}>
-                    <Image
-                        source={require('../assets/icons/meal.png')}
-                        style={{ width: 50, height: 50 }}
-                    />
-                    <Text style={styles.Icontxt}>MEALS</Text>
-                </TouchableOpacity>
-
-                {/* HOME ICON */}
-                <TouchableOpacity style={styles.icon} onPress={handleHomePress}>
-                    <Image
-                        source={require('../assets/icons/home.png')}
-                        style={{ width: 50, height: 50 }}
-                    />
-                    <Text style={styles.Icontxt}>HOME</Text>
-                </TouchableOpacity>
-
-                {/* SHOP ICON */}
-                <TouchableOpacity style={styles.icon} onPress={handleShopPress}>
-                    <Image
-                        source={require('../assets/icons/shop.png')}
-                        style={{ width: 50, height: 50 }}
-                    />
-                    <Text style={styles.Icontxt}>SHOP</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    );
+      {/* BOTTOM */}
+      <BottomNav />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
-    topContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: 'green',
-        padding: 25,
-    },
-    iconContainer: {
-        flex: 1,
-        alignItems: 'center',
-        width: 50,
-        height: 50,
-    },
-    title: {
-        flex: 2,
-        textAlign: 'center',
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: 'white',
-    },
-    Icontxt: {
-        textAlign: 'center',
-    },
-    middleContainer: {
-        flex: 3,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-    },
-    recommendedMeals: {
-        fontSize: 18,
-        marginBottom: 10,
-    },
-    imageContainer: {
-        width: 200,
-        height: 200,
-        backgroundColor: '#f0f0f0',
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    bottomContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        backgroundColor: 'green',
-        width: '100%',
-        padding: 25,
-    },
-
-
-
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
 });

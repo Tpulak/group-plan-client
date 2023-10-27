@@ -1,6 +1,5 @@
 // import React, { useEffect, useState, } from 'react';
 
-
 // import { AppLoading } from 'expo';
 // import Navigator from './routes/homeStack';
 
@@ -32,9 +31,9 @@
 //   );
 // }
 
-import React, { useState, useEffect } from 'react';
-import Loading from './screens/loading'; // Import the Loading component
-import Navigation from './navigation';
+import React, { useState, useEffect } from "react";
+import Loading from "./screens/loading"; // Import the Loading component
+import Navigation from "./navigation";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true); // State to control the loading screen
@@ -52,9 +51,3 @@ export default function App() {
 
   return <Navigation />;
 }
-
-
-
-
-
-
