@@ -26,33 +26,34 @@ export default function Login() {
   };
   //NAV: Login -> Homepage
   const handleLogInPress = () => {
-    //testing
-    // navigation.navigate("Home");
 
-    axios
-      .post(
-        `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-        }:8000/users/login/`,
-        (data = userInfo)
-      )
-      .then((response) => {
-        console.log(response.data);
-        if ("pk" in response.data) {
-          navigation.navigate("Home");
-        } else {
-          Alert.alert("Log In Error", response.data["message"], [
-            {
-              text: "OK",
-              onPress: () => {
-                // do something
-              },
-            },
-          ]);
-        }
-      })
-      .catch((error) => console.log(error));
-    console.log(userInfo);
+    //testing w/o login 
+    navigation.navigate("Home");
+
+    // axios
+    //   .post(
+    //     `http://${
+    //       Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+    //     }:8000/users/login/`,
+    //     (data = userInfo)
+    //   )
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     if ("pk" in response.data) {
+    //       navigation.navigate("Home");
+    //     } else {
+    //       Alert.alert("Log In Error", response.data["message"], [
+    //         {
+    //           text: "OK",
+    //           onPress: () => {
+    //             // do something
+    //           },
+    //         },
+    //       ]);
+    //     }
+    //   })
+    //   .catch((error) => console.log(error));
+    // console.log(userInfo);
   };
 
   return (
@@ -101,7 +102,7 @@ export default function Login() {
           title="Login"
           color="white"
           onPress={handleLogInPress}
-          // onPress={() => Alert.alert('Button pressed')}
+        // onPress={() => Alert.alert('Button pressed')}
         />
       </View>
 
@@ -136,10 +137,26 @@ const styles = StyleSheet.create({
   },
 
   Login_button: {
-    // margin: 10,
     margin: 15,
     padding: 4,
     borderRadius: 5,
-    backgroundColor: "green",
+    // backgroundColor: "green",
   },
 });
+
+// Apply platform-specific styles
+if (Platform.OS === 'ios') {
+  styles.Login_button = {
+
+    backgroundColor: "green",
+
+  };
+} else if (Platform.OS === 'android') {
+  styles.Login_button = {
+    backgroundColor: "blue",
+    // margin: 15,
+    padding: 4,
+    // borderRadius: 5,
+  };
+}
+
