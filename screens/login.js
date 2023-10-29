@@ -12,6 +12,7 @@ import {
   Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -24,36 +25,42 @@ export default function Login() {
   const handleSignUpPress = () => {
     navigation.navigate("signup"); // 'SignUp' should be the name of your sign-up screen
   };
+  const storeUserData = async (value) => {
+    try {
+      await AsyncStorage.setItem("sessionId", JSON.stringify(value));
+    } catch (e) {
+      // saving error
+    }
+  };
   //NAV: Login -> Homepage
   const handleLogInPress = () => {
+    //testing w/o login
+    // navigation.navigate("Home");
 
-    //testing w/o login 
-    navigation.navigate("Home");
-
-    // axios
-    //   .post(
-    //     `http://${
-    //       Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-    //     }:8000/users/login/`,
-    //     (data = userInfo)
-    //   )
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     if ("pk" in response.data) {
-    //       navigation.navigate("Home");
-    //     } else {
-    //       Alert.alert("Log In Error", response.data["message"], [
-    //         {
-    //           text: "OK",
-    //           onPress: () => {
-    //             // do something
-    //           },
-    //         },
-    //       ]);
-    //     }
-    //   })
-    //   .catch((error) => console.log(error));
-    // console.log(userInfo);
+    axios
+      .post(
+        `http://${
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
+        }:8000/users/login/`,
+        (data = userInfo)
+      )
+      .then((response) => {
+        storeUserData(response.headers["set-cookie"][0]);
+        if ("pk" in response.data) {
+          navigation.navigate("Home");
+        } else {
+          Alert.alert("Log In Error", response.data["message"], [
+            {
+              text: "OK",
+              onPress: () => {
+                // do something
+              },
+            },
+          ]);
+        }
+      })
+      .catch((error) => console.log(error));
+    console.log(userInfo);
   };
 
   return (
@@ -102,7 +109,7 @@ export default function Login() {
           title="Login"
           color="white"
           onPress={handleLogInPress}
-        // onPress={() => Alert.alert('Button pressed')}
+          // onPress={() => Alert.alert('Button pressed')}
         />
       </View>
 
@@ -145,13 +152,11 @@ const styles = StyleSheet.create({
 });
 
 // Apply platform-specific styles
-if (Platform.OS === 'ios') {
+if (Platform.OS === "ios") {
   styles.Login_button = {
-
     backgroundColor: "green",
-
   };
-} else if (Platform.OS === 'android') {
+} else if (Platform.OS === "android") {
   styles.Login_button = {
     backgroundColor: "blue",
     // margin: 15,
@@ -159,4 +164,3 @@ if (Platform.OS === 'ios') {
     // borderRadius: 5,
   };
 }
-

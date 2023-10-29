@@ -4,50 +4,59 @@ import {
   Text,
   TextInput,
   View,
-  Platform
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  Pressable,
+  TouchableOpacity,
 } from "react-native";
 
-import { Picker } from '@react-native-picker/picker';
+import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import BottomNav from "../components/bottomNav";
-import { Platform } from "react-native";
-import axios from 'axios';
+import axios from "axios";
+import MuiIcon from "react-native-vector-icons/MaterialIcons";
+import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import SelectDropdown from "react-native-select-dropdown";
 
 export default function Group() {
   // NAVIGATION
   const navigation = useNavigation();
 
-  //PICKER 
+  //PICKER
   const [selectedValue, setSelectedValue] = useState("My Group");
 
   //Groups is an empty array, this will hold data from api & setgroups will fetch data from backend
   const [group, setGroups] = useState([]);
 
   //empty string that later on holds text enterted by user input
-  const [SearchText, setSearchText] = useState("");
-
+  const [searchText, setSearchText] = useState("");
 
   //------------------FOR DISPLAYING PUBLIC/PRIVATE GROUPS -------------------------------------------------------------------------
-  //fetch data from backend api
-  useEffect(() => {
-
-    // axios.get('api for backend')
-    //   .then(response => {
+  const createGroup = async () => {
+    const info = await AsyncStorage.getItem("sessionId");
     axios
       .post(
-        `http://${Platform.OS === "ios" ? "localhost" : "10.0.2.2"}:8000/users/login/`,
-        { data: group } // Assuming you want to send the 'group' data in the request
+        `http://${
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
+        }:8000/recipes/group/`,
+        { name: "some_name4", privacy: "PUBLIC" },
+        {
+          withCredentials: true,
+          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+        } // Assuming you want to send the 'group' data in the request
       )
-      .then(response => {
-        setGroups(response.data.group); // stores data into group state
+      .then((response) => {
+        setGroups(response.body); // stores data into group state
       })
-      .catch(error => {
-        console.error('Error fetching data: ', error);
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
       });
-  }, []);
+  };
 
-  const handleSearchTextChange = (test) => {
+  const handleSearchTextChange = (text) => {
     setSearchText(text);
   };
 
@@ -63,73 +72,128 @@ export default function Group() {
           <View key={i}>
             {/* displays name of current group*/}
             <Text>{currentGroup.name}</Text>
-            {currentGroup.type === 'public' ? (
-              <Button title="Join"
+            {currentGroup.type === "public" ? (
+              <Button
+                title="Join"
                 onPress={() => handleJoin(currentGroup.id)}
-              />) : (
-                <Button
-                  title="Request"
-                  onPress={() => handleRequest(currentGroup.id)}
-                />)
-            }
+              />
+            ) : (
+              <Button
+                title="Request"
+                onPress={() => handleRequest(currentGroup.id)}
+              />
+            )}
           </View>
         );
       }
     }
-    return renderedGroups; //returns the array 
-
+    return renderedGroups; //returns the array
   };
   //------------------FOR DISPLAYING PUBLIC/PRIVATE GROUPS -------------------------------------------------------------------------
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="default" />
+      <View style={styles.container}>
+        {/* TOP */}
 
-
-      {/* TOP */}
-      <View style={styles.topContainer}>
         <Text style={styles.title}>Group Plan</Text>
+
+        {/* MIDDLE */}
+        <View style={styles.topContainer}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search public and private groups..."
+            onChangeText={setSearchText}
+            value={searchText}
+            autoCorrect={false}
+            returnKeyType="search"
+            onSubmitEditing={() => console.log("submitted")}
+          />
+          <Pressable onPress={() => console.log("clicked")}>
+            <MuiIcon
+              name="search"
+              size={40}
+              color="#FFBA00"
+              style={{ backgroundColor: "#fff", borderRadius: 5, padding: 5 }}
+            />
+          </Pressable>
+        </View>
+        <View style={styles.middleContainer}>
+          {Platform.OS === "ios" ? (
+            <TouchableOpacity style={styles.createButton} onPress={createGroup}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "#fff",
+                  marginBottom: 10,
+                  marginTop: 10,
+                  fontSize: 16,
+                }}
+              >
+                Create Group
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <Button
+              title="Create Group"
+              color="#88B361"
+              onPress={createGroup}
+              style={styles.createButton}
+            />
+          )}
+          {/* <Button
+            title="Create Group"
+            color="#88B361"
+            onPress={createGroup}
+            style={styles.createButton}
+          /> */}
+          <View style={styles.pickerContainer}>
+            <SelectDropdown
+              data={["My Groups", "Recommened Groups"]}
+              renderDropdownIcon={() => {
+                return (
+                  <MuiCIcon
+                    name="chevron-down"
+                    size={20}
+                    color="#FFBA00"
+                    style={{
+                      backgroundColor: "transparent",
+                      borderRadius: 5,
+                      padding: 5,
+                    }}
+                  />
+                );
+              }}
+              buttonStyle={{ width: "100%" }}
+            />
+            {/* <Picker
+              selectedValue={selectedValue}
+              style={styles.dropdown}
+              onValueChange={(itemValue) => setSelectedValue(itemValue)}
+            >
+              <Picker.Item label="My Groups" value="mygroup" />
+              <Picker.Item
+                label="Recommended Groups"
+                value="recommendedgroups"
+              />
+            </Picker> */}
+          </View>
+        </View>
+
+        {/* DROP DOWN MENU FOR MY GROUPS & RECOMMENDED GROUPS  */}
+
+        {/* {selectedValue === "My Group"
+          ? renderGroups()
+          : selectedValue === "Recommended Groups"
+          ? renderRecommendedGroups()
+          : null} */}
+
+        {/* BOTTOM */}
+        <BottomNav />
       </View>
-
-      {/* MIDDLE */}
-      <View style={styles.middleContainer}>
-        {/* <TextInput
-          style={styles.searchInput}
-          placeholder="Search public and private groups..."
-        // onChangeText={handleTextChange}
-        // value={searchText}
-        /> */}
-        <Button
-          title="Create Group"
-          color="#88B361"
-          onPress={() => { }}
-          style={styles.createButton}
-        />
-      </View>
-
-      {/* DROP DOWN MENU FOR MY GROUPS & RECOMMENDED GROUPS  */}
-      <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={selectedValue}
-          style={styles.dropdown}
-          onValueChange={(itemValue => setSelectedValue(itemValue)}
-        >
-          <Picker.Item label="My Group" value="mygroup" />
-          <Picker.Item label="Recommended Groups" value="recommendedgroups" />
-        </Picker>
-      </View>
-
-      {selectedValue === "My Group" ? renderUserGroups() : selectedValue === "Recommended Groups" ? renderRecommendedGroups() : null}
-
-
-
-      {/* BOTTOM */}
-      <BottomNav />
-
-
-    </View >
+    </SafeAreaView>
   );
-
-
 }
 
 const styles = StyleSheet.create({
@@ -138,25 +202,39 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   topContainer: {
-    padding: 25,
-    alignItems: "center",
+    flex: 0,
+    flexDirection: "row",
+    alignContent: "center",
+    backgroundColor: "white",
+    padding: 20,
   },
   title: {
     fontSize: 30,
     color: "black",
     fontWeight: "bold",
+    textAlign: "center",
   },
   middleContainer: {
+    flex: 1,
+    alignContent: "center",
     backgroundColor: "white",
     padding: 20,
+    borderColor: "black",
+    borderWidth: 0,
   },
   searchInput: {
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 10,
     paddingLeft: 10,
+    width: "90%",
   },
+  createButton: {
+    backgroundColor: "#88B361",
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+
   // groupRow: {
   //   flexDirection: "row",
   //   alignItems: "center",
@@ -198,25 +276,22 @@ const styles = StyleSheet.create({
 
   pickerContainer: {
     marginTop: 1,
+    width: "100%",
     // flex: 1,
-
   },
-
-
 });
 
-
 // Apply platform-specific styles
-if (Platform.OS === 'ios') {
+if (Platform.OS === "ios") {
   styles.pickerContainer = {
     marginTop: 1,
     flex: 1,
-    backgroundColor: "white",// Adjust this value to control the space between the button and the Picker for iOS
+    backgroundColor: "white", // Adjust this value to control the space between the button and the Picker for iOS
   };
-} else if (Platform.OS === 'android') {
+} else if (Platform.OS === "android") {
   styles.pickerContainer = {
     marginTop: 20,
     flex: 1,
-    backgroundColor: "white",// Adjust this value to control the space between the button and the Picker for Android
+    backgroundColor: "white", // Adjust this value to control the space between the button and the Picker for Android
   };
 }
