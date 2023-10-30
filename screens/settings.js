@@ -11,6 +11,8 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import TopNav from "../components/topNav";
 import BottomNav from "../components/bottomNav";
+import { SafeAreaView } from "react-native";
+import { StatusBar } from "react-native";
 
 export default function Meal() {
   // NAVIGATION
@@ -22,47 +24,50 @@ export default function Meal() {
   };
 
   return (
-    <View style={styles.container}>
-      {/* TOP */}
-      <TopNav />
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="default" />
+      <View style={styles.container}>
+        {/* TOP */}
+        <TopNav />
 
-      {/* MIDDLE */}
-      <View style={styles.middleContainer}>
-        <View style={styles.section}>
-          {/* <Text style={styles.sectionTitle}>Change Username</Text> */}
-          <Button
-            title="Change Username"
-            color="green"
-            onPress={() => {
-              // Add logic to handle username change here
-            }}
-          />
-        </View>
-        <View style={styles.section}>
-          {/* <Text style={styles.sectionTitle}>Change Password</Text> */}
-          <Button
-            title="Change Password"
-            color="green"
-            onPress={() => {
-              // Add logic to handle password change here
-            }}
-          />
-        </View>
-        <TouchableOpacity
-          style={styles.logoutButton}
-          onPress={handleLogoutPress}
-        >
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
+        {/* MIDDLE */}
+        <View style={styles.middleContainer}>
+          <View style={styles.section}>
+            {/* <Text style={styles.sectionTitle}>Change Username</Text> */}
+            <Button
+              title="Change Username"
+              color="green"
+              onPress={() => {
+                // Add logic to handle username change here
+              }}
+            />
+          </View>
+          <View style={styles.section}>
+            {/* <Text style={styles.sectionTitle}>Change Password</Text> */}
+            <Button
+              title="Change Password"
+              color="green"
+              onPress={() => {
+                // Add logic to handle password change here
+              }}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={handleLogoutPress}
+          >
+            <Text style={styles.logoutText}>Logout</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.deleteButton}>
-          <Text style={styles.deleteText}>Delete Account</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.deleteButton}>
+            <Text style={styles.deleteText}>Delete Account</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* BOTTOM */}
+        <BottomNav />
       </View>
-
-      {/* BOTTOM */}
-      <BottomNav />
-    </View>
+    </SafeAreaView>
   );
 }
 

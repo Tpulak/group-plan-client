@@ -27,6 +27,7 @@ export default function Home() {
         console.log(meals);
       })
       .catch((error) => console.log(error));
+    console.log;
   }, []);
 
   return (

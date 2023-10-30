@@ -55,7 +55,7 @@ export default function Group() {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.209" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/searchGroups/${searchText}`
       )
       .then((response) => {
@@ -69,7 +69,7 @@ export default function Group() {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.209" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/getUserGroups/`,
         {
           withCredentials: true,
@@ -87,9 +87,9 @@ export default function Group() {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.209" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/group/`,
-        { name: "some_name9", privacy: "PUBLIC" },
+        { name: "demoGroup", privacy: "PUBLIC" },
         {
           withCredentials: true,
           headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
@@ -99,7 +99,7 @@ export default function Group() {
         getUserGroups();
       })
       .catch((error) => {
-        console.error("Error fetching data: ", error);
+        console.error("Error fetching data: ", error.response.data);
       });
   };
 
@@ -158,15 +158,19 @@ export default function Group() {
             </TouchableOpacity>
           ) : (
             <Button
-              title="Create Group"
-              color="#88B361"
-              onPress={createGroup}
+              title={searchText ? "Cancel search" : "Create Group"}
+              color={searchText ? "red" : "#88B361"}
+              onPress={searchText ? cancelSearch : createGroup}
               style={styles.createButton}
             />
           )}
 
           {searchText ? (
-            <GroupsCollections groups={searchedGroups} />
+            <GroupsCollections
+              groups={searchedGroups}
+              showbtn={true}
+              updateUserGroups={getUserGroups}
+            />
           ) : (
             <View style={styles.pickerContainer}>
               <SelectDropdown
@@ -192,9 +196,17 @@ export default function Group() {
                 defaultValueByIndex={0}
               />
               {selectedValue ? (
-                <GroupsCollections groups={recommendedGroups} showbtn={true} />
+                <GroupsCollections
+                  groups={recommendedGroups}
+                  showbtn={true}
+                  updateUserGroups={getUserGroups}
+                />
               ) : (
-                <GroupsCollections groups={userGroups} showbtn={false} />
+                <GroupsCollections
+                  groups={userGroups}
+                  showbtn={false}
+                  updateUserGroups={getUserGroups}
+                />
               )}
             </View>
           )}
@@ -228,8 +240,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     backgroundColor: "white",
     padding: 20,
-    borderColor: "black",
-    borderWidth: 2,
     overflow: "hidden",
   },
   searchInput: {

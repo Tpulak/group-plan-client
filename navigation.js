@@ -40,18 +40,18 @@ const Navigation = () => {
         <Stack.Screen
           name="Meal"
           component={Meal}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="Settings"
           component={Settings}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Shop"
           component={Shop}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
