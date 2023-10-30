@@ -23,19 +23,20 @@ export default function Signup() {
     password2: "",
   });
 
-
   //NAV: SignUp -> Homepage
   const handleSignUpPress = () => {
-
-
     axios
-      .post(`http://${Platform.OS === "ios" ? "localhost" : "10.0.2.2"}:8000/users/register/`, data = userInfo)
+      .post(
+        `http://${
+          Platform.OS === "ios" ? "192.168.1.209" : "10.0.2.2"
+        }:8000/users/register/`,
+        (data = userInfo)
+      )
       .then((response) => {
         console.log(response.data[0]);
         if ("fields" in response.data[0]) {
           navigation.navigate("Home");
-        }
-        else {
+        } else {
           Alert.alert("Sign Up Error", response.data["message"], [
             {
               text: "OK",
@@ -48,8 +49,6 @@ export default function Signup() {
       })
       .catch((error) => console.log(error));
     console.log(userInfo);
-
-
   };
 
   return (

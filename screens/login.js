@@ -40,7 +40,7 @@ export default function Login() {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.209" : "10.0.2.2"
         }:8000/users/login/`,
         (data = userInfo)
       )
