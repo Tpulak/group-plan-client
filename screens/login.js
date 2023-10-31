@@ -36,13 +36,12 @@ export default function Login() {
   };
   //NAV: Login -> Homepage
   const handleLogInPress = () => {
-    //testing w/o login
     // navigation.navigate("Home");
-
+    // const user = userInfo;
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
         }:8000/users/login/`,
         (data = userInfo)
       )
@@ -51,6 +50,10 @@ export default function Login() {
         storeUserData(response.data.pk, "userId");
         if ("pk" in response.data) {
           navigation.navigate("Home");
+          setUserInfo({
+            username: "",
+            password: "",
+          });
         } else {
           Alert.alert("Log In Error", response.data["message"], [
             {
@@ -63,7 +66,6 @@ export default function Login() {
         }
       })
       .catch((error) => console.log(error));
-    console.log(userInfo);
   };
 
   return (
@@ -83,12 +85,13 @@ export default function Login() {
           <Text style={{ textAlign: "left" }}>Username</Text>
           <View style={styles.input}>
             <TextInput
-              placeholder=" "
+              placeholder=""
               onChangeText={(usernameInput) => {
                 setUserInfo((prevState) => {
                   return { ...prevState, username: usernameInput };
                 });
               }}
+              value={userInfo.username}
             />
           </View>
         </View>
@@ -97,7 +100,7 @@ export default function Login() {
           <Text style={{ textAlign: "left" }}>Password</Text>
           <View style={styles.input}>
             <TextInput
-              placeholder=" "
+              placeholder=""
               //hides password
               secureTextEntry={true}
               onChangeText={(passwordInput) => {
@@ -105,6 +108,7 @@ export default function Login() {
                   return { ...prevState, password: passwordInput };
                 });
               }}
+              value={userInfo.password}
             />
           </View>
         </View>

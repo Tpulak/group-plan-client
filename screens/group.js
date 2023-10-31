@@ -55,7 +55,7 @@ export default function Group() {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
         }:8000/recipes/searchGroups/${searchText}`
       )
       .then((response) => {
@@ -69,7 +69,7 @@ export default function Group() {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
         }:8000/recipes/getUserGroups/`,
         {
           withCredentials: true,
@@ -87,9 +87,9 @@ export default function Group() {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
         }:8000/recipes/group/`,
-        { name: "demoGroup", privacy: "PUBLIC" },
+        { name: "demoGroup103", privacy: "PRIVATE" },
         {
           withCredentials: true,
           headers: { Coookie: info.split(";")[0].replace(/"/g, "") },

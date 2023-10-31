@@ -19,7 +19,7 @@ export default function GroupsCollections(props) {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
         }:8000/recipes/group/add`,
         {
           user_id: userId,
@@ -35,7 +35,7 @@ export default function GroupsCollections(props) {
       });
   };
   const driod = async (x) => {
-    console.log(x._dispatchInstances.memoizedProps.testID);
+    console.log(x._dispatchInstances.memoizedProps);
   };
   return (
     <ScrollView>
@@ -46,45 +46,72 @@ export default function GroupsCollections(props) {
               flexDirection: "row",
               alignContent: "center",
               width: "100%",
-              justifyContent: "space-between",
+              justifyContent: "space-around",
               height: 50,
               paddingRight: 40,
               paddingLeft: 40,
               marginTop: 20,
+              borderWidth: 2,
+              borderColor: "black",
+              paddingVertical: Platform.OS === "ios" ? 10 : 0,
             }}
             key={group.fields.name}
           >
             {/* displays name of current group*/}
             <Text style={{ fontSize: 18, textAlign: "center" }}>
-              {group.fields.name}
+              {group.fields.name.charAt(0).toUpperCase() +
+                group.fields.name.slice(1)}
             </Text>
             {Platform.OS === "ios" ? (
               group.fields.privacy === "PUBLIC" ? (
+                props.showbtn ? (
+                  <TouchableOpacity
+                    onPress={handleJoin}
+                    testID={group.pk}
+                    style={styles.join_button}
+                  >
+                    <Text style={{ textAlign: "center", color: "#fff" }}>
+                      Join
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <></>
+                )
+              ) : props.showbtn ? (
                 <TouchableOpacity
                   onPress={handleJoin}
                   testID={group.pk}
                   style={styles.join_button}
                 >
-                  <Text style={{ textAlign: "center" }}>Join</Text>
+                  <Text style={{ textAlign: "center", color: "#fff" }}>
+                    Request
+                  </Text>
                 </TouchableOpacity>
               ) : (
-                <Button
-                  title="Request"
-                  onPress={() => handleRequest(currentGroup.id)}
-                />
+                <></>
               )
             ) : group.fields.privacy === "PUBLIC" ? (
-              <Button
-                title="Join"
-                onPress={handleJoin}
-                style={styles.join_button}
-                color="#88B361"
-              />
-            ) : (
+              props.showbtn ? (
+                <Button
+                  title="Join"
+                  onPress={handleJoin}
+                  style={styles.join_button}
+                  color="#88B361"
+                  testID={`${group.pk}`}
+                />
+              ) : (
+                <></>
+              )
+            ) : props.showbtn ? (
               <Button
                 title="Request"
-                onPress={() => handleRequest(currentGroup.id)}
+                onPress={handleJoin}
+                color="#88B361"
+                style={styles.join_button}
+                testID={`${group.pk}`}
               />
+            ) : (
+              <></>
             )}
           </View>
         );
@@ -107,11 +134,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   join_button: {
-    margin: 10,
     padding: 5,
     borderRadius: 5,
     backgroundColor: "#88B361",
     marginLeft: "auto",
-    width: 50,
+    width: "auto",
+    height: 30,
   },
 });

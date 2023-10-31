@@ -10,6 +10,7 @@ import {
 import React from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Signup() {
   //NAV
@@ -23,18 +24,27 @@ export default function Signup() {
     password2: "",
   });
 
+  const storeUserData = async (value, key) => {
+    try {
+      await AsyncStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      // saving error
+    }
+  };
+
   //NAV: SignUp -> Homepage
   const handleSignUpPress = () => {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.209" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
         }:8000/users/register/`,
         (data = userInfo)
       )
       .then((response) => {
         console.log(response.data[0]);
         if ("fields" in response.data[0]) {
+          storeUserData(response.headers["set-cookie"][0], "sessionId");
           navigation.navigate("Home");
         } else {
           Alert.alert("Sign Up Error", response.data["message"], [
