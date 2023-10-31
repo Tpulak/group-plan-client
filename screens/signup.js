@@ -45,6 +45,7 @@ export default function Signup() {
         console.log(response.data[0]);
         if ("fields" in response.data[0]) {
           storeUserData(response.headers["set-cookie"][0], "sessionId");
+          storeUserData(response.data.pk, "userId");
           navigation.navigate("Home");
         } else {
           Alert.alert("Sign Up Error", response.data["message"], [
