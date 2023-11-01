@@ -12,6 +12,8 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import TopNav from "../components/topNav";
 import BottomNav from "../components/bottomNav";
+import { SafeAreaView } from "react-native";
+import { StatusBar } from "react-native";
 
 export default function Meal() {
   // NAVIGATION
@@ -22,32 +24,35 @@ export default function Meal() {
   // };
 
   return (
-    <View style={styles.container}>
-      {/* TOP */}
-      <TopNav />
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="default" />
+      <View style={styles.container}>
+        {/* TOP */}
+        <TopNav />
 
-      {/* MIDDLE */}
-      <View style={styles.middleContainer}>
-        {/* onPress={handleAddMeal} */}
-        <TouchableOpacity style={styles.addButton}>
-          <Text style={styles.addButtonText}>Add Meal</Text>
-        </TouchableOpacity>
+        {/* MIDDLE */}
+        <View style={styles.middleContainer}>
+          {/* onPress={handleAddMeal} */}
+          <TouchableOpacity style={styles.addButton}>
+            <Text style={styles.addButtonText}>Add Meal</Text>
+          </TouchableOpacity>
 
-        <ScrollView style={styles.mealList}>
-          {[1, 2, 3].map((meal) => (
-            <TouchableOpacity style={styles.mealContainer} key={meal}>
-              <View style={styles.mealNameContainer}>
-                <Text style={styles.mealName}>Meal {meal}</Text>
-              </View>
-              <View style={styles.mealImagePlaceholder}></View>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+          <ScrollView style={styles.mealList}>
+            {[1, 2, 3].map((meal) => (
+              <TouchableOpacity style={styles.mealContainer} key={meal}>
+                <View style={styles.mealNameContainer}>
+                  <Text style={styles.mealName}>Meal {meal}</Text>
+                </View>
+                <View style={styles.mealImagePlaceholder}></View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* BOTTOM */}
+        <BottomNav />
       </View>
-
-      {/* BOTTOM */}
-      <BottomNav />
-    </View>
+    </SafeAreaView>
   );
 }
 

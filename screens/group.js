@@ -4,193 +4,216 @@ import {
   Text,
   TextInput,
   View,
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  Pressable,
   TouchableOpacity,
-  Image,
-  Alert,
 } from "react-native";
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import BottomNav from "../components/bottomNav";
+import axios from "axios";
+import MuiIcon from "react-native-vector-icons/MaterialIcons";
+import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import SelectDropdown from "react-native-select-dropdown";
+import GroupsCollections from "../components/GroupsCollection";
 
 export default function Group() {
   // NAVIGATION
   const navigation = useNavigation();
 
-  //------------------FOR DISPLAYING PUBLIC/PRIVATE GROUPS -------------------------------------------------------------------------
+  //PICKER
+  const [selectedValue, setSelectedValue] = useState(0);
 
-  // Array that holds the groups
-  const publicGroups = [
-    "Public Group 1",
-    "Public Group 2",
-    "Public Group 3",
-    "Public Group 4",
-  ];
-  const privateGroups = ["Pescetarian", "Vegan", "Vegetarian"];
+  //Groups is an empty array, this will hold data from api & setgroups will fetch data from backend
+  const [searchedGroups, setSearchedGroups] = useState([]);
 
+  //empty string that later on holds text enterted by user input
   const [searchText, setSearchText] = useState("");
 
-  /* User uses search bar for private groups */
-  const handleTextChange = (text) => {
-    setSearchText(text.toLowerCase());
+  const [userGroups, setUserGroups] = useState([]);
+
+  const [recommendedGroups, setRecommendedGroups] = useState([]);
+
+  const handleSearchTextChange = (text) => {
+    setSearchText(text);
   };
 
-  //Initially display public groups until user uses search bar
-  const renderPublicGroups = () => {
-    return publicGroups.map((group, index) => (
-      <View key={index} style={styles.groupRow}>
-        <TouchableOpacity style={styles.icon}>
-          <Image
-            source={require("../assets/icons/groupchat.png")}
-            style={{ width: 75, height: 75 }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.groupName}>{group}</Text>
-
-        <View style={styles.Join_button}>
-          <Button
-            title="Join"
-            color="white"
-            onPress={() => Alert.alert(`${group} joined`)}
-          />
-        </View>
-      </View>
-    ));
+  const cancelSearch = () => {
+    setSearchText("");
+    // searchedGroups([]);
   };
 
-  /* Display the private groups once the user search*/
-  const renderPrivateGroups = () => {
-    const filteredGroups = privateGroups.filter((group) =>
-      group.toLocaleLowerCase().includes(searchText)
-    );
-    return filteredGroups.map((group, index) => (
-      <View key={index} style={styles.groupRow}>
-        <TouchableOpacity style={styles.icon}>
-          <Image
-            source={require("../assets/icons/groupchat.png")}
-            style={{ width: 75, height: 75 }}
-          />
-        </TouchableOpacity>
-        {/* Right side - Group Name */}
-        <Text style={styles.groupName}>{group}</Text>
-        <View style={styles.Join_button}>
-          <Button
-            title="Request"
-            color="white"
-            disabled
-            onPress={() => Alert.alert(`${group} Group Pending`)}
-          />
-        </View>
-      </View>
-    ));
-  };
   //------------------FOR DISPLAYING PUBLIC/PRIVATE GROUPS -------------------------------------------------------------------------
+  const getGroups = () => {
+    if (searchText === "") {
+      return;
+    }
+    axios
+      .get(
+        `http://${
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+        }:8000/recipes/searchGroups/${searchText}`
+      )
+      .then((response) => {
+        setSearchedGroups(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const getUserGroups = async () => {
+    const info = await AsyncStorage.getItem("sessionId");
+    axios
+      .get(
+        `http://${
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+        }:8000/recipes/getUserGroups/`,
+        {
+          withCredentials: true,
+          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+        }
+      )
+      .then((response) => {
+        setUserGroups(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const createGroup = async () => {
+    const info = await AsyncStorage.getItem("sessionId");
+    axios
+      .post(
+        `http://${
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+        }:8000/recipes/group/`,
+        { name: "demoGroup103", privacy: "PRIVATE" },
+        {
+          withCredentials: true,
+          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+        } // Assuming you want to send the 'group' data in the request
+      )
+      .then((response) => {
+        getUserGroups();
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error.response.data);
+      });
+  };
+
+  useEffect(() => {
+    getUserGroups();
+  }, []);
 
   return (
-    <View style={styles.container}>
-      {/* TOP */}
-      <View style={styles.topContainer}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="default" />
+      <View style={styles.container}>
+        {/* TOP */}
+
         <Text style={styles.title}>Group Plan</Text>
-      </View>
 
-      {/* MIDDLE */}
-      <View style={styles.middleContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search for private groups..."
-          onChangeText={handleTextChange}
-          value={searchText}
-        />
-
-        <Button title="Create Group" color="#88B361" onPress={() => {}} />
-
-        <View>
-          <Text style={styles.Recgroup}> Recommend Groups</Text>
-
-          {/* if (searchText === '') {
-                        renderPublicGroups();
-                    } else {
-                        renderPrivateGroups();
-                    }; */}
-
-          {/* if search text is empty display public groups else private on user input  */}
-          {searchText === "" ? renderPublicGroups() : renderPrivateGroups()}
+        {/* MIDDLE */}
+        <View style={styles.topContainer}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search public and private groups..."
+            onChangeText={handleSearchTextChange}
+            value={searchText}
+            autoCorrect={false}
+            returnKeyType="search"
+            onSubmitEditing={getGroups}
+          />
+          <Pressable onPress={getGroups}>
+            <MuiIcon
+              name="search"
+              size={40}
+              color="#FFBA00"
+              style={{ backgroundColor: "#fff", borderRadius: 5, padding: 5 }}
+            />
+          </Pressable>
         </View>
+        <View style={styles.middleContainer}>
+          {Platform.OS === "ios" ? (
+            <TouchableOpacity
+              style={{
+                ...styles.createButton,
+                backgroundColor: searchText ? "red" : "#88B361",
+              }}
+              onPress={searchText ? cancelSearch : createGroup}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "#fff",
+                  marginBottom: 10,
+                  marginTop: 10,
+                  fontSize: 16,
+                }}
+              >
+                {searchText ? "Cancel search" : "Create Group"}
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <Button
+              title={searchText ? "Cancel search" : "Create Group"}
+              color={searchText ? "red" : "#88B361"}
+              onPress={searchText ? cancelSearch : createGroup}
+              style={styles.createButton}
+            />
+          )}
 
-        {/* <View style={styles.groupRow}>
-                    <TouchableOpacity style={styles.icon}>
-                        <Image
-                            source={require('../assets/icons/groupchat.png')}
-                            style={{ width: 75, height: 75 }}
-                        />
-                    </TouchableOpacity>
-
-                    <Text style={styles.groupName}>Public Group 1</Text>
-
-                    <View style={styles.Join_button}>
-                        <Button
-                            title="Join"
-                            color="white"
-                            onPress={() => Alert.alert('PG1 success')}
-                        />
-                    </View>
-                </View>
-
-                <View style={styles.groupRow}>
-                    <TouchableOpacity style={styles.icon}>
-                        <Image
-                            source={require('../assets/icons/groupchat.png')}
-                            style={{ width: 75, height: 75 }}
-                        />
-                    </TouchableOpacity>
-                    <Text style={styles.groupName}>Public Group 2</Text>
-
-                    <View style={styles.Join_button}>
-                        <Button
-                            title="Join"
-                            color="white"
-                            onPress={() => Alert.alert('PG2 Success')}
-                        />
-                    </View>
-                </View>
-
-                <View style={styles.groupRow}>
-                    <TouchableOpacity style={styles.icon}>
-                        <Image
-                            source={require('../assets/icons/groupchat.png')}
-                            style={{ width: 75, height: 75 }}
-                        />
-                    </TouchableOpacity>
-                    <Text style={styles.groupName}>Public Group 3</Text>
-                    <View style={styles.Join_button}>
-                        <Button
-                            title="Join"
-                            color="white"
-                            onPress={() => Alert.alert('PG3 Sucess')}
-                        />
-                    </View>
-                </View>
-
-                <View style={styles.groupRow}>
-                    <TouchableOpacity style={styles.icon}>
-                        <Image
-                            source={require('../assets/icons/groupchat.png')}
-                            style={{ width: 75, height: 75 }}
-                        />
-                    </TouchableOpacity>
-                    <Text style={styles.groupName}>Public Group 4</Text>
-                    <View style={styles.Join_button}>
-                        <Button
-                            title="Join"
-                            color="white"
-                            onPress={() => Alert.alert('PG4 Sucess')}
-                        />
-                    </View>
-                </View> */}
+          {searchText ? (
+            <GroupsCollections
+              groups={searchedGroups}
+              showbtn={true}
+              updateUserGroups={getUserGroups}
+            />
+          ) : (
+            <View style={styles.pickerContainer}>
+              <SelectDropdown
+                data={["My Groups", "Recommened Groups"]}
+                renderDropdownIcon={() => {
+                  return (
+                    <MuiCIcon
+                      name="chevron-down"
+                      size={20}
+                      color="#FFBA00"
+                      style={{
+                        backgroundColor: "transparent",
+                        borderRadius: 5,
+                        padding: 5,
+                      }}
+                    />
+                  );
+                }}
+                buttonStyle={{ width: "100%" }}
+                onSelect={(selectedItem, index) => {
+                  setSelectedValue(index);
+                }}
+                defaultValueByIndex={0}
+              />
+              {selectedValue ? (
+                <GroupsCollections
+                  groups={recommendedGroups}
+                  showbtn={true}
+                  updateUserGroups={getUserGroups}
+                />
+              ) : (
+                <GroupsCollections
+                  groups={userGroups}
+                  showbtn={false}
+                  updateUserGroups={getUserGroups}
+                />
+              )}
+            </View>
+          )}
+        </View>
+        <BottomNav />
       </View>
-
-      {/* BOTTOM */}
-      <BottomNav />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -200,25 +223,48 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   topContainer: {
-    // backgroundColor: "green",
-    padding: 25,
-    alignItems: "center",
+    flex: 0,
+    flexDirection: "row",
+    alignContent: "center",
+    backgroundColor: "white",
+    padding: 20,
   },
   title: {
     fontSize: 30,
     color: "black",
     fontWeight: "bold",
+    textAlign: "center",
   },
   middleContainer: {
+    flex: 1,
+    alignContent: "center",
     backgroundColor: "white",
     padding: 20,
+    overflow: "hidden",
   },
   searchInput: {
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 10,
     paddingLeft: 10,
+    width: "90%",
+  },
+  createButton: {
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+
+  pickerContainer: {
+    marginTop: 1,
+    width: "100%",
+    // flex: 1,
+  },
+  Join_button: {
+    margin: 30,
+    padding: 5,
+    borderRadius: 5,
+    backgroundColor: "#88B361",
+    marginLeft: "auto",
   },
   groupRow: {
     flexDirection: "row",
@@ -229,33 +275,17 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 18,
   },
-  bottomContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    backgroundColor: "green",
-    padding: 10,
-    alignItems: "center",
-  },
-  icon: {
-    padding: 10,
-  },
-
-  Join_button: {
-    margin: 30,
-    padding: 5,
-    borderRadius: 5,
-    backgroundColor: "#88B361",
-    marginLeft: "auto",
-  },
-
-  Recgroup: {
-    fontSize: 19,
-    fontWeight: "bold",
-  },
-  Icontxt: {
-    textAlign: "center",
-  },
 });
+
+// Apply platform-specific styles
+if (Platform.OS === "ios") {
+  styles.pickerContainer = {
+    marginTop: 1,
+    backgroundColor: "white", // Adjust this value to control the space between the button and the Picker for iOS
+  };
+} else if (Platform.OS === "android") {
+  styles.pickerContainer = {
+    marginTop: 20,
+    backgroundColor: "white", // Adjust this value to control the space between the button and the Picker for Android
+  };
+}

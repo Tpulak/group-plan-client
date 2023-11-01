@@ -10,8 +10,11 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
+  SafeAreaView,
+  StatusBar,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -24,11 +27,17 @@ export default function Login() {
   const handleSignUpPress = () => {
     navigation.navigate("signup"); // 'SignUp' should be the name of your sign-up screen
   };
+  const storeUserData = async (value, key) => {
+    try {
+      await AsyncStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      // saving error
+    }
+  };
   //NAV: Login -> Homepage
   const handleLogInPress = () => {
-    //testing
     // navigation.navigate("Home");
-
+    // const user = userInfo;
     axios
       .post(
         `http://${
@@ -37,9 +46,14 @@ export default function Login() {
         (data = userInfo)
       )
       .then((response) => {
-        console.log(response.data);
+        storeUserData(response.headers["set-cookie"][0], "sessionId");
+        storeUserData(response.data.pk, "userId");
         if ("pk" in response.data) {
           navigation.navigate("Home");
+          setUserInfo({
+            username: "",
+            password: "",
+          });
         } else {
           Alert.alert("Log In Error", response.data["message"], [
             {
@@ -52,70 +66,78 @@ export default function Login() {
         }
       })
       .catch((error) => console.log(error));
-    console.log(userInfo);
   };
 
   return (
-    <View style={styles.container}>
-      <View style={{ alignItems: "flex-start" }}>
-        <Text> GROUP PLAN </Text>
-      </View>
-
-      <Image
-        source={require("../assets/icons/logoPH.png")}
-        style={{ width: 100, height: 100 }}
-      />
-
-      <View style={{ alignItems: "flex-start" }}>
-        <Text style={{ textAlign: "left" }}>Username</Text>
-        <View style={styles.input}>
-          <TextInput
-            placeholder=" "
-            onChangeText={(usernameInput) => {
-              setUserInfo((prevState) => {
-                return { ...prevState, username: usernameInput };
-              });
-            }}
-          />
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="default" />
+      <View style={styles.container}>
+        <View style={{ alignItems: "flex-start" }}>
+          <Text> GROUP PLAN </Text>
         </View>
-      </View>
 
-      <View style={{ alignItems: "flex-start" }}>
-        <Text style={{ textAlign: "left" }}>Password</Text>
-        <View style={styles.input}>
-          <TextInput
-            placeholder=" "
-            //hides password
-            secureTextEntry={true}
-            onChangeText={(passwordInput) => {
-              setUserInfo((prevState) => {
-                return { ...prevState, password: passwordInput };
-              });
-            }}
-          />
-        </View>
-      </View>
-
-      <View style={styles.Login_button}>
-        <Button
-          title="Login"
-          color="white"
-          onPress={handleLogInPress}
-          // onPress={() => Alert.alert('Button pressed')}
+        <Image
+          source={require("../assets/icons/logoPH.png")}
+          style={{ width: 100, height: 100 }}
         />
-      </View>
 
-      <Text>Forgot Password?</Text>
+        <View style={{ alignItems: "flex-start" }}>
+          <Text style={{ textAlign: "left" }}>Username</Text>
+          <View style={styles.input}>
+            <TextInput
+              placeholder=""
+              onChangeText={(usernameInput) => {
+                setUserInfo((prevState) => {
+                  return { ...prevState, username: usernameInput };
+                });
+              }}
+              value={userInfo.username}
+            />
+          </View>
+        </View>
 
-      <View>
-        <Text>
-          Don't have an account?{" "}
-          <TouchableOpacity onPress={handleSignUpPress}>
-            <Text style={{ textDecorationLine: "underline" }}>Sign Up</Text>
-          </TouchableOpacity>
-        </Text>
+        <View style={{ alignItems: "flex-start" }}>
+          <Text style={{ textAlign: "left" }}>Password</Text>
+          <View style={styles.input}>
+            <TextInput
+              placeholder=""
+              //hides password
+              secureTextEntry={true}
+              onChangeText={(passwordInput) => {
+                setUserInfo((prevState) => {
+                  return { ...prevState, password: passwordInput };
+                });
+              }}
+              value={userInfo.password}
+            />
+          </View>
+        </View>
+
+        <View>
+          {Platform.OS === "ios" ? (
+            <TouchableOpacity
+              style={styles.Login_button}
+              onPress={handleLogInPress}
+            >
+              <Text style={{ fontSize: 17, color: "white" }}>Login</Text>
+            </TouchableOpacity>
+          ) : (
+            <Button title="Login" color="#88B361" onPress={handleLogInPress} />
+          )}
+        </View>
+
+        <Text>Forgot Password?</Text>
+
+        <View>
+          <Text>
+            Don't have an account?{" "}
+            <TouchableOpacity onPress={handleSignUpPress}>
+              <Text style={{ textDecorationLine: "underline" }}>Sign Up</Text>
+            </TouchableOpacity>
+          </Text>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -136,10 +158,9 @@ const styles = StyleSheet.create({
   },
 
   Login_button: {
-    // margin: 10,
-    margin: 15,
-    padding: 4,
+    margin: 10,
+    padding: 8,
     borderRadius: 5,
-    backgroundColor: "green",
+    backgroundColor: "#88B361",
   },
 });

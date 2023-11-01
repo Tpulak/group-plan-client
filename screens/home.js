@@ -1,4 +1,10 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import HomeMealCard from "../components/HomeMealCard";
@@ -21,30 +27,34 @@ export default function Home() {
         console.log(meals);
       })
       .catch((error) => console.log(error));
+    console.log;
   }, []);
 
   return (
-    <View style={styles.container}>
-      {/* TOP */}
-      <TopNav />
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="default" />
+      <View style={styles.container}>
+        {/* TOP */}
+        <TopNav />
 
-      {/* MIDDLE */}
-      <ScrollView>
-        {meals.map((element) => {
-          return (
-            <HomeMealCard
-              name={element.strMeal}
-              id={element.idMeal}
-              key={element.idMeal}
-              image={element.strMealThumb}
-            />
-          );
-        })}
-      </ScrollView>
+        {/* MIDDLE */}
+        <ScrollView>
+          {meals.map((element) => {
+            return (
+              <HomeMealCard
+                name={element.strMeal}
+                id={element.idMeal}
+                key={element.idMeal}
+                image={element.strMealThumb}
+              />
+            );
+          })}
+        </ScrollView>
 
-      {/* BOTTOM */}
-      <BottomNav />
-    </View>
+        {/* BOTTOM */}
+        <BottomNav />
+      </View>
+    </SafeAreaView>
   );
 }
 

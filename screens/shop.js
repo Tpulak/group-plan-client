@@ -10,6 +10,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import TopNav from "../components/topNav";
 import BottomNav from "../components/bottomNav";
+import { SafeAreaView } from "react-native";
+import { StatusBar } from "react-native";
 
 export default function Shop() {
   const navigation = useNavigation();
@@ -26,36 +28,39 @@ export default function Shop() {
   };
 
   return (
-    <View style={styles.container}>
-      {/* TOP */}
-      <TopNav />
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="default" />
+      <View style={styles.container}>
+        {/* TOP */}
+        <TopNav />
 
-      {/* MIDDLE */}
-      <View style={styles.middleContainer}>
-        <TouchableOpacity style={styles.importButton}>
-          <Text style={styles.importButtonText}>Import Meal</Text>
-        </TouchableOpacity>
-        <ScrollView style={styles.checklistContainer}>
-          {ingredients.map((ingredient, index) => (
-            <View style={styles.checklistItem} key={index}>
-              <TouchableOpacity onPress={() => handleCheckboxToggle(index)}>
-                <View
-                  style={
-                    ingredient.checked
-                      ? styles.checkboxChecked
-                      : styles.checkbox
-                  }
-                ></View>
-              </TouchableOpacity>
-              <Text style={styles.ingredientName}>{ingredient.name}</Text>
-            </View>
-          ))}
-        </ScrollView>
+        {/* MIDDLE */}
+        <View style={styles.middleContainer}>
+          <TouchableOpacity style={styles.importButton}>
+            <Text style={styles.importButtonText}>Import Meal</Text>
+          </TouchableOpacity>
+          <ScrollView style={styles.checklistContainer}>
+            {ingredients.map((ingredient, index) => (
+              <View style={styles.checklistItem} key={index}>
+                <TouchableOpacity onPress={() => handleCheckboxToggle(index)}>
+                  <View
+                    style={
+                      ingredient.checked
+                        ? styles.checkboxChecked
+                        : styles.checkbox
+                    }
+                  ></View>
+                </TouchableOpacity>
+                <Text style={styles.ingredientName}>{ingredient.name}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* BOTTOM */}
+        <BottomNav />
       </View>
-
-      {/* BOTTOM */}
-      <BottomNav />
-    </View>
+    </SafeAreaView>
   );
 }
 
