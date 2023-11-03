@@ -9,11 +9,14 @@ import {
   StatusBar,
   Pressable,
   TouchableOpacity,
+  Switch,
+  Modal,
 } from "react-native";
 
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import BottomNav from "../components/bottomNav";
+import ModalView from "../components/ModalView";
 import axios from "axios";
 import MuiIcon from "react-native-vector-icons/MaterialIcons";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -22,8 +25,22 @@ import SelectDropdown from "react-native-select-dropdown";
 import GroupsCollections from "../components/GroupsCollection";
 
 export default function Group() {
+
+  const [groupType, setGroupType] = useState("public"); // State for group type, defaulting to "public"
+
   // NAVIGATION
   const navigation = useNavigation();
+
+  //CREATE GROUP
+  const [modalVisible, setModalVisible] = useState(false);
+  const [groupName, setGroupName] = useState(""); // State to hold group name
+  const [isPublic, setIsPublic] = useState(true); // State for the switch
+
+  const handleGroupCreatePress = () => {
+    console.log("handleGroupCreatePress called");
+    setModalVisible(true);
+  };
+
 
   //PICKER
   const [selectedValue, setSelectedValue] = useState(0);
@@ -83,24 +100,25 @@ export default function Group() {
   };
 
   const createGroup = async () => {
-    const info = await AsyncStorage.getItem("sessionId");
-    axios
-      .post(
-        `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-        }:8000/recipes/group/`,
-        { name: "demoGroup103", privacy: "PRIVATE" },
-        {
-          withCredentials: true,
-          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
-        } // Assuming you want to send the 'group' data in the request
-      )
-      .then((response) => {
-        getUserGroups();
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error.response.data);
-      });
+     setModalVisible(true);
+    // const info = await AsyncStorage.getItem("sessionId");
+    // axios
+    //   .post(
+    //     `http://${
+    //       Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+    //     }:8000/recipes/group/`,
+    //     // { name: "demoGroup103", privacy: "PRIVATE" },
+    //     {
+    //       withCredentials: true,
+    //       headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+    //     } // Assuming you want to send the 'group' data in the request
+    //   )
+    //   .then((response) => {
+    //     getUserGroups();
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching data: ", error.response.data);
+    //   });
   };
 
   useEffect(() => {
@@ -135,8 +153,11 @@ export default function Group() {
             />
           </Pressable>
         </View>
+
         <View style={styles.middleContainer}>
           {Platform.OS === "ios" ? (
+
+            
             <TouchableOpacity
               style={{
                 ...styles.createButton,
@@ -157,12 +178,20 @@ export default function Group() {
               </Text>
             </TouchableOpacity>
           ) : (
+
+            // <Button
+            //   title={searchText ? "Cancel search" : "Create Group"}
+            //   color={searchText ? "red" : "#88B361"}
+            //   onPress={searchText ? cancelSearch : createGroup}
+            //   style={styles.createButton}
+            // />
             <Button
-              title={searchText ? "Cancel search" : "Create Group"}
+              title="Create Group"
               color={searchText ? "red" : "#88B361"}
-              onPress={searchText ? cancelSearch : createGroup}
+              onPress={handleGroupCreatePress}
               style={styles.createButton}
             />
+
           )}
 
           {searchText ? (
@@ -212,6 +241,62 @@ export default function Group() {
           )}
         </View>
         <BottomNav />
+        
+        {/* MODAL VIEW */}
+        <ModalView modalVisible={modalVisible} close={setModalVisible} userGroups={getUserGroups}></ModalView>
+
+        {/* <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Create Group</Text>
+            <TextInput
+              style={styles.groupInput}
+              placeholder="Group Title"
+              
+            />
+            <View style={styles.groupTypeContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.groupTypeButton,
+                  groupType === "public" && styles.groupTypeButtonSelected,
+                ]}
+                onPress={() => setGroupType("public")}
+              >
+                <Text style={styles.groupTypeButtonText}>Public</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.groupTypeButton,
+                  groupType === "private" && styles.groupTypeButtonSelected,
+                ]}
+                onPress={() => setGroupType("private")}
+              >
+                <Text style={styles.groupTypeButtonText}>Private</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.modalButtons}>
+              <Button
+                title="Cancel"
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              />
+              <Button
+                title="Create"
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              />
+            </View>
+          </View>
+        </Modal> */}
+
       </View>
     </SafeAreaView>
   );
@@ -275,6 +360,92 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 18,
   },
+
+  //MODAL
+  modalView: {
+    margin: 20,
+    marginTop: 100,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 24,
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  groupInput: {
+    height: 40,
+    width: "100%",
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingLeft: 10,
+  },
+  
+  groupTypeContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  groupTypeText: {
+    fontSize: 18,
+    marginLeft: 10,
+  },
+
+  modalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    marginTop: 20,
+  },
+
+  radioButtons: {
+    flexDirection: "row",
+    marginBottom: 10,
+  },
+  radioButton: {
+    borderWidth: 1,
+    borderColor: "#888",
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  radioButtonSelected: {
+    backgroundColor: "#888",
+  },
+  radioButtonText: {
+    color: "#888",
+  },
+  
+  groupTypeContainer: {
+    flexDirection: "row",
+    marginBottom: 10,
+  },
+  groupTypeButton: {
+    borderWidth: 1,
+    borderColor: "#888",
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  groupTypeButtonSelected: {
+    backgroundColor: "#88B361",
+  },
+  groupTypeButtonText: {
+    color: "black",
+  },
+
+  
 });
 
 // Apply platform-specific styles

@@ -9,6 +9,7 @@ import Group from "./screens/group";
 import Meal from "./screens/meal";
 import Settings from "./screens/settings";
 import Shop from "./screens/shop";
+import CreateMeal from "./screens/createMeal";
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,12 @@ const Navigation = () => {
         <Stack.Screen
           name="Meal"
           component={Meal}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="CreateMeal"
+          component={CreateMeal}
           options={{ headerShown: false }}
         />
 
