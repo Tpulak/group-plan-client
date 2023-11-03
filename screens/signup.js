@@ -42,7 +42,22 @@ export default function Signup() {
         (data = userInfo)
       )
       .then((response) => {
-        if ("model" in response.data[0]) {
+        console.log(Object.keys(response));
+        console.log(response.data);
+        if (response.data[0] === undefined) {
+          Alert.alert(
+            "Sign Up Error",
+            Object.values(response.data).join("\n"),
+            [
+              {
+                text: "OK",
+                onPress: () => {
+                  // do something
+                },
+              },
+            ]
+          );
+        } else if ("model" in response.data[0]) {
           axios
             .post(
               `http://${
@@ -57,18 +72,15 @@ export default function Signup() {
                 navigation.navigate("Home");
               } else {
                 Alert.alert("Log In Error", response.data["message"], [
-            {
-              text: "OK",
-              onPress: () => {
-                // do something
-              },
-            },
-          ]);
-        }
-      })
-          // storeUserData(response.headers["set-cookie"][0], "sessionId");
-          // storeUserData(response.data.pk, "userId");
-          // navigation.navigate("Home");
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      // do something
+                    },
+                  },
+                ]);
+              }
+            });
         } else {
           Alert.alert("Sign Up Error", response.data["message"], [
             {

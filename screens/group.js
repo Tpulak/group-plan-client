@@ -25,7 +25,6 @@ import SelectDropdown from "react-native-select-dropdown";
 import GroupsCollections from "../components/GroupsCollection";
 
 export default function Group() {
-
   const [groupType, setGroupType] = useState("public"); // State for group type, defaulting to "public"
 
   // NAVIGATION
@@ -40,7 +39,6 @@ export default function Group() {
     console.log("handleGroupCreatePress called");
     setModalVisible(true);
   };
-
 
   //PICKER
   const [selectedValue, setSelectedValue] = useState(0);
@@ -100,7 +98,7 @@ export default function Group() {
   };
 
   const createGroup = async () => {
-     setModalVisible(true);
+    setModalVisible(true);
     // const info = await AsyncStorage.getItem("sessionId");
     // axios
     //   .post(
@@ -156,8 +154,6 @@ export default function Group() {
 
         <View style={styles.middleContainer}>
           {Platform.OS === "ios" ? (
-
-            
             <TouchableOpacity
               style={{
                 ...styles.createButton,
@@ -178,20 +174,12 @@ export default function Group() {
               </Text>
             </TouchableOpacity>
           ) : (
-
-            // <Button
-            //   title={searchText ? "Cancel search" : "Create Group"}
-            //   color={searchText ? "red" : "#88B361"}
-            //   onPress={searchText ? cancelSearch : createGroup}
-            //   style={styles.createButton}
-            // />
             <Button
-              title="Create Group"
+              title={searchText ? "Cancel search" : "Create Group"}
               color={searchText ? "red" : "#88B361"}
-              onPress={handleGroupCreatePress}
+              onPress={searchText ? cancelSearch : createGroup}
               style={styles.createButton}
             />
-
           )}
 
           {searchText ? (
@@ -241,9 +229,13 @@ export default function Group() {
           )}
         </View>
         <BottomNav />
-        
+
         {/* MODAL VIEW */}
-        <ModalView modalVisible={modalVisible} close={setModalVisible} userGroups={getUserGroups}></ModalView>
+        <ModalView
+          modalVisible={modalVisible}
+          close={setModalVisible}
+          userGroups={getUserGroups}
+        ></ModalView>
 
         {/* <Modal
           animationType="slide"
@@ -296,7 +288,6 @@ export default function Group() {
             </View>
           </View>
         </Modal> */}
-
       </View>
     </SafeAreaView>
   );
@@ -391,7 +382,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingLeft: 10,
   },
-  
+
   groupTypeContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -426,7 +417,7 @@ const styles = StyleSheet.create({
   radioButtonText: {
     color: "#888",
   },
-  
+
   groupTypeContainer: {
     flexDirection: "row",
     marginBottom: 10,
@@ -444,8 +435,6 @@ const styles = StyleSheet.create({
   groupTypeButtonText: {
     color: "black",
   },
-
-  
 });
 
 // Apply platform-specific styles
