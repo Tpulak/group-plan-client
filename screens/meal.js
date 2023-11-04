@@ -19,10 +19,11 @@ export default function Meal() {
   // NAVIGATION
   const navigation = useNavigation();
 
-  // const handleAddMeal = () => {
-  //     // Add logic for adding a meal here
-  // };
+  const handleCreateMeal = () => {
+      navigation.navigate("CreateMeal")
+  };
 
+  
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="default" />
@@ -33,7 +34,7 @@ export default function Meal() {
         {/* MIDDLE */}
         <View style={styles.middleContainer}>
           {/* onPress={handleAddMeal} */}
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity style={styles.addButton} onPress={handleCreateMeal}>
             <Text style={styles.addButtonText}>Add Meal</Text>
           </TouchableOpacity>
 

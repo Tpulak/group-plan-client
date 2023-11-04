@@ -36,8 +36,8 @@ export default function Login() {
   };
   //NAV: Login -> Homepage
   const handleLogInPress = () => {
-    // navigation.navigate("Home");
-    // const user = userInfo;
+    navigation.navigate("Home");
+    const user = userInfo;
     axios
       .post(
         `http://${
