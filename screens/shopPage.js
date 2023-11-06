@@ -13,7 +13,7 @@ import BottomNav from "../components/bottomNav";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
 
-export default function Shop() {
+export default function ShopPage() {
   const navigation = useNavigation();
   const [ingredients, setIngredients] = useState([
     { name: "Example Ingredient 1", checked: false },

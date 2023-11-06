@@ -12,7 +12,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Signup() {
+export default function SignupPage() {
   //NAV
   const navigation = useNavigation();
   const [userInfo, setUserInfo] = React.useState({

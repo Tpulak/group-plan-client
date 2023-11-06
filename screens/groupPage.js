@@ -16,15 +16,15 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import BottomNav from "../components/bottomNav";
-import ModalView from "../components/ModalView";
+import CreateGroupModal from "../components/createGroupModal";
 import axios from "axios";
 import MuiIcon from "react-native-vector-icons/MaterialIcons";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SelectDropdown from "react-native-select-dropdown";
-import GroupsCollections from "../components/GroupsCollection";
+import GroupsCollections from "../components/groupsCollection";
 
-export default function Group() {
+export default function GroupPage() {
   const [groupType, setGroupType] = useState("public"); // State for group type, defaulting to "public"
 
   // NAVIGATION
@@ -99,24 +99,6 @@ export default function Group() {
 
   const createGroup = async () => {
     setModalVisible(true);
-    // const info = await AsyncStorage.getItem("sessionId");
-    // axios
-    //   .post(
-    //     `http://${
-    //       Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-    //     }:8000/recipes/group/`,
-    //     // { name: "demoGroup103", privacy: "PRIVATE" },
-    //     {
-    //       withCredentials: true,
-    //       headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
-    //     } // Assuming you want to send the 'group' data in the request
-    //   )
-    //   .then((response) => {
-    //     getUserGroups();
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching data: ", error.response.data);
-    //   });
   };
 
   useEffect(() => {
@@ -231,63 +213,11 @@ export default function Group() {
         <BottomNav />
 
         {/* MODAL VIEW */}
-        <ModalView
+        <CreateGroupModal
           modalVisible={modalVisible}
           close={setModalVisible}
           userGroups={getUserGroups}
-        ></ModalView>
-
-        {/* <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Create Group</Text>
-            <TextInput
-              style={styles.groupInput}
-              placeholder="Group Title"
-              
-            />
-            <View style={styles.groupTypeContainer}>
-              <TouchableOpacity
-                style={[
-                  styles.groupTypeButton,
-                  groupType === "public" && styles.groupTypeButtonSelected,
-                ]}
-                onPress={() => setGroupType("public")}
-              >
-                <Text style={styles.groupTypeButtonText}>Public</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.groupTypeButton,
-                  groupType === "private" && styles.groupTypeButtonSelected,
-                ]}
-                onPress={() => setGroupType("private")}
-              >
-                <Text style={styles.groupTypeButtonText}>Private</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.modalButtons}>
-              <Button
-                title="Cancel"
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-              />
-              <Button
-                title="Create"
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-              />
-            </View>
-          </View>
-        </Modal> */}
+        ></CreateGroupModal>
       </View>
     </SafeAreaView>
   );

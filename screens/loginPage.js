@@ -16,7 +16,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Login() {
+export default function LoginPage() {
   const navigation = useNavigation();
   const [userInfo, setUserInfo] = React.useState({
     username: "",

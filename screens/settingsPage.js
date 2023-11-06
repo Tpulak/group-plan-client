@@ -13,13 +13,15 @@ import TopNav from "../components/topNav";
 import BottomNav from "../components/bottomNav";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Meal() {
+export default function SettingsPage() {
   // NAVIGATION
   const navigation = useNavigation();
 
   // Logout Button -> Login Page
-  const handleLogoutPress = () => {
+  const handleLogoutPress = async () => {
+    await AsyncStorage.setItem("sessionId", JSON.stringify(""));
     navigation.navigate("Login");
   };
 

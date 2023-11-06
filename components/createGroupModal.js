@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function ModalView(props) {
+export default function CreateGroupModal(props) {
   const [groupType, setGroupType] = useState("PUBLIC");
   const [groupName, setGroupName] = useState("");
 
