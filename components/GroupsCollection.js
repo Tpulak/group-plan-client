@@ -20,8 +20,7 @@ export default function GroupsCollections(props) {
     const info = await AsyncStorage.getItem("sessionId");
     axios
       .post(
-        `http://${
-          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
+        `http://${Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/group/add`,
         {
           user_id: userId,
@@ -82,8 +81,8 @@ export default function GroupsCollections(props) {
                     </Text>
                   </TouchableOpacity>
                 ) : (
-                  <></>
-                )
+                    <></>
+                  )
               ) : props.showbtn ? (
                 <TouchableOpacity
                   onPress={handleJoin}
@@ -95,8 +94,8 @@ export default function GroupsCollections(props) {
                   </Text>
                 </TouchableOpacity>
               ) : (
-                <></>
-              )
+                    <></>
+                  )
             ) : group.fields.privacy === "PUBLIC" ? (
               props.showbtn ? (
                 <Button
@@ -107,8 +106,8 @@ export default function GroupsCollections(props) {
                   testID={`${group.pk}`}
                 />
               ) : (
-                <></>
-              )
+                  <></>
+                )
             ) : props.showbtn ? (
               <Button
                 title="Request"
@@ -118,8 +117,8 @@ export default function GroupsCollections(props) {
                 testID={`${group.pk}`}
               />
             ) : (
-              <></>
-            )}
+                    <></>
+                  )}
           </View>
         );
       })}
