@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function ModalView(props) {
+export default function CreateGroupModal(props) {
   const [groupType, setGroupType] = useState("PUBLIC");
   const [groupName, setGroupName] = useState("");
 
@@ -21,7 +21,7 @@ export default function ModalView(props) {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/group/`,
         { name: groupName, privacy: groupType },
         {
