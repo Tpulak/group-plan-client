@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Button,
@@ -12,7 +11,7 @@ import {
   Alert,
 } from "react-native";
 
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 
 import { useNavigation } from "@react-navigation/native";
 import TopNav from "../components/topNav";
@@ -20,7 +19,7 @@ import BottomNav from "../components/bottomNav";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
 
-export default function CreateMeal() {
+export default function CreateMealPage() {
   // NAVIGATION
   const navigation = useNavigation();
   const [mealName, setMealName] = useState("");
@@ -46,12 +45,12 @@ export default function CreateMeal() {
             text: "Cancel",
             style: "cancel",
           },
-          { 
-            text: "Yes", 
+          {
+            text: "Yes",
             onPress: () => {
               console.log("Meal created");
-              navigation.navigate('Meal'); // Navigate to NextScreen
-            }
+              navigation.navigate("Meal"); // Navigate to NextScreen
+            },
           },
         ],
         { cancelable: false }
@@ -62,23 +61,23 @@ export default function CreateMeal() {
   };
 
   const uploadImage = async () => {
-    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-  
+    let permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");
       return;
     }
-  
+
     let pickerResult = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
     });
-  
+
     if (!pickerResult.cancelled) {
       setMealImage(pickerResult.uri);
     }
   };
-  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -88,10 +87,9 @@ export default function CreateMeal() {
         <TopNav />
 
         {/* MIDDLE */}
-        
-          <Text style={styles.title}>CREATE A MEAL</Text>
-        <ScrollView contentContainerStyle={styles.middleContainer}>
 
+        <Text style={styles.title}>CREATE A MEAL</Text>
+        <ScrollView contentContainerStyle={styles.middleContainer}>
           <TextInput
             style={styles.input}
             placeholder="Title of meal"

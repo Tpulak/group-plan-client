@@ -10,8 +10,10 @@ import {
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function GroupsCollections(props) {
+  const navigation = useNavigation();
   const handleJoin = async (x) => {
     const groupId = await x._dispatchInstances.memoizedProps.testID;
     const userId = await AsyncStorage.getItem("userId");
@@ -19,7 +21,7 @@ export default function GroupsCollections(props) {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
         }:8000/recipes/group/add`,
         {
           user_id: userId,
@@ -58,7 +60,12 @@ export default function GroupsCollections(props) {
             key={group.fields.name}
           >
             {/* displays name of current group*/}
-            <Text style={{ fontSize: 18, textAlign: "center" }}>
+            <Text
+              style={{ fontSize: 18, textAlign: "center" }}
+              onPress={() => {
+                navigation.navigate("DetailedGroupPage", { group: group });
+              }}
+            >
               {group.fields.name.charAt(0).toUpperCase() +
                 group.fields.name.slice(1)}
             </Text>

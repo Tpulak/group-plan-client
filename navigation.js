@@ -2,15 +2,17 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Login from "./screens/login";
-import SignUp from "./screens/signup";
-import Home from "./screens/home";
-import Group from "./screens/group";
-import Meal from "./screens/meal";
-import Settings from "./screens/settings";
-import Shop from "./screens/shop";
-import CreateMeal from "./screens/createMeal";
-
+import LoginPage from "./screens/loginPage";
+import SignUpPage from "./screens/signupPage";
+import HomePage from "./screens/homePage";
+import GroupPage from "./screens/groupPage";
+import MealPage from "./screens/mealPage";
+import SettingsPage from "./screens/settingsPage";
+import ShopPage from "./screens/shopPage";
+import CreateMealPage from "./screens/createMealPage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import DetailedGroupPage from "./screens/detailedGroupPage";
+import { useNavigation } from "@react-navigation/native";
 const Stack = createStackNavigator();
 
 const Navigation = () => {
@@ -19,45 +21,46 @@ const Navigation = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
-          component={Login}
+          component={
+            AsyncStorage.getItem("sessionId") === "" ? HomePage : LoginPage
+          }
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name="signup"
-          component={SignUp}
+          component={SignUpPage}
           options={{ headerShown: true }}
         />
         <Stack.Screen
           name="Home"
-          component={Home}
+          component={HomePage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Group"
-          component={Group}
+          component={GroupPage}
           options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="Meal"
-          component={Meal}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
-          name="CreateMeal"
-          component={CreateMeal}
+          component={MealPage}
           options={{ headerShown: false }}
         />
 
         <Stack.Screen
           name="Settings"
-          component={Settings}
+          component={SettingsPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Shop"
-          component={Shop}
+          component={ShopPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="DetailedGroupPage"
+          component={DetailedGroupPage}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

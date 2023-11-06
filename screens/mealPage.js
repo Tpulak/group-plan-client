@@ -8,22 +8,48 @@ import {
   View,
   Image,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import TopNav from "../components/topNav";
 import BottomNav from "../components/bottomNav";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import CreateMealModal from "../components/createMealModal";
 
-export default function Meal() {
+export default function MealPage() {
   // NAVIGATION
   const navigation = useNavigation();
+  const [recipes, setRecipes] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleCreateMeal = () => {
-      navigation.navigate("CreateMeal")
+    setModalVisible(true);
   };
 
-  
+  const getUserRecipes = async () => {
+    const info = await AsyncStorage.getItem("sessionId");
+    axios
+      .get(
+        `http://${
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
+        }:8000/recipes/getUserRecipes/`,
+        {
+          withCredentials: true,
+          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+        }
+      )
+      .then((response) => {
+        setRecipes(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getUserRecipes();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="default" />
@@ -35,14 +61,14 @@ export default function Meal() {
         <View style={styles.middleContainer}>
           {/* onPress={handleAddMeal} */}
           <TouchableOpacity style={styles.addButton} onPress={handleCreateMeal}>
-            <Text style={styles.addButtonText}>Add Meal</Text>
+            <Text style={styles.addButtonText}>Add Recipe</Text>
           </TouchableOpacity>
 
           <ScrollView style={styles.mealList}>
-            {[1, 2, 3].map((meal) => (
-              <TouchableOpacity style={styles.mealContainer} key={meal}>
+            {recipes.map((recipe) => (
+              <TouchableOpacity style={styles.mealContainer} key={recipe.pk}>
                 <View style={styles.mealNameContainer}>
-                  <Text style={styles.mealName}>Meal {meal}</Text>
+                  <Text style={styles.mealName}>{recipe.fields.name}</Text>
                 </View>
                 <View style={styles.mealImagePlaceholder}></View>
               </TouchableOpacity>
@@ -52,6 +78,11 @@ export default function Meal() {
 
         {/* BOTTOM */}
         <BottomNav />
+        <CreateMealModal
+          show={modalVisible}
+          close={setModalVisible}
+          updateRecipes={getUserRecipes}
+        />
       </View>
     </SafeAreaView>
   );

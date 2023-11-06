@@ -7,11 +7,11 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import HomeMealCard from "../components/HomeMealCard";
+import HomeMealCard from "../components/homeMealCard";
 import TopNav from "../components/topNav";
 import BottomNav from "../components/bottomNav";
 
-export default function Home() {
+export default function HomePage() {
   const [meals, setMeals] = useState([]);
 
   useEffect(() => {
@@ -22,9 +22,7 @@ export default function Home() {
       .then((response) => {
         const meals = response.data.meals;
 
-        console.log(meals[0].strMeal);
         setMeals(meals);
-        console.log(meals);
       })
       .catch((error) => console.log(error));
     console.log;

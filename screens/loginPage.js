@@ -16,7 +16,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Login() {
+export default function LoginPage() {
   const navigation = useNavigation();
   const [userInfo, setUserInfo] = React.useState({
     username: "",
@@ -41,7 +41,7 @@ export default function Login() {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
         }:8000/users/login/`,
         (data = userInfo)
       )

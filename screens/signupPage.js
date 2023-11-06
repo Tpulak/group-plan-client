@@ -12,7 +12,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Signup() {
+export default function SignupPage() {
   //NAV
   const navigation = useNavigation();
   const [userInfo, setUserInfo] = React.useState({
@@ -37,7 +37,7 @@ export default function Signup() {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
         }:8000/users/register/`,
         (data = userInfo)
       )
@@ -61,7 +61,7 @@ export default function Signup() {
           axios
             .post(
               `http://${
-                Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+                Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
               }:8000/users/login/`,
               { username: userInfo.username, password: userInfo.password1 }
             )
