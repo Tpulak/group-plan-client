@@ -44,6 +44,7 @@ export default function HomePage() {
                 id={element.idMeal}
                 key={element.idMeal}
                 image={element.strMealThumb}
+                meal={element}
               />
             );
           })}
