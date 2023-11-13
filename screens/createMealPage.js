@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import {
-  Button,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,12 +11,12 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
-import TopNav from "../components/topNav";
 import BottomNav from "../components/bottomNav";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
-import MuiIcon from "react-native-vector-icons/MaterialIcons";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const CreateMealPage = () => {
   const navigation = useNavigation();
@@ -30,24 +29,46 @@ const CreateMealPage = () => {
   const addIngredient = () => setIngredients([...ingredients, ""]);
   const addStep = () => setSteps([...steps, ""]);
 
-  const handleDone = () => {
+  const handleCreate = async () => {
     if (mealName && ingredients.length > 0 && steps.length > 0) {
-      const confirmationMessage = "Are you done creating the meal?";
-      Alert.alert(
-        "Confirmation",
-        confirmationMessage,
-        [
-          { text: "Cancel", style: "cancel" },
-          { text: "Yes", onPress: () => onDonePressed() },
-        ],
-        { cancelable: false }
-      );
+      const info = await AsyncStorage.getItem("sessionId");
+      const mealIngredients = "[" + ingredients.toString() + "]";
+      const mealInstructions = "[" + steps.toString() + "]";
+
+      axios
+        .post(
+          `http://${
+            Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          }:8000/recipes/createRecipe/`,
+          {
+            recipe_name: mealName,
+            recipe_ingredients: mealIngredients,
+            recipe_instructions: mealInstructions,
+          },
+          {
+            withCredentials: true,
+            headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+          } // Assuming you want to send the 'group' data in the request
+        )
+        .then((response) => {
+          navigation.navigate("Meals");
+        })
+        .catch((error) => {
+          Alert.alert("Recipe Creation error", error.response.data.message, [
+            {
+              text: "OK",
+              onPress: () => {
+                // do something
+              },
+            },
+          ]);
+        });
     } else {
       Alert.alert("Error", "Please fill in all fields");
     }
   };
 
-  const onDonePressed = () => {
+  const onCreatePressed = () => {
     console.log("Meal created");
     navigation.navigate("Meal");
   };
@@ -76,9 +97,21 @@ const CreateMealPage = () => {
     setIngredients(updatedIngredients);
   };
 
+  const removeIngredient = (index) => {
+    const updatedIngredients = [...ingredients];
+    updatedIngredients.splice(index, 1);
+    setIngredients(updatedIngredients);
+  };
+
   const onStepChange = (text, index) => {
     const updatedSteps = [...steps];
     updatedSteps[index] = text;
+    setSteps(updatedSteps);
+  };
+
+  const removeStep = (index) => {
+    const updatedSteps = [...steps];
+    updatedSteps.splice(index, 1);
     setSteps(updatedSteps);
   };
 
@@ -124,7 +157,7 @@ const CreateMealPage = () => {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Ingredients</Text>
             {ingredients.map((ingredient, index) => (
-              <View style={styles.inputContainer}>
+              <View style={styles.inputContainer} key={index}>
                 <TextInput
                   key={index}
                   style={styles.input}
@@ -140,7 +173,9 @@ const CreateMealPage = () => {
                     backgroundColor: "#88B361",
                     flex: 1,
                   }}
-                  onPress={() => {}}
+                  onPress={() => {
+                    removeIngredient(index);
+                  }}
                 >
                   <MuiCIcon name="trash-can-outline" size={30} color="#fff" />
                 </TouchableOpacity>
@@ -157,7 +192,7 @@ const CreateMealPage = () => {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Steps</Text>
             {steps.map((step, index) => (
-              <View style={styles.inputContainer}>
+              <View style={styles.inputContainer} key={index}>
                 <TextInput
                   key={index}
                   style={[styles.input, styles.multiLineInput]}
@@ -174,7 +209,9 @@ const CreateMealPage = () => {
                     backgroundColor: "#88B361",
                     flex: 1,
                   }}
-                  onPress={() => {}}
+                  onPress={() => {
+                    removeStep(index);
+                  }}
                 >
                   <MuiCIcon name="trash-can-outline" size={30} color="#fff" />
                 </TouchableOpacity>
@@ -196,7 +233,7 @@ const CreateMealPage = () => {
               alignItems: "center",
               borderRadius: 10,
             }}
-            onPress={handleDone}
+            onPress={handleCreate}
           >
             <Text style={{ color: "white", fontSize: 18 }}>Save</Text>
           </TouchableOpacity>

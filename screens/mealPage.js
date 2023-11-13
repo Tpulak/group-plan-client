@@ -9,6 +9,7 @@ import {
   Image,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import TopNav from "../components/topNav";
 import BottomNav from "../components/bottomNav";
@@ -17,10 +18,12 @@ import { StatusBar } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import CreateMealModal from "../components/createMealModal";
+import MealDetailsModal from "../components/mealDetailsModal";
 
-export default function MealPage() {
+export default function MealPage(props) {
   // NAVIGATION
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [recipes, setRecipes] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -33,7 +36,7 @@ export default function MealPage() {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/getUserRecipes/`,
         {
           withCredentials: true,
@@ -47,8 +50,10 @@ export default function MealPage() {
   };
 
   useEffect(() => {
-    getUserRecipes();
-  }, []);
+    if (isFocused) {
+      getUserRecipes();
+    }
+  }, [props, isFocused]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -78,11 +83,7 @@ export default function MealPage() {
 
         {/* BOTTOM */}
         <BottomNav />
-        <CreateMealModal
-          show={modalVisible}
-          close={setModalVisible}
-          updateRecipes={getUserRecipes}
-        />
+        <MealDetailsModal show={modalVisible} close={setModalVisible} />
       </View>
     </SafeAreaView>
   );

@@ -84,7 +84,7 @@ export default function GroupPage() {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/getUserGroups/`,
         {
           withCredentials: true,

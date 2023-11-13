@@ -6,28 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function UserGroupCard(props) {
   // NAVIGATION
   const navigation = useNavigation();
-  const handleJoin = async (x) => {
-    const groupId = await x._dispatchInstances.memoizedProps.testID;
-    const userId = await AsyncStorage.getItem("userId");
-    const info = await AsyncStorage.getItem("sessionId");
-    axios
-      .post(
-        `http://${
-          Platform.OS === "ios" ? "192.168.1.51" : "10.0.2.2"
-        }:8000/recipes/group/add`,
-        {
-          user_id: userId,
-          group_id: groupId,
-        },
-        {
-          withCredentials: true,
-          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
-        } // Assuming you want to send the 'group' data in the request
-      )
-      .then(() => {
-        props.updateUserGroups();
-      });
-  };
+
   return (
     <TouchableOpacity
       style={styles.mealContainer}
