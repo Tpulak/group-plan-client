@@ -14,7 +14,7 @@ export default function BottomNav() {
 
   // Meal Button -> Meal Page
   const handleMealPress = () => {
-    navigation.navigate("Meal");
+    navigation.navigate("Meals");
   };
 
   // Shop Button -> Shop Page

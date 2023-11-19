@@ -87,13 +87,46 @@ export default function CreateGroupModal(props) {
           </TouchableOpacity>
         </View>
         <View style={styles.modalButtons}>
-          <Button
-            title="Cancel"
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#88B361",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
             onPress={() => {
               props.close(!props.modalVisible);
             }}
-          />
-          <Button title="Create" onPress={createGroup} />
+          >
+            <Text
+              style={{
+                color: "white",
+                textAlign: "center",
+                fontSize: 16,
+                padding: 6,
+              }}
+            >
+              Cancel
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#88B361",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onPress={createGroup}
+          >
+            <Text
+              style={{
+                color: "white",
+                textAlign: "center",
+                fontSize: 16,
+                padding: 6,
+              }}
+            >
+              Create
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>

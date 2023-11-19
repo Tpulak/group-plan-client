@@ -8,10 +8,11 @@ export default function HomeMealCard(props) {
       <Card.Title>{props.name}</Card.Title>
       <Card.Divider />
       <Card.Image source={{ uri: props.image }} />
-      <Text style={{ marginBottom: 10 }}>
+      <Card.Divider />
+      {/* <Text style={{ marginBottom: 10 }}>
         The idea with React Native Elements is more about component structure
         than actual design.
-      </Text>
+      </Text> */}
       {Platform.OS === "ios" ? (
         <TouchableOpacity
           style={{
@@ -33,7 +34,7 @@ export default function HomeMealCard(props) {
             marginRight: 0,
             marginBottom: 0,
           }}
-          title="VIEW NOW"
+          title="VIEW MEAL"
           color="#88B361"
         />
       )}

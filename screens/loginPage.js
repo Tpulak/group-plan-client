@@ -72,9 +72,9 @@ export default function LoginPage() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="default" />
       <View style={styles.container}>
-        <View style={{ alignItems: "flex-start" }}>
+        {/* <View style={{ alignItems: "flex-start" }}>
           <Text> GROUP PLAN </Text>
-        </View>
+        </View> */}
 
         <Image
           source={require("../assets/icons/logoPH.png")}

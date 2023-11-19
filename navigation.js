@@ -43,7 +43,7 @@ const Navigation = () => {
         />
 
         <Stack.Screen
-          name="Meal"
+          name="Meals"
           component={MealPage}
           options={{ headerShown: false }}
         />
@@ -63,6 +63,7 @@ const Navigation = () => {
           component={DetailedGroupPage}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="Create Meal Page" component={CreateMealPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
