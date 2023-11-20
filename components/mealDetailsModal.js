@@ -1,22 +1,6 @@
-import React, { useState } from "react";
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Alert,
-  Modal,
-  Platform,
-  TouchableOpacity,
-} from "react-native";
-
-import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
 
 export default function MealDetailsModal(props) {
-  // NAVIGATION
-  const navigation = useNavigation();
-
   return (
     <Modal
       animationType="slide"
@@ -26,7 +10,21 @@ export default function MealDetailsModal(props) {
         props.close(false);
       }}
     >
-      <View style={styles.modalView}></View>
+      <View style={styles.modalView}>
+        <TouchableOpacity
+          onPress={() => {
+            props.close(false);
+          }}
+        >
+          {/**
+           * //TODO: display meal name, ingredients and instructions
+           * //TODO: Add button that will later be used the add ingredients to the shopping List.Use a TouchableOpacity for the button to avoid having to check for the Platform
+           * <Text>{props.fields.name}</Text>
+           */}
+          <Text style={{ fontSize: 30 }}>X</Text>
+          <Text>{props.meal?.fields.name}</Text>
+        </TouchableOpacity>
+      </View>
     </Modal>
   );
 }
