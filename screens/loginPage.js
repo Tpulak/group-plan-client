@@ -37,35 +37,35 @@ export default function LoginPage() {
   //NAV: Login -> Homepage
   const handleLogInPress = () => {
     navigation.navigate("Home");
-    const user = userInfo;
-    axios
-      .post(
-        `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-        }:8000/users/login/`,
-        (data = userInfo)
-      )
-      .then((response) => {
-        storeUserData(response.headers["set-cookie"][0], "sessionId");
-        storeUserData(response.data.pk, "userId");
-        if ("pk" in response.data) {
-          navigation.navigate("Home");
-          setUserInfo({
-            username: "",
-            password: "",
-          });
-        } else {
-          Alert.alert("Log In Error", response.data["message"], [
-            {
-              text: "OK",
-              onPress: () => {
-                // do something
-              },
-            },
-          ]);
-        }
-      })
-      .catch((error) => console.log(error));
+    // const user = userInfo;
+    // axios
+    //   .post(
+    //     `http://${
+    //       Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+    //     }:8000/users/login/`,
+    //     (data = userInfo)
+    //   )
+    //   .then((response) => {
+    //     storeUserData(response.headers["set-cookie"][0], "sessionId");
+    //     storeUserData(response.data.pk, "userId");
+    //     if ("pk" in response.data) {
+    //       navigation.navigate("Home");
+    //       setUserInfo({
+    //         username: "",
+    //         password: "",
+    //       });
+    //     } else {
+    //       Alert.alert("Log In Error", response.data["message"], [
+    //         {
+    //           text: "OK",
+    //           onPress: () => {
+    //             // do something
+    //           },
+    //         },
+    //       ]);
+    //     }
+    //   })
+    //   .catch((error) => console.log(error));
   };
 
   return (
