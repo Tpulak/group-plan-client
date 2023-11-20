@@ -17,8 +17,8 @@ import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import CreateMealModal from "../components/createMealModal";
 import MealDetailsModal from "../components/mealDetailsModal";
+import RecipeCard from "../components/recipeCard";
 
 export default function MealPage(props) {
   // NAVIGATION
@@ -26,6 +26,7 @@ export default function MealPage(props) {
   const isFocused = useIsFocused();
   const [recipes, setRecipes] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [focusedMeal, setFocusedMeal] = useState(0);
 
   const handleCreateMeal = () => {
     navigation.navigate("Create Meal Page");
@@ -49,6 +50,13 @@ export default function MealPage(props) {
       .catch((error) => console.log(error));
   };
 
+  const openMealModal = (index) => {
+    //prints the meal that should be shown in the modal
+    console.log(recipes[index]);
+    setFocusedMeal(index);
+    setModalVisible(true);
+  };
+
   useEffect(() => {
     if (isFocused) {
       getUserRecipes();
@@ -70,8 +78,14 @@ export default function MealPage(props) {
           </TouchableOpacity>
 
           <ScrollView style={styles.mealList}>
-            {recipes.map((recipe) => (
-              <TouchableOpacity style={styles.mealContainer} key={recipe.pk}>
+            {recipes.map((recipe, index) => (
+              <TouchableOpacity
+                style={styles.mealContainer}
+                key={recipe.pk}
+                onPress={() => {
+                  openMealModal(index);
+                }}
+              >
                 <View style={styles.mealNameContainer}>
                   <Text style={styles.mealName}>{recipe.fields.name}</Text>
                 </View>
@@ -83,7 +97,11 @@ export default function MealPage(props) {
 
         {/* BOTTOM */}
         <BottomNav />
-        <MealDetailsModal show={modalVisible} close={setModalVisible} />
+        <MealDetailsModal
+          show={modalVisible}
+          close={setModalVisible}
+          meal={recipes[focusedMeal]}
+        />
       </View>
     </SafeAreaView>
   );

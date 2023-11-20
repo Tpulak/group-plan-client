@@ -1,28 +1,16 @@
-import {
-  Button,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  Image,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect } from "react";
 
 export default function RecipeCard(props) {
-  // NAVIGATION
-
   return (
     <TouchableOpacity
       style={styles.mealContainer}
-      // key={props.recipe?.pk}
       onPress={() => {
         console.log("open meal modal");
       }}
     >
       <View style={styles.mealNameContainer}>
-        <Text style={styles.mealName}>{props.recipe.name}</Text>
+        <Text style={styles.mealName}>{props.recipe.fields.name}</Text>
       </View>
       <View style={styles.mealImagePlaceholder}></View>
     </TouchableOpacity>
