@@ -2,6 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect } from "react";
 
 export default function RecipeCard(props) {
+  useEffect(() => {
+    console.log(props.recipe);
+  });
   return (
     <TouchableOpacity
       style={styles.mealContainer}
@@ -10,7 +13,7 @@ export default function RecipeCard(props) {
       }}
     >
       <View style={styles.mealNameContainer}>
-        <Text style={styles.mealName}>{props.recipe.fields.name}</Text>
+        <Text style={styles.mealName}>{props.recipe.fields?.name}</Text>
       </View>
       <View style={styles.mealImagePlaceholder}></View>
     </TouchableOpacity>

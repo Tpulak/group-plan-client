@@ -37,7 +37,7 @@ export default function SignupPage() {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.75" : "10.0.2.2"
         }:8000/users/register/`,
         (data = userInfo)
       )
@@ -61,7 +61,7 @@ export default function SignupPage() {
           axios
             .post(
               `http://${
-                Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+                Platform.OS === "ios" ? "192.168.1.75" : "10.0.2.2"
               }:8000/users/login/`,
               { username: userInfo.username, password: userInfo.password1 }
             )

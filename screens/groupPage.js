@@ -16,7 +16,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import BottomNav from "../components/bottomNav";
-import CreateGroupModal from "../components/createGroupModal";
+import CreateGroupModal from "../components/modals/createGroupModal";
 import axios from "axios";
 import MuiIcon from "react-native-vector-icons/MaterialIcons";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -25,15 +25,11 @@ import SelectDropdown from "react-native-select-dropdown";
 import GroupsCollections from "../components/groupsCollection";
 
 export default function GroupPage() {
-  const [groupType, setGroupType] = useState("public"); // State for group type, defaulting to "public"
-
   // NAVIGATION
   const navigation = useNavigation();
 
   //CREATE GROUP
   const [modalVisible, setModalVisible] = useState(false);
-  const [groupName, setGroupName] = useState(""); // State to hold group name
-  const [isPublic, setIsPublic] = useState(true); // State for the switch
 
   const handleGroupCreatePress = () => {
     console.log("handleGroupCreatePress called");
@@ -84,7 +80,7 @@ export default function GroupPage() {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.75" : "10.0.2.2"
         }:8000/recipes/getUserGroups/`,
         {
           withCredentials: true,

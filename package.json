@@ -22,9 +22,12 @@
     "expo-app-loading": "^1.0.3",
     "expo-constants": "~14.4.2",
     "expo-font": "~11.4.0",
+    "expo-image-picker": "~14.3.2",
     "expo-linking": "~5.0.2",
     "expo-router": "^2.0.10",
     "expo-status-bar": "~1.6.0",
+    "i": "^0.3.7",
+    "n": "^9.2.0",
     "react": "18.2.0",
     "react-native": "0.72.5",
     "react-native-dotenv": "^3.4.9",
@@ -39,7 +42,7 @@
     "react-native-select-dropdown": "^3.4.0",
     "react-native-svg": "^13.14.0",
     "react-native-vector-icons": "^10.0.1",
-    "expo-image-picker": "~14.3.2"
+    "stable": "^0.1.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -17,7 +17,7 @@ import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import MealDetailsModal from "../components/mealDetailsModal";
+import MealDetailsModal from "../components/modals/mealDetailsModal";
 import RecipeCard from "../components/recipeCard";
 
 export default function MealPage(props) {
@@ -37,7 +37,7 @@ export default function MealPage(props) {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.75" : "10.0.2.2"
         }:8000/recipes/getUserRecipes/`,
         {
           withCredentials: true,

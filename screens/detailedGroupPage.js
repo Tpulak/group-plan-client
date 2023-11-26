@@ -14,13 +14,17 @@ import TopNav from "../components/topNav";
 import BottomNav from "../components/bottomNav";
 import RecipeCard from "../components/recipeCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import GroupMembersModal from "../components/modals/groupMembersModal";
+import MealDetailsModal from "../components/modals/mealDetailsModal";
+import { PropaneSharp } from "@mui/icons-material";
 // import { useNavigation } from "@react-navigation/native";
 
 export default function DetailedGroupPage({ route }) {
   //   const navigation = useNavigation();
   const [group, setGroup] = useState(route.params.group.fields);
   const [currentRecipe, setCurrentRecipe] = useState({});
-
+  const [mealModalVisible, setMealModalVisible] = useState(false);
+  const [memberModalsVisible, setMemberModalsVisible] = useState(false);
   useEffect(() => {
     getcurrentRecipe();
   }, [group]);
@@ -33,7 +37,7 @@ export default function DetailedGroupPage({ route }) {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.75" : "10.0.2.2"
         }:8000/recipes/getRecipe/${group.current_recipe}`,
         {
           withCredentials: true,
@@ -51,7 +55,7 @@ export default function DetailedGroupPage({ route }) {
     axios
       .put(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.75" : "10.0.2.2"
         }:8000/recipes/startPoll/${route.params.group.pk}/`,
         {
           withCredentials: true,
@@ -76,31 +80,37 @@ export default function DetailedGroupPage({ route }) {
           <Text style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>
             {group.name}
           </Text>
-          {Platform.OS === "ios" ? (
-            <TouchableOpacity
-              style={styles.membersButton}
-              onPress={() => {
-                console.log("Open members modal");
-              }}
-            >
-              <Text style={{ color: "white" }}>Members</Text>
-            </TouchableOpacity>
-          ) : (
-            <Button
-              title="Members"
-              color="#88B361"
-              onPress={() => {
-                console.log("Open members modal");
-              }}
-            />
-          )}
+          <TouchableOpacity
+            style={styles.membersButton}
+            onPress={() => {
+              setMemberModalsVisible(true);
+            }}
+          >
+            <Text style={{ color: "white" }}>Members</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.groupContainer}>
           <View style={styles.currentMeal}>
             <Text>Current Meal</Text>
-            <RecipeCard recipe={currentRecipe} />
+            <TouchableOpacity
+              style={styles.mealContainer}
+              key={currentRecipe?.pk}
+              onPress={() => {
+                if (currentRecipe.fields) {
+                  setMealModalVisible(true);
+                }
+              }}
+            >
+              <View style={styles.mealNameContainer}>
+                <Text style={styles.mealName}>
+                  {currentRecipe.fields?.name}
+                </Text>
+              </View>
+              <View style={styles.mealImagePlaceholder}></View>
+            </TouchableOpacity>
           </View>
+
           {group.current_poll ? (
             <TouchableOpacity
               style={styles.currentPoll}
@@ -144,6 +154,17 @@ export default function DetailedGroupPage({ route }) {
 
         {/* BOTTOM */}
         <BottomNav />
+        <MealDetailsModal
+          show={mealModalVisible}
+          close={setMealModalVisible}
+          meal={currentRecipe}
+        />
+        <GroupMembersModal
+          show={memberModalsVisible}
+          close={setMemberModalsVisible}
+          owner={group.owner}
+          groupID={props.group.pk}
+        />
       </View>
     </SafeAreaView>
   );
@@ -187,5 +208,26 @@ const styles = StyleSheet.create({
     backgroundColor: "#88B361",
     padding: 10,
     borderRadius: 10,
+  },
+  mealContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  mealNameContainer: {
+    flex: 1,
+    padding: 10,
+  },
+  mealName: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  mealImagePlaceholder: {
+    width: 100,
+    height: 100,
+    backgroundColor: "#ccc", // Gray color as a placeholder
   },
 });
