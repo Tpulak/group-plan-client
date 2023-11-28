@@ -707,8 +707,10 @@ export const DetailedGroupPageStyles = StyleSheet.create({
   },
   currentPoll: {
     justifyContent: "center",
-    backgroundColor: "#88B361",
-    height: 100,
+
+    // borderColor: "#88B361",
+    // borderWidth: 2,
+    height: 200,
     marginLeft: 10,
     marginRight: 10,
   },

@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Platform,
+  Dimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -16,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import GroupMembersModal from "../components/Modals/GroupMembersModal";
 import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
 import { DetailedGroupPageStyles } from "../styles";
+import { Bar } from "react-native-progress";
 
 // import { useNavigation } from "@react-navigation/native";
 
@@ -25,8 +27,16 @@ export default function DetailedGroupPage({ route }) {
   const [currentRecipe, setCurrentRecipe] = useState({});
   const [mealModalVisible, setMealModalVisible] = useState(false);
   const [memberModalsVisible, setMemberModalsVisible] = useState(false);
+  const [pollSummary, setPollSummary] = useState({
+    Taco: { id: 28, votes: 10 },
+    "Fried Egg": { id: 41, votes: 3 },
+    "Recipe 1": { id: 37, votes: 6 },
+    Cake: { id: 40, votes: 2 },
+  });
+
   useEffect(() => {
     getcurrentRecipe();
+    pollPreview();
   }, [group]);
 
   const getcurrentRecipe = async () => {
@@ -37,7 +47,7 @@ export default function DetailedGroupPage({ route }) {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.199" : "10.0.2.2"
         }:8000/recipes/getRecipe/${group.current_recipe}`,
         {
           withCredentials: true,
@@ -55,7 +65,7 @@ export default function DetailedGroupPage({ route }) {
     axios
       .put(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.199" : "10.0.2.2"
         }:8000/recipes/startPoll/${route.params.group.pk}/`,
         {
           withCredentials: true,
@@ -68,6 +78,37 @@ export default function DetailedGroupPage({ route }) {
         });
       })
       .catch((error) => console.log(error));
+  };
+
+  const pollPreview = () => {
+    const x = Object.entries(pollSummary);
+    x.sort((a, b) => b[1].votes - a[1].votes);
+    const preview = [];
+    for (var element in Object.fromEntries(x)) {
+      preview.push(
+        <Bar
+          progress={pollSummary[element].votes / 21}
+          width={Dimensions.get("window").width * 0.94}
+          height={35}
+          animated={true}
+          style={{ marginBottom: 15 }}
+          color="#FFBA00"
+        >
+          <Text
+            style={{
+              position: "absolute",
+              color: "#88B361",
+              fontSize: 15,
+              textAlign: "center",
+              padding: 8,
+            }}
+          >
+            {element}
+          </Text>
+        </Bar>
+      );
+    }
+    return preview.slice(-3);
   };
 
   return (
@@ -118,17 +159,10 @@ export default function DetailedGroupPage({ route }) {
                 console.log("Open Poll Modal");
               }}
             >
-              <Text
-                style={{
-                  textAlign: "center",
-                  color: "white",
-                  fontSize: 20,
-                  fontWeight: "bold",
-                }}
-              >
-                Next Meal Poll
-              </Text>
-              <View></View>
+              <Text style={{ marginBottom: 10 }}>Current Poll</Text>
+              {pollPreview().map((preview) => {
+                return preview;
+              })}
             </TouchableOpacity>
           ) : (
             <TouchableOpacity

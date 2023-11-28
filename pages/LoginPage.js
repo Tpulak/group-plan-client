@@ -30,7 +30,7 @@ export default function LoginScreen() {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          Platform.OS === "ios" ? "192.168.1.199" : "10.0.2.2"
         }:8000/users/login/`,
         // eslint-disable-next-line no-undef
         (data = { username: username, password: password })
