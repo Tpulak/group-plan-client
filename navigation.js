@@ -1,61 +1,66 @@
 // Navigation.js
 import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginPage from "./screens/loginPage";
-import SignUpPage from "./screens/signupPage";
-import HomePage from "./screens/homePage";
-import GroupPage from "./screens/groupPage";
-import MealPage from "./screens/mealPage";
-import SettingsPage from "./screens/settingsPage";
-import ShopPage from "./screens/shopPage";
-import CreateMealPage from "./screens/createMealPage";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import DetailedGroupPage from "./screens/detailedGroupPage";
-import { useNavigation } from "@react-navigation/native";
+import HomePage from "./pages/HomePage";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import GroupsPage from "./pages/GroupsPage";
+import RecipesPage from "./pages/RecipesPage";
+import CreateRecipePage from "./pages/CreateRecipePage";
+import AccountSettingsPage from "./pages/AccountSettingsPage";
+import DetailedGroupPage from "./pages/DetailedGroupPage";
+import CartPage from "./pages/CartPage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const Stack = createStackNavigator();
 
 const Navigation = () => {
+  // const info = await AsyncStorage.getItem("sessionId");
+  // info = info.split(";")[0].replace(/"/g, "");
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Login"
-          component={
-            AsyncStorage.getItem("sessionId") === "" ? HomePage : LoginPage
-          }
+          name="LandingPage"
+          component={LandingPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="signup"
-          component={SignUpPage}
-          options={{ headerShown: true }}
-        />
-        <Stack.Screen
-          name="Home"
+          name="HomePage"
           component={HomePage}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="Group"
-          component={GroupPage}
-          options={{ headerShown: false }}
-        />
 
         <Stack.Screen
-          name="Meals"
-          component={MealPage}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
-          name="Settings"
-          component={SettingsPage}
+          name="LoginPage"
+          component={LoginPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Shop"
-          component={ShopPage}
+          name="SignUpPage"
+          component={SignUpPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="GroupsPage"
+          component={GroupsPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RecipesPage"
+          component={RecipesPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Create Recipe Page"
+          component={CreateRecipePage}
+          // options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AccountSettingsPage"
+          component={AccountSettingsPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -63,7 +68,11 @@ const Navigation = () => {
           component={DetailedGroupPage}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Create Meal Page" component={CreateMealPage} />
+        <Stack.Screen
+          name="CartPage"
+          component={CartPage}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

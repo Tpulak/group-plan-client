@@ -6,12 +6,13 @@ import {
   StatusBar,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { HomePageStyles } from "../styles";
 import axios from "axios";
-import TopNav from "../components/topNav";
-import BottomNav from "../components/bottomNav";
-import HomeMealCard from "../components/homeMealCard";
+import TopNav from "../components/TopNav";
+import BottomNav from "../components/BottomNav";
+import HomeMealCard from "../components/Cards/HomeMealCard";
 
-export default function HomePage() {
+const HomePage = () => {
   const [meals, setMeals] = useState([]);
 
   useEffect(() => {
@@ -29,9 +30,9 @@ export default function HomePage() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={HomePageStyles.container}>
       <StatusBar barStyle="default" />
-      <View style={styles.container}>
+      <View style={HomePageStyles.container}>
         {/* TOP */}
         <TopNav />
 
@@ -55,11 +56,6 @@ export default function HomePage() {
       </View>
     </SafeAreaView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-});
+export default HomePage;

@@ -1,5 +1,4 @@
 import {
-  StyleSheet,
   View,
   SafeAreaView,
   StatusBar,
@@ -10,13 +9,14 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import TopNav from "../components/topNav";
-import BottomNav from "../components/bottomNav";
-import RecipeCard from "../components/recipeCard";
+import TopNav from "../components/TopNav";
+import BottomNav from "../components/BottomNav";
+// import RecipeCard from "../components/recipeCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import GroupMembersModal from "../components/modals/groupMembersModal";
-import MealDetailsModal from "../components/modals/mealDetailsModal";
-import { PropaneSharp } from "@mui/icons-material";
+import GroupMembersModal from "../components/Modals/GroupMembersModal";
+import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
+import { DetailedGroupPageStyles } from "../styles";
+
 // import { useNavigation } from "@react-navigation/native";
 
 export default function DetailedGroupPage({ route }) {
@@ -71,17 +71,17 @@ export default function DetailedGroupPage({ route }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={DetailedGroupPageStyles.container}>
       <StatusBar barStyle="default" />
-      <View style={styles.container}>
+      <View style={DetailedGroupPageStyles.container}>
         {/* TOP */}
         <TopNav />
-        <View style={styles.topContainer}>
+        <View style={DetailedGroupPageStyles.topContainer}>
           <Text style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>
             {group.name}
           </Text>
           <TouchableOpacity
-            style={styles.membersButton}
+            style={DetailedGroupPageStyles.membersButton}
             onPress={() => {
               setMemberModalsVisible(true);
             }}
@@ -90,11 +90,11 @@ export default function DetailedGroupPage({ route }) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.groupContainer}>
-          <View style={styles.currentMeal}>
+        <View style={DetailedGroupPageStyles.groupContainer}>
+          <View style={DetailedGroupPageStyles.currentMeal}>
             <Text>Current Meal</Text>
             <TouchableOpacity
-              style={styles.mealContainer}
+              style={DetailedGroupPageStyles.mealContainer}
               key={currentRecipe?.pk}
               onPress={() => {
                 if (currentRecipe.fields) {
@@ -102,18 +102,18 @@ export default function DetailedGroupPage({ route }) {
                 }
               }}
             >
-              <View style={styles.mealNameContainer}>
-                <Text style={styles.mealName}>
+              <View style={DetailedGroupPageStyles.mealNameContainer}>
+                <Text style={DetailedGroupPageStyles.mealName}>
                   {currentRecipe.fields?.name}
                 </Text>
               </View>
-              <View style={styles.mealImagePlaceholder}></View>
+              <View style={DetailedGroupPageStyles.mealImagePlaceholder}></View>
             </TouchableOpacity>
           </View>
 
           {group.current_poll ? (
             <TouchableOpacity
-              style={styles.currentPoll}
+              style={DetailedGroupPageStyles.currentPoll}
               onPress={() => {
                 console.log("Open Poll Modal");
               }}
@@ -132,7 +132,7 @@ export default function DetailedGroupPage({ route }) {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              style={styles.startPoll}
+              style={DetailedGroupPageStyles.startPoll}
               onPress={() => {
                 startPoll();
               }}
@@ -154,7 +154,7 @@ export default function DetailedGroupPage({ route }) {
 
         {/* BOTTOM */}
         <BottomNav />
-        <MealDetailsModal
+        <RecipeDetailsModal
           show={mealModalVisible}
           close={setMealModalVisible}
           meal={currentRecipe}
@@ -163,71 +163,9 @@ export default function DetailedGroupPage({ route }) {
           show={memberModalsVisible}
           close={setMemberModalsVisible}
           owner={group.owner}
-          groupID={props.group.pk}
+          groupID={route.params.group.pk}
         />
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  groupContainer: {
-    flex: 1,
-    justifyContent: "space-around",
-  },
-  topContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    marginTop: 15,
-  },
-  currentPoll: {
-    justifyContent: "center",
-    backgroundColor: "#88B361",
-    height: 100,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  startPoll: {
-    justifyContent: "center",
-    backgroundColor: "#88B361",
-    height: 100,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  currentMeal: {
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  membersButton: {
-    backgroundColor: "#88B361",
-    padding: 10,
-    borderRadius: 10,
-  },
-  mealContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-    backgroundColor: "#f0f0f0",
-    borderRadius: 10,
-    overflow: "hidden",
-  },
-  mealNameContainer: {
-    flex: 1,
-    padding: 10,
-  },
-  mealName: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  mealImagePlaceholder: {
-    width: 100,
-    height: 100,
-    backgroundColor: "#ccc", // Gray color as a placeholder
-  },
-});

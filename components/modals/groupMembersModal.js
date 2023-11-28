@@ -1,7 +1,30 @@
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
+import { Text, View, Modal, TouchableOpacity, StyleSheet } from "react-native";
+import { MembersModalStyles } from "../../styles";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function GroupMembersModal(props) {
-  //CONVERTING INGREDIENTS TO AN ARRAY
+  const [members, setMembers] = useState([]);
+  const [owner, setOwner] = useState("");
+  const getMembers = () => {
+    axios
+      .get(
+        `http://${
+          Platform.OS === "ios" ? "192.168.1.75" : "10.0.2.2"
+        }:8000/recipes/group/members/${props.groupID}`
+      )
+      .then((response) => {
+        setMembers(response.data.filter((member) => member.pk != props.owner));
+        setOwner(
+          response.data.filter((member) => member.pk === props.owner)[0]
+        );
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getMembers();
+  }, []);
 
   return (
     <Modal
@@ -12,22 +35,47 @@ export default function GroupMembersModal(props) {
         props.close(false);
       }}
     >
-      <View style={styles.modalView}>
+      <View style={MembersModalStyles.modalView}>
         <TouchableOpacity
           onPress={() => {
             props.close(false);
           }}
         >
+          <Text style={{ fontWeight: "bold", marginBottom: 10, fontSize: 18 }}>
+            Owner:{" "}
+            <Text style={{ fontWeight: "normal" }}>{owner.username}</Text>
+          </Text>
+
+          <View
+            style={{
+              borderBottomColor: "black",
+              borderBottomWidth: StyleSheet.hairlineWidth,
+            }}
+          />
+          <Text style={{ fontWeight: "bold", fontSize: 18 }}>Members</Text>
+          <View
+            style={{
+              borderBottomColor: "black",
+              borderBottomWidth: StyleSheet.hairlineWidth,
+            }}
+          />
+          {members.map((member) => {
+            return (
+              <Text key={member.username} style={{ fontSize: 18 }}>
+                {member.username}
+              </Text>
+            );
+          })}
           {/* Buttons */}
-          <View style={styles.buttonContainer}>
+          <View style={MembersModalStyles.buttonContainer}>
             {/* CLOSE BUTTON */}
             <TouchableOpacity
               onPress={() => {
                 props.close(false);
               }}
-              style={styles.closeButton}
+              style={MembersModalStyles.closeButton}
             >
-              <Text style={styles.buttonText}>Close</Text>
+              <Text style={MembersModalStyles.buttonText}>Close</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -35,54 +83,3 @@ export default function GroupMembersModal(props) {
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  modalView: {
-    margin: 20,
-    marginTop: 100,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  sectionHeader: {
-    fontSize: 20,
-    marginTop: 10,
-    fontWeight: "bold",
-    textAlign: "left",
-  },
-  sectionContent: {
-    textAlign: "left",
-  },
-
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 20,
-  },
-  closeButton: {
-    padding: 10,
-    backgroundColor: "#888",
-    borderRadius: 5,
-    width: "48%",
-    alignItems: "center",
-  },
-  exportButton: {
-    padding: 10,
-    backgroundColor: "#88B631",
-    borderRadius: 5,
-    width: "48%",
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
-  },
-});

@@ -2,22 +2,22 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable } from "react-native";
-
+import { NavStyles } from "../styles";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function TopNav() {
   const navigation = useNavigation();
   // Group Button -> Group Page
   const handleGroupPress = () => {
-    navigation.navigate("Group");
+    navigation.navigate("GroupsPage");
   };
 
   // Settings Button -> Settings Page
   const handleSettingPress = () => {
-    navigation.navigate("Settings");
+    navigation.navigate("AccountSettingsPage");
   };
   return (
-    <View style={styles.topContainer}>
+    <View style={NavStyles.topNavContainer}>
       {/* GROUP ICON*/}
       <Pressable onPress={handleGroupPress}>
         <MuiCIcon
@@ -28,7 +28,7 @@ export default function TopNav() {
         />
       </Pressable>
 
-      <Text style={styles.title}>Group Plan</Text>
+      <Text style={NavStyles.topNavtitle}>Group Plan</Text>
 
       {/* SETTINGS ICON*/}
       <Pressable onPress={handleSettingPress}>
@@ -42,18 +42,3 @@ export default function TopNav() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  topContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 10,
-  },
-
-  title: {
-    fontSize: 30,
-    color: "black",
-    fontWeight: "bold",
-  },
-});

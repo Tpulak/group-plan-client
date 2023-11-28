@@ -4,27 +4,28 @@ import { useNavigation } from "@react-navigation/native";
 import { Pressable } from "react-native";
 import MuiIcon from "react-native-vector-icons/MaterialIcons";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import { NavStyles } from "../styles";
 
 export default function BottomNav() {
   const navigation = useNavigation();
   // Group Button -> Group Page
   const handleHomePress = () => {
-    navigation.navigate("Home");
+    navigation.navigate("HomePage");
   };
 
   // Meal Button -> Meal Page
-  const handleMealPress = () => {
-    navigation.navigate("Meals");
+  const handleRecipesPress = () => {
+    navigation.navigate("RecipesPage");
   };
 
   // Shop Button -> Shop Page
-  const handleShopPress = () => {
-    navigation.navigate("Shop");
+  const handleCartPress = () => {
+    navigation.navigate("CartPage");
   };
   return (
-    <View style={styles.bottomContainer}>
+    <View style={NavStyles.bottomNavContainer}>
       {/* MEAL ICON */}
-      <Pressable onPress={handleMealPress}>
+      <Pressable onPress={handleRecipesPress}>
         <MuiCIcon name="food-variant" size={40} color="#fff" />
       </Pressable>
 
@@ -34,20 +35,9 @@ export default function BottomNav() {
       </Pressable>
 
       {/* SHOP ICON */}
-      <Pressable onPress={handleShopPress}>
+      <Pressable onPress={handleCartPress}>
         <MuiCIcon name="clipboard-list" size={40} color="#fff" />
       </Pressable>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  bottomContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "#FFBA00",
-    width: "100%",
-    padding: 10,
-  },
-});

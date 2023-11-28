@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
+import { Text, View, Modal, TouchableOpacity } from "react-native";
+import { RecipeDetailsModalStyles } from "../../styles";
 
-export default function MealDetailsModal(props) {
+export default function RecipeDetailsModal(props) {
   //CONVERTING INGREDIENTS TO AN ARRAY
   const ingredientsString =
     (props.meal && props.meal.fields && props.meal.fields.ingredients) || "";
@@ -26,7 +27,7 @@ export default function MealDetailsModal(props) {
         props.close(false);
       }}
     >
-      <View style={styles.modalView}>
+      <View style={RecipeDetailsModalStyles.modalView}>
         <TouchableOpacity
           onPress={() => {
             props.close(false);
@@ -41,13 +42,17 @@ export default function MealDetailsModal(props) {
 
           <View>
             {/* INGREDIENTS */}
-            <Text style={styles.sectionHeader}>INGREDIENTS:</Text>
-            <Text style={styles.sectionContent}>
+            <Text style={RecipeDetailsModalStyles.sectionHeader}>
+              INGREDIENTS:
+            </Text>
+            <Text style={RecipeDetailsModalStyles.sectionContent}>
               {ingredientsArray.join(", ")}
             </Text>
 
             {/* INSTRUCTIONS */}
-            <Text style={styles.sectionHeader}>INSTRUCTIONS:</Text>
+            <Text style={RecipeDetailsModalStyles.sectionHeader}>
+              INSTRUCTIONS:
+            </Text>
             <View>
               {instructionsArray.map((instruction, index) => (
                 <View
@@ -62,15 +67,15 @@ export default function MealDetailsModal(props) {
           </View>
 
           {/* Buttons */}
-          <View style={styles.buttonContainer}>
+          <View style={RecipeDetailsModalStyles.buttonContainer}>
             {/* CLOSE BUTTON */}
             <TouchableOpacity
               onPress={() => {
                 props.close(false);
               }}
-              style={styles.closeButton}
+              style={RecipeDetailsModalStyles.closeButton}
             >
-              <Text style={styles.buttonText}>Close</Text>
+              <Text style={RecipeDetailsModalStyles.buttonText}>Close</Text>
             </TouchableOpacity>
 
             {/* EXPORT BUTTON */}
@@ -79,9 +84,9 @@ export default function MealDetailsModal(props) {
                 // EXPORT BUTTON LOGIC TO BE ADDED
                 console.log("Export button pressed");
               }}
-              style={styles.exportButton}
+              style={RecipeDetailsModalStyles.exportButton}
             >
-              <Text style={styles.buttonText}>Export</Text>
+              <Text style={RecipeDetailsModalStyles.buttonText}>Export</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -89,54 +94,3 @@ export default function MealDetailsModal(props) {
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  modalView: {
-    margin: 20,
-    marginTop: 100,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  sectionHeader: {
-    fontSize: 20,
-    marginTop: 10,
-    fontWeight: "bold",
-    textAlign: "left",
-  },
-  sectionContent: {
-    textAlign: "left",
-  },
-
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
-  },
-  closeButton: {
-    padding: 10,
-    backgroundColor: "#888",
-    borderRadius: 5,
-    width: "48%",
-    alignItems: "center",
-  },
-  exportButton: {
-    padding: 10,
-    backgroundColor: "#88B631",
-    borderRadius: 5,
-    width: "48%",
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
-  },
-});
