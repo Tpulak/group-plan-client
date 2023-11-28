@@ -1,16 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-import {
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Platform } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, ScrollView } from "react-native";
+
 import GroupCard from "./Cards/GroupCard";
 import UserGroupCard from "./Cards/UserGroupCard";
 
