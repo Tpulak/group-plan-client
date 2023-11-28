@@ -37,7 +37,7 @@ export default function DetailedGroupPage({ route }) {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.75" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/getRecipe/${group.current_recipe}`,
         {
           withCredentials: true,
@@ -55,7 +55,7 @@ export default function DetailedGroupPage({ route }) {
     axios
       .put(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.75" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/startPoll/${route.params.group.pk}/`,
         {
           withCredentials: true,

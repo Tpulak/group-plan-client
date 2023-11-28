@@ -39,7 +39,7 @@ export default function CreateRecipePage() {
       axios
         .post(
           `http://${
-            Platform.OS === "ios" ? "192.168.1.75" : "10.0.2.2"
+            Platform.OS === "ios" ? "localhost" : "10.0.2.2"
           }:8000/recipes/createRecipe/`,
           {
             recipe_name: mealName,
