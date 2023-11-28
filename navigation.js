@@ -1,6 +1,6 @@
 // Navigation.js
 import * as React from "react";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";

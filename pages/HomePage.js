@@ -1,10 +1,4 @@
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  SafeAreaView,
-  StatusBar,
-} from "react-native";
+import { ScrollView, View, SafeAreaView, StatusBar } from "react-native";
 import React, { useEffect, useState } from "react";
 import { HomePageStyles } from "../styles";
 import axios from "axios";

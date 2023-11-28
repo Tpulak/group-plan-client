@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { View, SafeAreaView } from "react-native";
+import { View } from "react-native";
 import {
   Text,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LoginPageStyles } from "../styles";
@@ -31,6 +32,7 @@ export default function LoginScreen() {
         `http://${
           Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/users/login/`,
+        // eslint-disable-next-line no-undef
         (data = { username: username, password: password })
       )
       .then((response) => {

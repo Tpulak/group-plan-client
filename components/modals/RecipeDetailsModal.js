@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 import { Text, View, Modal, TouchableOpacity } from "react-native";
 import { RecipeDetailsModalStyles } from "../../styles";
+import React from "react";
 
 export default function RecipeDetailsModal(props) {
   //CONVERTING INGREDIENTS TO AN ARRAY

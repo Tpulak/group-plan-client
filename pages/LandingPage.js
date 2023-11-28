@@ -1,12 +1,6 @@
 import React from "react";
 import { LandingPageStyles } from "../styles";
-import {
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-  Text,
-  StatusBar,
-} from "react-native";
+import { TouchableOpacity, SafeAreaView, Text, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function LandingPage() {

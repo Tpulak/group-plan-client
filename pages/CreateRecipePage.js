@@ -5,9 +5,9 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Image,
   Alert,
-  KeyboardAvoidingView,
+  ImagePicker,
+  Platform,
 } from "react-native";
 // import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";

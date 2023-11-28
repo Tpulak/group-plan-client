@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import {
   View,
   SafeAreaView,
   StatusBar,
   Text,
   TouchableOpacity,
-  Button,
   Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";

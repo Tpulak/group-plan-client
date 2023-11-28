@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Text,
+  Platform,
 } from "react-native";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
