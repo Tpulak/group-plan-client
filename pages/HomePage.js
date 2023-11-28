@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { HomePageStyles } from "../styles";
 import axios from "axios";
 import TopNav from "../components/TopNav";
-import BottomNav from "../components/BottomNav";
+import BottomNav from "../components/NottomNav";
 import HomeMealCard from "../components/Cards/HomeMealCard";
 
 const HomePage = () => {

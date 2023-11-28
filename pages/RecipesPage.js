@@ -12,7 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { RecipesPageStyles } from "../styles";
 import TopNav from "../components/TopNav";
-import BottomNav from "../components/BottomNav";
+import BottomNav from "../components/NottomNav";
 import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
 
 export default function RecipesPage(props) {

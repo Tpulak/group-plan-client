@@ -10,10 +10,10 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TopNav from "../components/TopNav";
-import BottomNav from "../components/BottomNav";
+import BottomNav from "../components/NottomNav";
 // import RecipeCard from "../components/recipeCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import GroupMembersModal from "../components/Modals/GroupMembersModal";
+import GroupMembersModal from "../components/modals/GroupMembersModal";
 import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
 import { DetailedGroupPageStyles } from "../styles";
 

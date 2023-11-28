@@ -11,8 +11,8 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import GroupCard from "../components/Cards/GroupCard";
-import UserGroupCard from "../components/Cards/UserGroupCard";
+import GroupCard from "./Cards/GroupCard";
+import UserGroupCard from "./Cards/UserGroupCard";
 
 export default function GroupsCollection(props) {
   return (

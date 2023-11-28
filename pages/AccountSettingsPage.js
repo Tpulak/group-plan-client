@@ -7,7 +7,7 @@ import {
   StatusBar,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import BottomNav from "../components/BottomNav";
+import BottomNav from "../components/NottomNav";
 import TopNav from "../components/TopNav";
 import { SettingsPageStyles } from "../styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
