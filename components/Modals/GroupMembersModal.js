@@ -9,18 +9,17 @@ import {
 } from "react-native";
 import { MembersModalStyles } from "../../styles";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import React from "react";
+import axios from "axios";
 
 export default function GroupMembersModal(props) {
   const [members, setMembers] = useState([]);
   const [owner, setOwner] = useState("");
-
   const getMembers = () => {
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.199" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/group/members/${props.groupID}`
       )
       .then((response) => {
