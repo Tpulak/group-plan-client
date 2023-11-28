@@ -5,13 +5,13 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Image,
   Alert,
-  KeyboardAvoidingView,
+  ImagePicker,
+  Platform,
 } from "react-native";
 // import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
-import BottomNav from "../components/NottomNav";
+import BottomNav from "../components/BottomNav";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";

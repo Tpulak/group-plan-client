@@ -1,15 +1,9 @@
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  SafeAreaView,
-  StatusBar,
-} from "react-native";
+import { ScrollView, View, SafeAreaView, StatusBar } from "react-native";
 import React, { useEffect, useState } from "react";
 import { HomePageStyles } from "../styles";
 import axios from "axios";
 import TopNav from "../components/TopNav";
-import BottomNav from "../components/NottomNav";
+import BottomNav from "../components/BottomNav";
 import HomeMealCard from "../components/Cards/HomeMealCard";
 
 const HomePage = () => {

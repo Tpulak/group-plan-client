@@ -18,7 +18,7 @@ import MuiIcon from "react-native-vector-icons/MaterialIcons";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import GroupsCollection from "../components/GroupsCollection";
 import { GroupsPageStyles } from "../styles";
-import BottomNav from "../components/NottomNav";
+import BottomNav from "../components/BottomNav";
 
 // Add other imports as needed
 

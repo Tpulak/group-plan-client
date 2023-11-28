@@ -1,19 +1,19 @@
+/* eslint-disable react/prop-types */
 import {
   View,
   SafeAreaView,
   StatusBar,
   Text,
   TouchableOpacity,
-  Button,
   Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TopNav from "../components/TopNav";
-import BottomNav from "../components/NottomNav";
+import BottomNav from "../components/BottomNav";
 // import RecipeCard from "../components/recipeCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import GroupMembersModal from "../components/modals/GroupMembersModal";
+import GroupMembersModal from "../components/Modals/GroupMembersModal";
 import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
 import { DetailedGroupPageStyles } from "../styles";
 
