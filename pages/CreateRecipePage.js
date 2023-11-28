@@ -1,24 +1,25 @@
 import React, { useState, useRef } from "react";
 import {
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
   Image,
   Alert,
+  KeyboardAvoidingView,
 } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+// import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
-import BottomNav from "../components/bottomNav";
+import BottomNav from "../components/BottomNav";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { CreateRecipesStyles } from "../styles";
 
-const CreateMealPage = () => {
+export default function CreateRecipePage() {
   const navigation = useNavigation();
   const scrollViewRef = useRef();
   const [mealName, setMealName] = useState("");
@@ -51,7 +52,7 @@ const CreateMealPage = () => {
           } // Assuming you want to send the 'group' data in the request
         )
         .then((response) => {
-          navigation.navigate("Meals");
+          navigation.navigate("RecipesPage");
         })
         .catch((error) => {
           Alert.alert("Recipe Creation error", error.response.data.message, [
@@ -116,24 +117,24 @@ const CreateMealPage = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={CreateRecipesStyles.container}>
       <StatusBar barStyle="default" />
-      <View style={styles.pageContainer}>
+      <View style={CreateRecipesStyles.pageContainer}>
         {/* MIDDLE */}
         <ScrollView
           ref={scrollViewRef}
-          contentContainerStyle={styles.middleContainer}
+          contentContainerStyle={CreateRecipesStyles.middleContainer}
           automaticallyAdjustKeyboardInsets={true}
           style={{ flex: 1 }}
           onContentSizeChange={() =>
             scrollViewRef.current.scrollToEnd({ animated: true })
           }
         >
-          <View style={styles.section}>
-            <Text style={styles.sectionLabel}>Name</Text>
+          <View style={CreateRecipesStyles.section}>
+            <Text style={CreateRecipesStyles.sectionLabel}>Name</Text>
             <TextInput
               style={{
-                ...styles.input,
+                ...CreateRecipesStyles.input,
                 width: "100%",
                 borderTopColor: "#000",
                 borderLeftColor: "#000",
@@ -148,19 +149,19 @@ const CreateMealPage = () => {
 
           {/* <TouchableOpacity onPress={uploadImage}>
             {mealImage ? (
-              <Image source={{ uri: mealImage }} style={styles.imagePreview} />
+              <Image source={{ uri: mealImage }} style={CreateRecipesStyles.imagePreview} />
             ) : (
-              <View style={styles.imageUpload} />
+              <View style={CreateRecipesStyles.imageUpload} />
             )}
           </TouchableOpacity> */}
 
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Ingredients</Text>
+          <View style={CreateRecipesStyles.section}>
+            <Text style={CreateRecipesStyles.sectionTitle}>Ingredients</Text>
             {ingredients.map((ingredient, index) => (
-              <View style={styles.inputContainer} key={index}>
+              <View style={CreateRecipesStyles.inputContainer} key={index}>
                 <TextInput
                   key={index}
-                  style={styles.input}
+                  style={CreateRecipesStyles.input}
                   placeholder={`Ingredient ${index + 1}`}
                   value={ingredient}
                   onChangeText={(text) => onIngredientChange(text, index)}
@@ -183,19 +184,22 @@ const CreateMealPage = () => {
             ))}
             <TouchableOpacity
               onPress={addIngredient}
-              style={styles.addMoreButton}
+              style={CreateRecipesStyles.addMoreButton}
             >
               <MuiCIcon name="plus" size={30} color="#fff" />
             </TouchableOpacity>
           </View>
 
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Steps</Text>
+          <View style={CreateRecipesStyles.section}>
+            <Text style={CreateRecipesStyles.sectionTitle}>Steps</Text>
             {steps.map((step, index) => (
-              <View style={styles.inputContainer} key={index}>
+              <View style={CreateRecipesStyles.inputContainer} key={index}>
                 <TextInput
                   key={index}
-                  style={[styles.input, styles.multiLineInput]}
+                  style={[
+                    CreateRecipesStyles.input,
+                    CreateRecipesStyles.multiLineInput,
+                  ]}
                   placeholder={`Step ${index + 1}`}
                   value={step}
                   onChangeText={(text) => onStepChange(text, index)}
@@ -217,7 +221,10 @@ const CreateMealPage = () => {
                 </TouchableOpacity>
               </View>
             ))}
-            <TouchableOpacity onPress={addStep} style={styles.addMoreButton}>
+            <TouchableOpacity
+              onPress={addStep}
+              style={CreateRecipesStyles.addMoreButton}
+            >
               <MuiCIcon name="plus" size={30} color="#fff" />
             </TouchableOpacity>
           </View>
@@ -244,81 +251,4 @@ const CreateMealPage = () => {
       </View>
     </SafeAreaView>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  pageContainer: {
-    height: "100%",
-  },
-  middleContainer: {
-    alignItems: "center",
-    backgroundColor: "white",
-  },
-  section: {
-    width: "90%",
-    marginBottom: 20,
-  },
-  sectionLabel: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-    marginTop: 10,
-    textAlign: "left",
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  input: {
-    height: 50,
-    borderColor: "gray",
-    borderWidth: 1,
-    width: "88%",
-    paddingLeft: 10,
-    borderTopColor: "#88B361",
-    borderLeftColor: "#88B361",
-    borderBottomColor: "#88B361",
-    borderRightColor: "#88B361",
-  },
-  inputContainer: {
-    flexDirection: "row",
-    alignContent: "center",
-    marginBottom: 10,
-
-    paddingBottom: 15,
-    overflow: "hidden",
-    justifyContent: "center",
-  },
-  multiLineInput: {
-    height: 50,
-    textAlign: "left",
-    paddingTop: 15,
-  },
-  imageUpload: {
-    width: 300,
-    height: 150,
-    backgroundColor: "lightgray",
-    marginBottom: 20,
-  },
-  imagePreview: {
-    width: 200,
-    height: 100,
-    marginBottom: 20,
-  },
-  addMoreButton: {
-    alignItems: "center",
-    borderWidth: 2,
-    borderColor: "#FFBA00",
-    borderRadius: 10,
-    backgroundColor: "#FFBA00",
-    height: 50,
-    justifyContent: "center",
-  },
-});
-
-export default CreateMealPage;
+}

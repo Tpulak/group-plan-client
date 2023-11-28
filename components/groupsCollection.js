@@ -11,10 +11,10 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Platform } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import GroupCard from "../components/groupCard";
-import UserGroupCard from "../components/userGroupsCard";
+import GroupCard from "../components/Cards/GroupCard";
+import UserGroupCard from "../components/Cards/UserGroupCard";
 
-export default function GroupsCollections(props) {
+export default function GroupsCollection(props) {
   return (
     <ScrollView style={styles.topContainer}>
       {props.groups.map((group) => {
