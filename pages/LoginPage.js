@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LoginPageStyles } from "../styles";
@@ -30,7 +31,7 @@ export default function LoginScreen() {
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.199" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/users/login/`,
         // eslint-disable-next-line no-undef
         (data = { username: username, password: password })
@@ -65,9 +66,17 @@ export default function LoginScreen() {
         <Text style={LoginPageStyles.LoginPageTitle}>
           Welcome back Group Planner!
         </Text>
+        <Image
+          // eslint-disable-next-line no-undef
+          source={require("../assets/icons/logoPH.png")}
+          style={{ width: 100, height: 100 }}
+        />
 
         <TextInput
-          style={LoginPageStyles.LoginPageInput}
+          style={{
+            ...LoginPageStyles.LoginPageInput,
+            ...LoginPageStyles.usernameInput,
+          }}
           placeholder="Username"
           value={username}
           onChangeText={(text) => setUsername(text)}

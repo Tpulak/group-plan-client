@@ -18,11 +18,14 @@ import GroupMembersModal from "../components/Modals/GroupMembersModal";
 import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
 import { DetailedGroupPageStyles } from "../styles";
 import { Bar } from "react-native-progress";
+import MuiIcon from "react-native-vector-icons/MaterialIcons";
 
-// import { useNavigation } from "@react-navigation/native";
+// import { placeholders } from "../pollPlaceholders";
+
+import { useNavigation } from "@react-navigation/native";
 
 export default function DetailedGroupPage({ route }) {
-  //   const navigation = useNavigation();
+  const navigation = useNavigation();
   const [group, setGroup] = useState(route.params.group.fields);
   const [currentRecipe, setCurrentRecipe] = useState({});
   const [mealModalVisible, setMealModalVisible] = useState(false);
@@ -92,12 +95,14 @@ export default function DetailedGroupPage({ route }) {
           height={35}
           animated={true}
           style={{ marginBottom: 15 }}
-          color="#FFBA00"
+          color="#88B361"
+          // #88B361#FFBA00
+          key={element}
         >
           <Text
             style={{
               position: "absolute",
-              color: "#88B361",
+              color: "#FFBA00",
               fontSize: 15,
               textAlign: "center",
               padding: 8,
@@ -133,7 +138,7 @@ export default function DetailedGroupPage({ route }) {
 
         <View style={DetailedGroupPageStyles.groupContainer}>
           <View style={DetailedGroupPageStyles.currentMeal}>
-            <Text>Current Meal</Text>
+            <Text style={{ fontSize: 20, marginBottom: 10 }}>Current Meal</Text>
             <TouchableOpacity
               style={DetailedGroupPageStyles.mealContainer}
               key={currentRecipe?.pk}
@@ -156,10 +161,30 @@ export default function DetailedGroupPage({ route }) {
             <TouchableOpacity
               style={DetailedGroupPageStyles.currentPoll}
               onPress={() => {
-                console.log("Open Poll Modal");
+                navigation.navigate("Poll Page");
               }}
             >
-              <Text style={{ marginBottom: 10 }}>Current Poll</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  marginBottom: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                    textAlign: "center",
+                  }}
+                >
+                  Current Poll{" "}
+                  {/* (Press to vote/add recipe arrow-forward-ios) */}
+                </Text>
+                <View style={{ flex: 1, justifyContent: "center" }}>
+                  <MuiIcon name="arrow-forward-ios" size={16} color="blue" />
+                </View>
+              </View>
+
               {pollPreview().map((preview) => {
                 return preview;
               })}

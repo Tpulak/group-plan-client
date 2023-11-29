@@ -12,6 +12,7 @@ import CreateRecipePage from "./pages/CreateRecipePage";
 import AccountSettingsPage from "./pages/AccountSettingsPage";
 import DetailedGroupPage from "./pages/DetailedGroupPage";
 import CartPage from "./pages/CartPage";
+import PollPage from "./pages/PollPage";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
@@ -72,6 +73,11 @@ const Navigation = () => {
           name="CartPage"
           component={CartPage}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Poll Page"
+          component={PollPage}
+          options={{ headerShown: true }}
         />
       </Stack.Navigator>
     </NavigationContainer>

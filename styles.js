@@ -126,6 +126,9 @@ export const LoginPageStyles = StyleSheet.create({
     alignItems: "center",
   },
   LoginPageBtnText: { color: "white", fontSize: 18 },
+  usernameInput: {
+    marginTop: 30,
+  },
 });
 
 export const RecipesPageStyles = StyleSheet.create({
@@ -707,9 +710,7 @@ export const DetailedGroupPageStyles = StyleSheet.create({
   },
   currentPoll: {
     justifyContent: "center",
-
-    // borderColor: "#88B361",
-    // borderWidth: 2,
+    backgroundColor: "lightgrey",
     height: 200,
     marginLeft: 10,
     marginRight: 10,
@@ -733,7 +734,6 @@ export const DetailedGroupPageStyles = StyleSheet.create({
   mealContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
     backgroundColor: "#f0f0f0",
     borderRadius: 10,
     overflow: "hidden",
@@ -750,5 +750,37 @@ export const DetailedGroupPageStyles = StyleSheet.create({
     width: 100,
     height: 100,
     backgroundColor: "#ccc", // Gray color as a placeholder
+  },
+});
+
+export const PollPageStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  middleContainer: {
+    flex: 3,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+  },
+  pollPageBtnContainer: {
+    flex: 1,
+    alignItems: "center",
+    paddingTop: 10,
+  },
+  pollPageBtn: {
+    borderRadius: 5,
+    marginBottom: 10,
+    backgroundColor: "#88B361",
+    width: "90%",
+  },
+  pollPageBtnText: {
+    textAlign: "center",
+    color: "#fff",
+    marginBottom: 10,
+    marginTop: 10,
+    fontSize: 16,
   },
 });
