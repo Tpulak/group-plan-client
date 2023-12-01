@@ -12,6 +12,7 @@ import { SignUpPageStyles } from "../styles";
 
 export default function SignUpPage() {
   const navigation = useNavigation();
+  const [btnColor, setBtnColor] = useState(false);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -20,15 +21,32 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const handlSignUpPress = () => {
+    setBtnColor(true);
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={SignUpPageStyles.container}
     >
       <View style={SignUpPageStyles.container}>
-        <Text style={SignUpPageStyles.SignUpPageTitle}>
-          Become a Group Planner!
-        </Text>
+        <View style={{ flexDirection: "row", marginLeft: 15 }}>
+          <Text style={SignUpPageStyles.SignUpPageTitle}>Become a</Text>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            paddingBottom: 25,
+            marginRight: 15,
+          }}
+        >
+          <Text
+            style={{ ...SignUpPageStyles.SignUpPageTitle, textAlign: "right" }}
+          >
+            Group Planner !!!
+          </Text>
+        </View>
 
         <TextInput
           style={SignUpPageStyles.SignUpPageInput}
@@ -75,9 +93,13 @@ export default function SignUpPage() {
         />
 
         <TouchableOpacity
-          style={SignUpPageStyles.SignUpPageBtn}
+          style={{
+            ...SignUpPageStyles.SignUpPageBtn,
+            backgroundColor: btnColor ? "#88B361" : "#FFBA00",
+          }}
+          disabled={btnColor ? true : false}
           onPress={() => {
-            // Handle sign-up logic here
+            handlSignUpPress();
             console.log("Sign Up pressed with:", {
               firstName,
               lastName,
@@ -102,7 +124,7 @@ export default function SignUpPage() {
             navigation.goBack();
           }}
         >
-          <Text style={{ color: "blue", fontSize: 16 }}>
+          <Text style={{ color: "white", fontSize: 18 }}>
             Back to Landing Page
           </Text>
         </TouchableOpacity>

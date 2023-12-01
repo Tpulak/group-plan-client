@@ -85,21 +85,37 @@ export const NavStyles = StyleSheet.create({
 export const LandingPageStyles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
+    alignContent: "center",
+    width: "100%",
+  },
+  coloredHalf: {
+    width: "75%",
+    height: "100%",
+    backgroundColor: "#88B361",
+    position: "absolute",
+    top: 0,
+    left: "13%",
+    zIndex: -1,
   },
   LandingPageBtn: {
-    width: 275, // Adjust the width as needed
+    width: "60%", // Adjust the width as needed
     marginTop: 20,
     padding: 15,
-    backgroundColor: "#88B361",
+    backgroundColor: "#FFBA00",
     borderRadius: 5,
     alignItems: "center",
     borderWidth: 2,
     borderColor: "#88B361",
   },
   LandingPageBtnText: { color: "white", fontSize: 18 },
+  image: {
+    width: "50%",
+  },
+  bottomView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export const LoginPageStyles = StyleSheet.create({
@@ -107,25 +123,40 @@ export const LoginPageStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#FFBA00",
+  },
+  LoginPageTitle: {
+    fontSize: 40,
+    marginBottom: 20,
+    color: "white",
+    fontWeight: "bold",
+    flexDirection: "row",
+    width: "100%",
+  },
+  LoginPageInput: {
+    width: 350,
+    height: 50,
+    borderColor: "black",
+    borderWidth: 1.5,
+    marginBottom: 20,
+    padding: 12,
+    borderRadius: 10,
+    fontSize: 15.5,
     backgroundColor: "white",
   },
-  LoginPageTitle: { fontSize: 24, marginBottom: 20 },
-  LoginPageInput: {
-    width: 300,
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
-  },
   LoginPageBtn: {
-    width: 200,
+    width: 225,
     padding: 15,
-    backgroundColor: "#88B361",
+    backgroundColor: "#FFBA00",
     borderRadius: 5,
     alignItems: "center",
+    marginTop: 15,
+    color: "white",
   },
-  LoginPageBtnText: { color: "white", fontSize: 18 },
+  LoginPageBtnText: { color: "black", fontSize: 25, fontWeight: "bold" },
+  usernameInput: {
+    marginTop: 30,
+  },
 });
 
 export const RecipesPageStyles = StyleSheet.create({
@@ -314,25 +345,35 @@ export const SignUpPageStyles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "#FFBA00",
   },
-  SignUpPageTitle: { fontSize: 24, marginBottom: 20 },
-  SignUpPageInput: {
-    width: 300,
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
+  SignUpPageTitle: {
+    fontSize: 40,
     marginBottom: 20,
-    padding: 10,
+    color: "white",
+    fontWeight: "bold",
+    flexDirection: "row",
+    width: "100%",
+  },
+  SignUpPageInput: {
+    width: 350,
+    height: 50,
+    borderColor: "black",
+    borderWidth: 1.5,
+    marginBottom: 20,
+    padding: 12,
+    borderRadius: 10,
+    fontSize: 15.5,
+    backgroundColor: "white",
   },
   SignUpPageBtn: {
     width: 200,
     padding: 15,
-    backgroundColor: "#88B361",
+    backgroundColor: "#FFBA00",
     borderRadius: 5,
     alignItems: "center",
   },
-  SignUpPageBtnText: { color: "white", fontSize: 18 },
+  SignUpPageBtnText: { color: "black", fontSize: 25, fontWeight: "bold" },
 });
 
 export const SettingsPageStyles = StyleSheet.create({
@@ -707,8 +748,8 @@ export const DetailedGroupPageStyles = StyleSheet.create({
   },
   currentPoll: {
     justifyContent: "center",
-    backgroundColor: "#88B361",
-    height: 100,
+    backgroundColor: "lightgrey",
+    height: 200,
     marginLeft: 10,
     marginRight: 10,
   },
@@ -731,7 +772,6 @@ export const DetailedGroupPageStyles = StyleSheet.create({
   mealContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
     backgroundColor: "#f0f0f0",
     borderRadius: 10,
     overflow: "hidden",
@@ -748,5 +788,37 @@ export const DetailedGroupPageStyles = StyleSheet.create({
     width: 100,
     height: 100,
     backgroundColor: "#ccc", // Gray color as a placeholder
+  },
+});
+
+export const PollPageStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  middleContainer: {
+    flex: 3,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+  },
+  pollPageBtnContainer: {
+    flex: 1,
+    alignItems: "center",
+    paddingTop: 10,
+  },
+  pollPageBtn: {
+    borderRadius: 5,
+    marginBottom: 10,
+    backgroundColor: "#88B361",
+    width: "90%",
+  },
+  pollPageBtnText: {
+    textAlign: "center",
+    color: "#fff",
+    marginBottom: 10,
+    marginTop: 10,
+    fontSize: 16,
   },
 });

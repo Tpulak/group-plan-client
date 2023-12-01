@@ -1,6 +1,15 @@
-import { Text, View, Modal, TouchableOpacity, StyleSheet } from "react-native";
+/* eslint-disable react/prop-types */
+import {
+  Text,
+  View,
+  Modal,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { MembersModalStyles } from "../../styles";
 import { useEffect, useState } from "react";
+import React from "react";
 import axios from "axios";
 
 export default function GroupMembersModal(props) {
