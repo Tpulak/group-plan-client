@@ -1,41 +1,98 @@
 import React from "react";
 import { LandingPageStyles } from "../styles";
-import { TouchableOpacity, SafeAreaView, Text, StatusBar } from "react-native";
+import {
+  TouchableOpacity,
+  SafeAreaView,
+  Text,
+  StatusBar,
+  View,
+  StyleSheet,
+  Image,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function LandingPage() {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={LandingPageStyles.container}>
+    <View style={LandingPageStyles.container}>
       <StatusBar barStyle="default" />
-      <Text style={{ fontSize: 24, marginBottom: 20 }}>
-        Welcome to Group Plan!
-      </Text>
+      <View style={LandingPageStyles.coloredHalf} />
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ height: "40%" }}>
+          <View
+            style={{
+              alignItems: "flex-end",
+              width: "100%",
+              height: "10%",
+            }}
+          >
+            <Image
+              source={require("../assets/images/landingIMG1.png")}
+              style={{ ...LandingPageStyles.image }}
+            />
+          </View>
+          <View
+            style={{
+              alignItems: "flex-start",
+              width: "100%",
+              height: "58%",
+            }}
+          >
+            <Image
+              source={require("../assets/images/landingIMG2.png")}
+              style={{ ...LandingPageStyles.image }}
+            />
+          </View>
+          <View
+            style={{
+              alignItems: "flex-end",
+              width: "100%",
+              height: "30%",
+            }}
+          >
+            <Image
+              source={require("../assets/images/landingIMG3.png")}
+              style={{ ...LandingPageStyles.image }}
+            />
+          </View>
+        </View>
+        <View style={LandingPageStyles.bottomView}>
+          <Text style={{ fontSize: 60, fontWeight: "bold", color: "white" }}>
+            Group{" "}
+          </Text>
+          <Text style={{ fontSize: 60, fontWeight: "bold", color: "white" }}>
+            Plan
+          </Text>
+          <Text style={{ fontSize: 20, color: "white" }}>
+            A Meal Planning Community
+          </Text>
 
-      <TouchableOpacity
-        style={{
-          ...LandingPageStyles.LandingPageBtn,
-          backgroundColor: "white",
-        }}
-        onPress={() => {
-          navigation.navigate("SignUpPage");
-        }}
-      >
-        <Text
-          style={{ ...LandingPageStyles.LandingPageBtnText, color: "#88B361" }}
-        >
-          Sign Up
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={LandingPageStyles.LandingPageBtn}
-        onPress={() => {
-          navigation.navigate("LoginPage");
-        }}
-      >
-        <Text style={LandingPageStyles.LandingPageBtnText}>Log In</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+          <TouchableOpacity
+            style={LandingPageStyles.LandingPageBtn}
+            onPress={() => {
+              navigation.navigate("LoginPage");
+            }}
+          >
+            <Text style={LandingPageStyles.LandingPageBtnText}>Log In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              ...LandingPageStyles.LandingPageBtn,
+            }}
+            onPress={() => {
+              navigation.navigate("SignUpPage");
+            }}
+          >
+            <Text
+              style={{
+                ...LandingPageStyles.LandingPageBtnText,
+              }}
+            >
+              Sign Up
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </View>
   );
 }

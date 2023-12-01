@@ -17,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [btnColor, setBtnColor] = useState(false);
   const navigation = useNavigation();
 
   const storeUserData = async (value, key) => {
@@ -28,6 +29,7 @@ export default function LoginScreen() {
   };
 
   const handleLogInPress = () => {
+    setBtnColor(true);
     axios
       .post(
         `http://${
@@ -43,7 +45,9 @@ export default function LoginScreen() {
           navigation.navigate("HomePage");
           setUsername("");
           setPassword("");
+          setBtnColor(false);
         } else {
+          setBtnColor(false);
           Alert.alert("Log In Error", response.data["message"], [
             {
               text: "OK",
@@ -54,7 +58,10 @@ export default function LoginScreen() {
           ]);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setBtnColor(false);
+        console.log(error);
+      });
   };
 
   return (
@@ -63,13 +70,27 @@ export default function LoginScreen() {
       style={LoginPageStyles.container}
     >
       <View style={LoginPageStyles.container}>
-        <Text style={LoginPageStyles.LoginPageTitle}>
-          Welcome back Group Planner!
-        </Text>
+        <View style={{ flexDirection: "row", marginLeft: 15 }}>
+          <Text style={LoginPageStyles.LoginPageTitle}>Welcome Back</Text>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            paddingBottom: 25,
+            marginRight: 15,
+          }}
+        >
+          <Text
+            style={{ ...LoginPageStyles.LoginPageTitle, textAlign: "right" }}
+          >
+            Group Planner !!!
+          </Text>
+        </View>
+
         <Image
           // eslint-disable-next-line no-undef
           source={require("../assets/icons/logoPH.png")}
-          style={{ width: 100, height: 100 }}
+          style={{ width: 125, height: 125 }}
         />
 
         <TextInput
@@ -91,7 +112,11 @@ export default function LoginScreen() {
         />
 
         <TouchableOpacity
-          style={LoginPageStyles.LoginPageBtn}
+          style={{
+            ...LoginPageStyles.LoginPageBtn,
+            backgroundColor: btnColor ? "#88B361" : "#FFBA00",
+          }}
+          disabled={btnColor ? true : false}
           onPress={() => {
             // Handle login logic here with username and password
             // console.log("Login pressed with:", { username, password });
@@ -111,7 +136,7 @@ export default function LoginScreen() {
             navigation.goBack();
           }}
         >
-          <Text style={{ color: "blue", fontSize: 16 }}>
+          <Text style={{ color: "white", fontSize: 18 }}>
             Back to Landing Page
           </Text>
         </TouchableOpacity>
