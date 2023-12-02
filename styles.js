@@ -532,24 +532,24 @@ export const MembersModalStyles = StyleSheet.create({
     elevation: 5,
   },
 
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 20,
-  },
-
   closeButton: {
-    padding: 10,
     backgroundColor: "#888",
-    borderRadius: 5,
+    borderRadius: 10,
     width: "48%",
     alignItems: "center",
+    paddingHorizontal: 32,
+    paddingVertical: 12,
   },
 
   buttonText: {
     color: "white",
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: fonts.bold,
+  },
+
+  membersText: {
+    fontFamily: fonts.regular,
+    fontSize: 15,
   },
 });
 
@@ -658,7 +658,6 @@ export const DetailedGroupPageStyles = StyleSheet.create({
   },
   groupContainer: {
     flex: 1,
-    justifyContent: "space-around",
   },
   topContainer: {
     width: "100%",
@@ -668,11 +667,9 @@ export const DetailedGroupPageStyles = StyleSheet.create({
     marginTop: 15,
   },
   currentPoll: {
-    justifyContent: "center",
-    backgroundColor: "lightgrey",
+    alignItems: "center",
     height: 200,
-    marginLeft: 10,
-    marginRight: 10,
+    marginTop: 30,
   },
   startPoll: {
     justifyContent: "center",
@@ -685,6 +682,7 @@ export const DetailedGroupPageStyles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     alignItems: "center",
+    marginTop: 50,
   },
   button: {
     backgroundColor: "#88B361",

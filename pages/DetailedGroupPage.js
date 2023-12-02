@@ -17,7 +17,7 @@ import GroupMembersModal from "../components/Modals/GroupMembersModal";
 import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
 import { DetailedGroupPageStyles, RecipeCardStyles } from "../styles";
 import { Bar } from "react-native-progress";
-import MuiIcon from "react-native-vector-icons/MaterialIcons";
+import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useNavigation } from "@react-navigation/native";
 
@@ -89,7 +89,7 @@ export default function DetailedGroupPage({ route }) {
       preview.push(
         <Bar
           progress={pollSummary[element].votes / 21}
-          width={Dimensions.get("window").width * 0.94}
+          width={Dimensions.get("window").width * 0.9}
           height={35}
           animated={true}
           style={{ marginBottom: 15 }}
@@ -100,7 +100,7 @@ export default function DetailedGroupPage({ route }) {
           <Text
             style={{
               position: "absolute",
-              color: "#FFBA00",
+              color: "black",
               fontSize: 15,
               textAlign: "center",
               padding: 8,
@@ -180,28 +180,32 @@ export default function DetailedGroupPage({ route }) {
             >
               <View
                 style={{
+                  width: "90%",
+                  marginBottom: 5,
                   flexDirection: "row",
-                  justifyContent: "center",
-                  marginBottom: 10,
+                  justifyContent: "space-between",
                 }}
               >
+                <Text style={DetailedGroupPageStyles.sectionTitle}>
+                  Current Poll
+                </Text>
                 <Text
                   style={{
-                    fontSize: 20,
-                    textAlign: "center",
+                    ...DetailedGroupPageStyles.sectionTitle,
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  Current Poll{" "}
-                  {/* (Press to vote/add recipe arrow-forward-ios) */}
+                  View
+                  <MuiCIcon name="arrow-right" size={20} color="#88B361" />
                 </Text>
-                <View style={{ flex: 1, justifyContent: "center" }}>
-                  <MuiIcon name="arrow-forward-ios" size={16} color="blue" />
-                </View>
               </View>
 
-              {pollPreview().map((preview) => {
-                return preview;
-              })}
+              <View>
+                {pollPreview().map((preview) => {
+                  return preview;
+                })}
+              </View>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity

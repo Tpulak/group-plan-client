@@ -50,17 +50,23 @@ export default function GroupMembersModal(props) {
             props.close(false);
           }}
         >
-          <Text style={{ fontWeight: "bold", marginBottom: 10, fontSize: 18 }}>
-            Owner:{" "}
-            <Text style={{ fontWeight: "normal" }}>{owner.username}</Text>
-          </Text>
-
+          <Text style={{ fontWeight: "bold", fontSize: 18 }}>Owner </Text>
           <View
             style={{
               borderBottomColor: "black",
               borderBottomWidth: StyleSheet.hairlineWidth,
             }}
           />
+          <Text
+            style={{
+              fontSize: 15,
+              marginBottom: 15,
+              fontFamily: "Poppins_400Regular",
+            }}
+          >
+            {owner.username}
+          </Text>
+
           <Text style={{ fontWeight: "bold", fontSize: 18 }}>Members</Text>
           <View
             style={{
@@ -70,13 +76,21 @@ export default function GroupMembersModal(props) {
           />
           {members.map((member) => {
             return (
-              <Text key={member.username} style={{ fontSize: 18 }}>
+              <Text
+                key={member.username}
+                style={MembersModalStyles.membersText}
+              >
                 {member.username}
               </Text>
             );
           })}
           {/* Buttons */}
-          <View style={MembersModalStyles.buttonContainer}>
+          <View
+            style={{
+              alignItems: "center",
+              marginTop: 20,
+            }}
+          >
             {/* CLOSE BUTTON */}
             <TouchableOpacity
               onPress={() => {
