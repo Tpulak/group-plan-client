@@ -71,7 +71,13 @@ export default function LoginScreen() {
     >
       <View style={LoginPageStyles.container}>
         <View style={{ flexDirection: "row", marginLeft: 15 }}>
-          <Text style={LoginPageStyles.LoginPageTitle}>Welcome Back</Text>
+          <Text
+            style={{
+              ...LoginPageStyles.LoginPageTitle,
+            }}
+          >
+            Welcome Back
+          </Text>
         </View>
         <View
           style={{
@@ -81,7 +87,10 @@ export default function LoginScreen() {
           }}
         >
           <Text
-            style={{ ...LoginPageStyles.LoginPageTitle, textAlign: "right" }}
+            style={{
+              ...LoginPageStyles.LoginPageTitle,
+              textAlign: "right",
+            }}
           >
             Group Planner !!!
           </Text>
@@ -104,7 +113,9 @@ export default function LoginScreen() {
         />
 
         <TextInput
-          style={LoginPageStyles.LoginPageInput}
+          style={{
+            ...LoginPageStyles.LoginPageInput,
+          }}
           placeholder="Password"
           secureTextEntry
           value={password}
@@ -123,7 +134,13 @@ export default function LoginScreen() {
             handleLogInPress();
           }}
         >
-          <Text style={LoginPageStyles.LoginPageBtnText}>Log In</Text>
+          <Text
+            style={{
+              ...LoginPageStyles.LoginPageBtnText,
+            }}
+          >
+            Log In
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -136,7 +153,13 @@ export default function LoginScreen() {
             navigation.goBack();
           }}
         >
-          <Text style={{ color: "white", fontSize: 18 }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 18,
+              fontFamily: "Poppins_400Regular",
+            }}
+          >
             Back to Landing Page
           </Text>
         </TouchableOpacity>

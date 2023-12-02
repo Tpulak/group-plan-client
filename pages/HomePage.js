@@ -4,7 +4,7 @@ import { HomePageStyles } from "../styles";
 import axios from "axios";
 import TopNav from "../components/TopNav";
 import BottomNav from "../components/BottomNav";
-import HomeMealCard from "../components/Cards/HomeMealCard";
+import HomeRecipeCard from "../components/Cards/HomeRecipeCard";
 
 const HomePage = () => {
   const [meals, setMeals] = useState([]);
@@ -31,10 +31,13 @@ const HomePage = () => {
         <TopNav />
 
         {/* MIDDLE */}
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ alignItems: "center" }}
+        >
           {meals.map((element) => {
             return (
-              <HomeMealCard
+              <HomeRecipeCard
                 name={element.strMeal}
                 id={element.idMeal}
                 key={element.idMeal}

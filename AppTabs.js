@@ -51,7 +51,7 @@ const AppTabs = ({ navigator }) => {
           tabBarIcon: ({ focused }) => (
             <View style={TabBarStyles.tabBarOptionContainer}>
               <Image
-                source={require("./assets/icons/dish.png")}
+                source={require("./assets/icons/fork_knife.png")}
                 style={{
                   ...TabBarStyles.tabBarOptionIMG,
                   tintColor: focused ? "#FFBA00" : "#748c94",

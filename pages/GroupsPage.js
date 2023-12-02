@@ -18,7 +18,7 @@ import MuiIcon from "react-native-vector-icons/MaterialIcons";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import GroupsCollection from "../components/GroupsCollection";
 import { GroupsPageStyles } from "../styles";
-import BottomNav from "../components/BottomNav";
+import CreateGroupModal from "../components/Modals/CreateGroupModal";
 
 // Add other imports as needed
 
@@ -128,7 +128,7 @@ export default function GroupPage() {
           <TouchableOpacity
             style={{
               ...GroupsPageStyles.createBtn,
-              backgroundColor: searchText ? "red" : "#88B361",
+              backgroundColor: searchText ? "red" : "#FFBA00",
             }}
             onPress={searchText ? cancelSearch : createGroup}
           >
@@ -183,6 +183,11 @@ export default function GroupPage() {
             //add switch for user groups and recommened groups
           )}
         </View>
+        <CreateGroupModal
+          modalVisible={modalVisible}
+          close={setModalVisible}
+          userGroups={getUserGroups}
+        />
       </View>
     </SafeAreaView>
   );

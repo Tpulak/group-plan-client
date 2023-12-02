@@ -7,25 +7,23 @@ import {
   TouchableOpacity,
   Platform,
   Dimensions,
+  useWindowDimensions,
+  Image,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import TopNav from "../components/TopNav";
-import BottomNav from "../components/BottomNav";
-// import RecipeCard from "../components/recipeCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GroupMembersModal from "../components/Modals/GroupMembersModal";
 import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
-import { DetailedGroupPageStyles } from "../styles";
+import { DetailedGroupPageStyles, RecipeCardStyles } from "../styles";
 import { Bar } from "react-native-progress";
 import MuiIcon from "react-native-vector-icons/MaterialIcons";
-
-// import { placeholders } from "../pollPlaceholders";
 
 import { useNavigation } from "@react-navigation/native";
 
 export default function DetailedGroupPage({ route }) {
   const navigation = useNavigation();
+  const { width } = useWindowDimensions();
   const [group, setGroup] = useState(route.params.group.fields);
   const [currentRecipe, setCurrentRecipe] = useState({});
   const [mealModalVisible, setMealModalVisible] = useState(false);
@@ -121,37 +119,55 @@ export default function DetailedGroupPage({ route }) {
       <StatusBar barStyle="default" />
       <View style={DetailedGroupPageStyles.container}>
         <View style={DetailedGroupPageStyles.topContainer}>
-          <Text style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>
-            {group.name}
-          </Text>
           <TouchableOpacity
-            style={DetailedGroupPageStyles.membersButton}
+            style={DetailedGroupPageStyles.button}
             onPress={() => {
               setMemberModalsVisible(true);
             }}
           >
-            <Text style={{ color: "white" }}>Members</Text>
+            <Text style={DetailedGroupPageStyles.buttonText}>Members</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              ...DetailedGroupPageStyles.button,
+              backgroundColor: "red",
+            }}
+            onPress={() => {
+              setMemberModalsVisible(true);
+            }}
+          >
+            <Text style={DetailedGroupPageStyles.buttonText}>Leave Group</Text>
           </TouchableOpacity>
         </View>
 
         <View style={DetailedGroupPageStyles.groupContainer}>
           <View style={DetailedGroupPageStyles.currentMeal}>
-            <Text style={{ fontSize: 20, marginBottom: 10 }}>Current Meal</Text>
+            <View style={{ width: "93%", marginBottom: 5 }}>
+              <Text style={DetailedGroupPageStyles.sectionTitle}>
+                Current Meal
+              </Text>
+            </View>
+
             <TouchableOpacity
-              style={DetailedGroupPageStyles.mealContainer}
-              key={currentRecipe?.pk}
-              onPress={() => {
-                if (currentRecipe.fields) {
-                  setMealModalVisible(true);
-                }
+              style={{
+                ...RecipeCardStyles.recipeContainer,
+                width: width * 0.9,
               }}
+              key={currentRecipe?.pk}
             >
-              <View style={DetailedGroupPageStyles.mealNameContainer}>
-                <Text style={DetailedGroupPageStyles.mealName}>
-                  {currentRecipe.fields?.name}
-                </Text>
-              </View>
-              <View style={DetailedGroupPageStyles.mealImagePlaceholder}></View>
+              <Image
+                source={{
+                  uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png",
+                }}
+                style={{
+                  height: 175,
+                  borderRadius: 10,
+                }}
+              />
+              <View style={RecipeCardStyles.recipeBottomBox}></View>
+              <Text style={RecipeCardStyles.recipeName}>
+                {currentRecipe?.name}
+              </Text>
             </TouchableOpacity>
           </View>
 

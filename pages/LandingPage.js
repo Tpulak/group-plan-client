@@ -6,13 +6,13 @@ import {
   Text,
   StatusBar,
   View,
-  StyleSheet,
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function LandingPage() {
   const navigation = useNavigation();
+
   return (
     <View style={LandingPageStyles.container}>
       <StatusBar barStyle="default" />
@@ -57,13 +57,31 @@ export default function LandingPage() {
           </View>
         </View>
         <View style={LandingPageStyles.bottomView}>
-          <Text style={{ fontSize: 60, fontWeight: "bold", color: "white" }}>
-            Group{" "}
+          <Text
+            style={{
+              fontSize: 60,
+              color: "white",
+              fontFamily: "Poppins_600SemiBold",
+            }}
+          >
+            Group
           </Text>
-          <Text style={{ fontSize: 60, fontWeight: "bold", color: "white" }}>
+          <Text
+            style={{
+              fontSize: 60,
+              color: "white",
+              fontFamily: "Poppins_600SemiBold",
+            }}
+          >
             Plan
           </Text>
-          <Text style={{ fontSize: 20, color: "white" }}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: "white",
+              fontFamily: "Poppins_400Regular",
+            }}
+          >
             A Meal Planning Community
           </Text>
 
@@ -73,7 +91,13 @@ export default function LandingPage() {
               navigation.navigate("LoginPage");
             }}
           >
-            <Text style={LandingPageStyles.LandingPageBtnText}>Log In</Text>
+            <Text
+              style={{
+                ...LandingPageStyles.LandingPageBtnText,
+              }}
+            >
+              Log In
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{

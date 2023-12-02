@@ -1,19 +1,29 @@
 import React from "react";
-import Navigation from "./Navigation";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import CreateRecipePage from "./pages/CreateRecipePage";
 import DetailedGroupPage from "./pages/DetailedGroupPage";
 import AppTabs from "./AppTabs";
+import { Image } from "react-native";
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+} from "@expo-google-fonts/poppins";
 
 const OnBoard = () => {
+  let [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -40,12 +50,39 @@ const OnBoard = () => {
         <Stack.Screen
           name="Create Recipe Page"
           component={CreateRecipePage}
-          options={{ headerShown: true }}
+          options={{
+            headerStyle: {
+              backgroundColor: "#FFBA00",
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerBackTitle: "Back",
+            headerBackTitleStyle: {
+              color: "black",
+              fontWeight: "bold",
+            },
+            headerTintColor: "black",
+          }}
         />
         <Stack.Screen
           name="Detailed Group Page"
           component={DetailedGroupPage}
-          options={{ headerShown: true }}
+          options={({ route }) => ({
+            headerTitle: route.params.group.fields.name,
+            headerStyle: {
+              backgroundColor: "#FFBA00",
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerBackTitle: "Back",
+            headerBackTitleStyle: {
+              color: "black",
+              fontWeight: "bold",
+            },
+            headerTintColor: "black",
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
