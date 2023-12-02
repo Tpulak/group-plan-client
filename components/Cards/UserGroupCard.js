@@ -11,7 +11,7 @@ export default function UserGroupCard(props) {
       style={GroupCardStyles.UserGroupContainer}
       id="hi"
       onPress={(x) => {
-        navigation.navigate("DetailedGroupPage", { group: props.group });
+        navigation.navigate("Detailed Group Page", { group: props.group });
       }}
     >
       <View style={GroupCardStyles.UserGroupImagePlaceholder}></View>

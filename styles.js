@@ -71,7 +71,7 @@ export const NavStyles = StyleSheet.create({
   },
   topNavContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     padding: 10,
   },
@@ -79,6 +79,7 @@ export const NavStyles = StyleSheet.create({
     fontSize: 30,
     color: "black",
     fontWeight: "bold",
+    textAlign: "center",
   },
 });
 
@@ -189,12 +190,9 @@ export const RecipesPageStyles = StyleSheet.create({
     textAlign: "center",
   },
   mealContainer: {
-    flexDirection: "row",
-    alignItems: "center",
     marginBottom: 10,
-    backgroundColor: "#f0f0f0",
     borderRadius: 10,
-    overflow: "hidden",
+    width: "100%",
   },
   mealNameContainer: {
     flex: 1,
@@ -822,3 +820,36 @@ export const PollPageStyles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+export const TabBarStyles = {
+  tabBar: {
+    position: "absolute",
+    bottom: 25,
+    left: 20,
+    right: 20,
+    elevation: 0,
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    height: 90,
+    shadow: {
+      shadowColor: "#FFBA00",
+      shadowOffset: {
+        width: 0,
+        height: 10,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.5,
+      elevation: 5,
+    },
+  },
+  tabBarOptionContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    top: 10,
+  },
+  tabBarOptionIMG: {
+    width: 30,
+    height: 30,
+    resizeMode: "contain",
+  },
+};

@@ -31,7 +31,7 @@ const HomePage = () => {
         <TopNav />
 
         {/* MIDDLE */}
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {meals.map((element) => {
             return (
               <HomeMealCard
@@ -46,7 +46,7 @@ const HomePage = () => {
         </ScrollView>
 
         {/* BOTTOM */}
-        <BottomNav />
+        {/* <BottomNav /> */}
       </View>
     </SafeAreaView>
   );
