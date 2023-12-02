@@ -183,7 +183,6 @@ export default function GroupPage() {
             //add switch for user groups and recommened groups
           )}
         </View>
-        <BottomNav />
       </View>
     </SafeAreaView>
   );

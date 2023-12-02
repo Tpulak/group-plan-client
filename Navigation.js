@@ -65,7 +65,7 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="DetailedGroupPage"
+          name="Detailed Group Page"
           component={DetailedGroupPage}
           options={{ headerShown: false }}
         />

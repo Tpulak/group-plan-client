@@ -120,8 +120,6 @@ export default function DetailedGroupPage({ route }) {
     <SafeAreaView style={DetailedGroupPageStyles.container}>
       <StatusBar barStyle="default" />
       <View style={DetailedGroupPageStyles.container}>
-        {/* TOP */}
-        <TopNav />
         <View style={DetailedGroupPageStyles.topContainer}>
           <Text style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>
             {group.name}
@@ -211,8 +209,6 @@ export default function DetailedGroupPage({ route }) {
           )}
         </View>
 
-        {/* BOTTOM */}
-        <BottomNav />
         <RecipeDetailsModal
           show={mealModalVisible}
           close={setMealModalVisible}

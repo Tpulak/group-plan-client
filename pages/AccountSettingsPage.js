@@ -69,8 +69,6 @@ export default function AccountSettingsPage() {
             <Text style={{ color: "white", fontSize: 18 }}>Log Out</Text>
           </TouchableOpacity>
         </View>
-
-        <BottomNav />
       </View>
     </SafeAreaView>
   );

@@ -42,7 +42,7 @@ export default function LoginScreen() {
         storeUserData(response.headers["set-cookie"][0], "sessionId");
         storeUserData(response.data.pk, "userId");
         if ("pk" in response.data) {
-          navigation.navigate("HomePage");
+          navigation.navigate("AppTabs");
           setUsername("");
           setPassword("");
           setBtnColor(false);

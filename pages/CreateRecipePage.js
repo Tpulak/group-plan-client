@@ -245,9 +245,6 @@ export default function CreateRecipePage() {
             <Text style={{ color: "white", fontSize: 18 }}>Save</Text>
           </TouchableOpacity>
         </ScrollView>
-
-        {/* BOTTOM */}
-        <BottomNav />
       </View>
     </SafeAreaView>
   );

@@ -7,14 +7,15 @@ import {
   ScrollView,
   Text,
   Platform,
+  Image,
 } from "react-native";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { RecipesPageStyles } from "../styles";
 import TopNav from "../components/TopNav";
-import BottomNav from "../components/BottomNav";
 import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
+import CreateRecipePage from "./CreateRecipePage";
 
 export default function RecipesPage(props) {
   const navigation = useNavigation();
@@ -22,10 +23,6 @@ export default function RecipesPage(props) {
   const [recipes, setRecipes] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [focusedMeal, setFocusedMeal] = useState(0);
-
-  const handleCreateMeal = () => {
-    navigation.navigate("Create Meal Page");
-  };
 
   const getUserRecipes = async () => {
     const info = await AsyncStorage.getItem("sessionId");
@@ -46,7 +43,6 @@ export default function RecipesPage(props) {
   };
   const openMealModal = (index) => {
     //prints the meal that should be shown in the modal
-    console.log(recipes[index]);
     setFocusedMeal(index);
     setModalVisible(true);
   };
@@ -70,7 +66,10 @@ export default function RecipesPage(props) {
           >
             <Text style={RecipesPageStyles.addRecipeBtnText}>Add Recipe</Text>
           </TouchableOpacity>
-          <ScrollView style={RecipesPageStyles.recipesList}>
+          <ScrollView
+            style={RecipesPageStyles.recipesList}
+            showsVerticalScrollIndicator={false}
+          >
             {recipes.map((recipe, index) => (
               <TouchableOpacity
                 style={RecipesPageStyles.mealContainer}
@@ -79,17 +78,38 @@ export default function RecipesPage(props) {
                   openMealModal(index);
                 }}
               >
-                <View style={RecipesPageStyles.mealNameContainer}>
+                {/* <View style={RecipesPageStyles.mealNameContainer}>
                   <Text style={RecipesPageStyles.mealName}>
                     {recipe.fields.name}
                   </Text>
                 </View>
-                <View style={RecipesPageStyles.mealImagePlaceholder}></View>
+                <View style={RecipesPageStyles.mealImagePlaceholder}></View> */}
+                <View
+                  style={{
+                    flexDirection: "column",
+                    marginBottom: 10,
+                  }}
+                >
+                  <Image
+                    source={{
+                      uri: "https://cdn.icon-icons.com/icons2/3361/PNG/512/multimedia_communication_image_placeholder_photography_landscape_image_comics_picture_photo_gallery_image_icon_210828.png",
+                    }}
+                    style={{ height: 200 }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      paddingTop: 5,
+                      textAlign: "center",
+                    }}
+                  >
+                    {recipe.fields.name}
+                  </Text>
+                </View>
               </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
-        <BottomNav />
         <RecipeDetailsModal
           show={modalVisible}
           close={setModalVisible}

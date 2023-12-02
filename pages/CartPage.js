@@ -52,9 +52,6 @@ export default function CartPage() {
             ))}
           </ScrollView>
         </View>
-
-        {/* BOTTOM */}
-        <BottomNav />
       </View>
     </SafeAreaView>
   );

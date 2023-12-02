@@ -19,26 +19,26 @@ export default function TopNav() {
   return (
     <View style={NavStyles.topNavContainer}>
       {/* GROUP ICON*/}
-      <Pressable onPress={handleGroupPress}>
+      {/* <Pressable onPress={handleGroupPress}>
         <MuiCIcon
           name="account-group-outline"
           size={40}
           color="#FFBA00"
           style={{ backgroundColor: "#fff", borderRadius: 5, padding: 5 }}
         />
-      </Pressable>
+      </Pressable> */}
 
       <Text style={NavStyles.topNavtitle}>Group Plan</Text>
 
       {/* SETTINGS ICON*/}
-      <Pressable onPress={handleSettingPress}>
+      {/* <Pressable onPress={handleSettingPress}>
         <MuiCIcon
           name="account-settings-outline"
           size={40}
           color="#FFBA00"
           style={{ backgroundColor: "#fff", borderRadius: 5, padding: 5 }}
         />
-      </Pressable>
+      </Pressable> */}
     </View>
   );
 }
