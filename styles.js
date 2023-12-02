@@ -1,5 +1,10 @@
 import { StyleSheet } from "react-native";
 
+const fonts = {
+  bold: "Poppins_600SemiBold",
+  regular: "Poppins_400Regular",
+};
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,7 +27,7 @@ export const styles = StyleSheet.create({
   topNavtitle: {
     fontSize: 30,
     color: "black",
-    fontWeight: "bold",
+    fontFamily: fonts.bold,
   },
   landingPageContainer: {
     backgroundColor: "green",
@@ -48,7 +53,7 @@ export const styles = StyleSheet.create({
   addRecipeBtnText: {
     color: "white",
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: fonts.bold,
     textAlign: "center",
   },
 });
@@ -78,7 +83,7 @@ export const NavStyles = StyleSheet.create({
   topNavtitle: {
     fontSize: 30,
     color: "black",
-    fontWeight: "bold",
+    fontFamily: fonts.bold,
     textAlign: "center",
   },
 });
@@ -103,12 +108,14 @@ export const LandingPageStyles = StyleSheet.create({
     marginTop: 20,
     padding: 15,
     backgroundColor: "#FFBA00",
-    borderRadius: 5,
     alignItems: "center",
     borderWidth: 2,
-    borderColor: "#88B361",
+    borderColor: "#FFBA00",
+    borderRadius: 10,
+    paddingHorizontal: 32,
+    paddingVertical: 16,
   },
-  LandingPageBtnText: { color: "white", fontSize: 18 },
+  LandingPageBtnText: { color: "white", fontSize: 18, fontFamily: fonts.bold },
   image: {
     width: "50%",
   },
@@ -130,7 +137,7 @@ export const LoginPageStyles = StyleSheet.create({
     fontSize: 40,
     marginBottom: 20,
     color: "white",
-    fontWeight: "bold",
+    fontFamily: fonts.bold,
     flexDirection: "row",
     width: "100%",
   },
@@ -143,6 +150,7 @@ export const LoginPageStyles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     fontSize: 15.5,
+    fontFamily: fonts.regular,
     backgroundColor: "white",
   },
   LoginPageBtn: {
@@ -154,7 +162,7 @@ export const LoginPageStyles = StyleSheet.create({
     marginTop: 15,
     color: "white",
   },
-  LoginPageBtnText: { color: "black", fontSize: 25, fontWeight: "bold" },
+  LoginPageBtnText: { color: "black", fontSize: 25, fontFamily: fonts.bold },
   usernameInput: {
     marginTop: 30,
   },
@@ -164,51 +172,27 @@ export const RecipesPageStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-  },
-  recipesMiddleContainer: {
-    flex: 3,
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
-    paddingHorizontal: 20,
   },
   recipesList: {
-    width: "100%",
+    alignItems: "center",
   },
   addRecipebtn: {
-    backgroundColor: "#88B361", // You can change the color as needed
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    backgroundColor: "#FFBA00", // You can change the color as needed
+    paddingHorizontal: 30,
+    paddingVertical: 5,
     borderRadius: 10,
     marginBottom: 20,
-    marginTop: 30,
+    marginTop: 10,
+    width: "90%",
   },
   addRecipeBtnText: {
     color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  mealContainer: {
-    marginBottom: 10,
-    borderRadius: 10,
-    width: "100%",
-  },
-  mealNameContainer: {
-    flex: 1,
-    padding: 10,
-  },
-  mealName: {
     fontSize: 18,
-    fontWeight: "bold",
-  },
-  mealImagePlaceholder: {
-    width: 100,
-    height: 100,
-    backgroundColor: "#ccc", // Gray color as a placeholder
-  },
-  Icontxt: {
+    fontFamily: fonts.bold,
     textAlign: "center",
+    marginBottom: 10,
+    marginTop: 10,
   },
 });
 
@@ -230,26 +214,26 @@ export const CreateRecipesStyles = StyleSheet.create({
   },
   sectionLabel: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: fonts.bold,
     marginBottom: 10,
     marginTop: 10,
     textAlign: "left",
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: fonts.bold,
     marginBottom: 10,
   },
   input: {
     height: 50,
-    borderColor: "gray",
+    borderColor: "#88B361",
     borderWidth: 1,
+    borderRadius: 10,
     width: "88%",
-    paddingLeft: 10,
-    borderTopColor: "#88B361",
-    borderLeftColor: "#88B361",
-    borderBottomColor: "#88B361",
-    borderRightColor: "#88B361",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    fontFamily: fonts.regular,
   },
   inputContainer: {
     flexDirection: "row",
@@ -264,6 +248,8 @@ export const CreateRecipesStyles = StyleSheet.create({
     height: 50,
     textAlign: "left",
     paddingTop: 15,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
   },
   imageUpload: {
     width: 300,
@@ -284,6 +270,16 @@ export const CreateRecipesStyles = StyleSheet.create({
     backgroundColor: "#FFBA00",
     height: 50,
     justifyContent: "center",
+    paddingHorizontal: 32,
+  },
+  removeButton: {
+    borderWidth: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#88B361",
+    flex: 1,
+    borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
   },
 });
 
@@ -307,11 +303,12 @@ export const RecipeDetailsModalStyles = StyleSheet.create({
   sectionHeader: {
     fontSize: 20,
     marginTop: 10,
-    fontWeight: "bold",
+    fontFamily: fonts.bold,
     textAlign: "left",
   },
   sectionContent: {
     textAlign: "left",
+    fontFamily: fonts.regular,
   },
 
   buttonContainer: {
@@ -335,6 +332,7 @@ export const RecipeDetailsModalStyles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
+    fontFamily: fonts.bold,
   },
 });
 
@@ -349,7 +347,7 @@ export const SignUpPageStyles = StyleSheet.create({
     fontSize: 40,
     marginBottom: 20,
     color: "white",
-    fontWeight: "bold",
+    fontFamily: fonts.bold,
     flexDirection: "row",
     width: "100%",
   },
@@ -362,6 +360,7 @@ export const SignUpPageStyles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     fontSize: 15.5,
+    fontFamily: fonts.regular,
     backgroundColor: "white",
   },
   SignUpPageBtn: {
@@ -371,7 +370,7 @@ export const SignUpPageStyles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
   },
-  SignUpPageBtnText: { color: "black", fontSize: 25, fontWeight: "bold" },
+  SignUpPageBtnText: { color: "black", fontSize: 25, fontFamily: fonts.bold },
 });
 
 export const SettingsPageStyles = StyleSheet.create({
@@ -404,7 +403,7 @@ export const GroupsPageStyles = StyleSheet.create({
   title: {
     fontSize: 30,
     color: "black",
-    fontWeight: "bold",
+    fontFamily: fonts.bold,
     textAlign: "center",
   },
   middleContainer: {
@@ -415,34 +414,33 @@ export const GroupsPageStyles = StyleSheet.create({
     overflow: "hidden",
   },
   searchInput: {
-    height: 40,
-    borderColor: "gray",
+    width: "92%",
+    borderColor: "#D9D9D9",
     borderWidth: 1,
-    paddingLeft: 10,
-    width: "90%",
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 16,
+    fontSize: 15,
+    fontFamily: fonts.regular,
   },
   createBtn: {
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 10,
+    paddingHorizontal: 30,
+    paddingVertical: 5,
   },
   createBtnText: {
     textAlign: "center",
     color: "#fff",
     marginBottom: 10,
     marginTop: 10,
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: fonts.bold,
   },
   pickerContainer: {
     marginTop: 1,
     width: "100%",
-    // flex: 1,
-  },
-  Join_button: {
-    margin: 30,
-    padding: 5,
-    borderRadius: 5,
-    backgroundColor: "#88B361",
-    marginLeft: "auto",
+    fontFamily: fonts.regular,
   },
   groupRow: {
     flexDirection: "row",
@@ -453,90 +451,6 @@ export const GroupsPageStyles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 18,
   },
-
-  //MODAL
-  modalView: {
-    margin: 20,
-    marginTop: 100,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalText: {
-    fontSize: 24,
-    marginBottom: 15,
-    textAlign: "center",
-  },
-  groupInput: {
-    height: 40,
-    width: "100%",
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10,
-  },
-
-  groupTypeContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  groupTypeText: {
-    fontSize: 18,
-    marginLeft: 10,
-  },
-
-  modalButtons: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
-    marginTop: 20,
-  },
-
-  radioButtons: {
-    flexDirection: "row",
-    marginBottom: 10,
-  },
-  radioButton: {
-    borderWidth: 1,
-    borderColor: "#888",
-    padding: 10,
-    borderRadius: 5,
-    marginRight: 10,
-  },
-  radioButtonSelected: {
-    backgroundColor: "#888",
-  },
-  radioButtonText: {
-    color: "#888",
-  },
-
-  groupTypeContainer: {
-    flexDirection: "row",
-    marginBottom: 10,
-  },
-  groupTypeButton: {
-    borderWidth: 1,
-    borderColor: "#888",
-    padding: 10,
-    borderRadius: 5,
-    marginRight: 10,
-  },
-  groupTypeButtonSelected: {
-    backgroundColor: "#88B361",
-  },
-  groupTypeButtonText: {
-    color: "black",
-  },
 });
 
 export const GroupCardStyles = StyleSheet.create({
@@ -544,24 +458,31 @@ export const GroupCardStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-    backgroundColor: "#E0E0E0",
+
     borderRadius: 10,
     overflow: "hidden",
   },
   UserGroupNameContainer: {
     flex: 1,
     padding: 10,
-    alignItems: "center",
+
     backgroundColor: "",
   },
   UserGroupName: {
     fontSize: 20,
+    fontFamily: fonts.bold,
+    // fontWeight: "bold",
+  },
+  UserGroupCurrentMeal: {
+    fontSize: 15,
+    fontFamily: fonts.regular,
     // fontWeight: "bold",
   },
   UserGroupImagePlaceholder: {
     width: 80,
     height: 80,
     backgroundColor: "#88B361", // Gray color as a placeholder
+    borderRadius: 50,
   },
 
   GroupContainer: {
@@ -581,6 +502,7 @@ export const GroupCardStyles = StyleSheet.create({
   },
   GroupName: {
     fontSize: 20,
+    fontFamily: fonts.regular,
     // fontWeight: "bold",
   },
   GroupBtn: {
@@ -610,23 +532,24 @@ export const MembersModalStyles = StyleSheet.create({
     elevation: 5,
   },
 
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 20,
-  },
-
   closeButton: {
-    padding: 10,
     backgroundColor: "#888",
-    borderRadius: 5,
+    borderRadius: 10,
     width: "48%",
     alignItems: "center",
+    paddingHorizontal: 32,
+    paddingVertical: 12,
   },
 
   buttonText: {
     color: "white",
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: fonts.bold,
+  },
+
+  membersText: {
+    fontFamily: fonts.regular,
+    fontSize: 15,
   },
 });
 
@@ -735,7 +658,6 @@ export const DetailedGroupPageStyles = StyleSheet.create({
   },
   groupContainer: {
     flex: 1,
-    justifyContent: "space-around",
   },
   topContainer: {
     width: "100%",
@@ -745,11 +667,9 @@ export const DetailedGroupPageStyles = StyleSheet.create({
     marginTop: 15,
   },
   currentPoll: {
-    justifyContent: "center",
-    backgroundColor: "lightgrey",
+    alignItems: "center",
     height: 200,
-    marginLeft: 10,
-    marginRight: 10,
+    marginTop: 30,
   },
   startPoll: {
     justifyContent: "center",
@@ -761,11 +681,25 @@ export const DetailedGroupPageStyles = StyleSheet.create({
   currentMeal: {
     paddingLeft: 10,
     paddingRight: 10,
+    alignItems: "center",
+    marginTop: 50,
   },
-  membersButton: {
+  button: {
     backgroundColor: "#88B361",
     padding: 10,
     borderRadius: 10,
+    paddingHorizontal: 32,
+    paddingVertical: 10,
+  },
+  buttonText: {
+    color: "white",
+    padding: 10,
+    fontFamily: fonts.bold,
+    fontSize: 16,
+  },
+  sectionTitle: {
+    fontFamily: fonts.bold,
+    fontSize: 20,
   },
   mealContainer: {
     flexDirection: "row",
@@ -853,3 +787,123 @@ export const TabBarStyles = {
     resizeMode: "contain",
   },
 };
+
+export const CreateGroupModalStyles = StyleSheet.create({
+  //MODAL
+  modalView: {
+    margin: 20,
+    marginTop: 100,
+    backgroundColor: "#FFBA00",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 24,
+    fontFamily: fonts.regular,
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  groupInput: {
+    height: 50,
+    width: "100%",
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 10,
+    marginBottom: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 16,
+    fontSize: 15,
+    fontFamily: fonts.regular,
+    backgroundColor: "white",
+  },
+
+  groupTypeContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  groupTypeText: {
+    fontSize: 18,
+    marginLeft: 10,
+    fontFamily: fonts.regular,
+  },
+
+  modalButtons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    marginTop: 20,
+  },
+
+  modalButtonsText: {
+    fontSize: 18,
+    fontFamily: fonts.bold,
+  },
+
+  groupTypeButton: {
+    borderWidth: 1,
+    borderColor: "black",
+    padding: 10,
+    borderRadius: 5,
+    marginRight: 10,
+    paddingHorizontal: 32,
+    paddingVertical: 10,
+  },
+  groupTypeButtonSelected: {
+    backgroundColor: "white",
+  },
+  groupTypeButtonText: {
+    color: "black",
+    fontFamily: fonts.regular,
+  },
+});
+
+export const RecipeCardStyles = StyleSheet.create({
+  recipeContainer: {
+    marginBottom: 15,
+    borderWidth: 2,
+    borderColor: "white",
+    borderRadius: 10,
+    shadow: {
+      shadowColor: "#FFBA00",
+      shadowOffset: {
+        width: 0,
+        height: 10,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.5,
+      elevation: 5,
+    },
+  },
+  recipeBottomBox: {
+    backgroundColor: "black",
+    opacity: 0.4,
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    height: 40,
+    justifyContent: "center",
+    paddingVertical: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+  recipeName: {
+    position: "absolute",
+    bottom: 5,
+    color: "white",
+    fontSize: 20,
+    fontFamily: fonts.bold,
+    opacity: 1,
+    elevation: 20,
+    paddingLeft: 10,
+  },
+});

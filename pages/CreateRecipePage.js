@@ -161,19 +161,16 @@ export default function CreateRecipePage() {
               <View style={CreateRecipesStyles.inputContainer} key={index}>
                 <TextInput
                   key={index}
-                  style={CreateRecipesStyles.input}
+                  style={[
+                    CreateRecipesStyles.input,
+                    CreateRecipesStyles.multiLineInput,
+                  ]}
                   placeholder={`Ingredient ${index + 1}`}
                   value={ingredient}
                   onChangeText={(text) => onIngredientChange(text, index)}
                 />
                 <TouchableOpacity
-                  style={{
-                    borderWidth: 0,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "#88B361",
-                    flex: 1,
-                  }}
+                  style={CreateRecipesStyles.removeButton}
                   onPress={() => {
                     removeIngredient(index);
                   }}
@@ -206,13 +203,7 @@ export default function CreateRecipePage() {
                   multiline={true}
                 />
                 <TouchableOpacity
-                  style={{
-                    borderWidth: 0,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "#88B361",
-                    flex: 1,
-                  }}
+                  style={CreateRecipesStyles.removeButton}
                   onPress={() => {
                     removeStep(index);
                   }}
@@ -242,7 +233,15 @@ export default function CreateRecipePage() {
             }}
             onPress={handleCreate}
           >
-            <Text style={{ color: "white", fontSize: 18 }}>Save</Text>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 18,
+                fontFamily: "Poppins_400Regular",
+              }}
+            >
+              Save
+            </Text>
           </TouchableOpacity>
         </ScrollView>
       </View>

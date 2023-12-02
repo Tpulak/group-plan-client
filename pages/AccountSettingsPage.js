@@ -51,7 +51,13 @@ export default function AccountSettingsPage() {
       <View style={SettingsPageStyles.container}>
         <TopNav />
         <View style={SettingsPageStyles.middleContainer}>
-          <Text style={{ fontSize: 24, marginBottom: 20 }}>
+          <Text
+            style={{
+              fontSize: 24,
+              marginBottom: 20,
+              fontFamily: "Poppins_400Regular",
+            }}
+          >
             Account Settings
           </Text>
 
@@ -66,7 +72,15 @@ export default function AccountSettingsPage() {
             }}
             onPress={handleLogout}
           >
-            <Text style={{ color: "white", fontSize: 18 }}>Log Out</Text>
+            <Text
+              style={{
+                color: "white",
+                fontSize: 18,
+                fontFamily: "Poppins_600SemiBold",
+              }}
+            >
+              Log Out
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

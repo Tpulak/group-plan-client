@@ -8,16 +8,18 @@ import {
   Text,
   Platform,
   Image,
+  useWindowDimensions,
 } from "react-native";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { RecipesPageStyles } from "../styles";
+import { RecipesPageStyles, RecipeCardStyles } from "../styles";
 import TopNav from "../components/TopNav";
 import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
 import CreateRecipePage from "./CreateRecipePage";
 
 export default function RecipesPage(props) {
+  const { width } = useWindowDimensions();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [recipes, setRecipes] = useState([]);
@@ -53,63 +55,53 @@ export default function RecipesPage(props) {
     }
   }, [props, isFocused]);
   return (
-    <SafeAreaView style={RecipesPageStyles.container}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar barStyle="default" />
       <View style={RecipesPageStyles.container}>
         <TopNav />
-        <View style={RecipesPageStyles.recipesMiddleContainer}>
-          <TouchableOpacity
-            style={RecipesPageStyles.addRecipebtn}
-            onPress={() => {
-              navigation.navigate("Create Recipe Page");
-            }}
-          >
-            <Text style={RecipesPageStyles.addRecipeBtnText}>Add Recipe</Text>
-          </TouchableOpacity>
-          <ScrollView
-            style={RecipesPageStyles.recipesList}
-            showsVerticalScrollIndicator={false}
-          >
-            {recipes.map((recipe, index) => (
-              <TouchableOpacity
-                style={RecipesPageStyles.mealContainer}
-                key={recipe.pk}
-                onPress={() => {
-                  openMealModal(index);
+        <TouchableOpacity
+          style={RecipesPageStyles.addRecipebtn}
+          onPress={() => {
+            navigation.navigate("Create Recipe Page");
+          }}
+        >
+          <Text style={RecipesPageStyles.addRecipeBtnText}>Add Recipe</Text>
+        </TouchableOpacity>
+        <ScrollView
+          // style={RecipesPageStyles.recipesList}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={RecipesPageStyles.recipesList}
+        >
+          {recipes.map((recipe, index) => (
+            <TouchableOpacity
+              style={{
+                ...RecipeCardStyles.recipeContainer,
+                width: width * 0.9,
+              }}
+              key={recipe.pk}
+              onPress={() => {
+                openMealModal(index);
+              }}
+            >
+              <Image
+                source={{
+                  uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png",
                 }}
-              >
-                {/* <View style={RecipesPageStyles.mealNameContainer}>
-                  <Text style={RecipesPageStyles.mealName}>
-                    {recipe.fields.name}
-                  </Text>
-                </View>
-                <View style={RecipesPageStyles.mealImagePlaceholder}></View> */}
-                <View
-                  style={{
-                    flexDirection: "column",
-                    marginBottom: 10,
-                  }}
-                >
-                  <Image
-                    source={{
-                      uri: "https://cdn.icon-icons.com/icons2/3361/PNG/512/multimedia_communication_image_placeholder_photography_landscape_image_comics_picture_photo_gallery_image_icon_210828.png",
-                    }}
-                    style={{ height: 200 }}
-                  />
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      paddingTop: 5,
-                      textAlign: "center",
-                    }}
-                  >
-                    {recipe.fields.name}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
+                style={{
+                  height: 175,
+
+                  borderRadius: 10,
+                  backgroundColor: "lightblue",
+                }}
+              />
+              <View style={RecipeCardStyles.recipeBottomBox}></View>
+              <Text style={RecipeCardStyles.recipeName}>
+                {recipe.fields.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
         <RecipeDetailsModal
           show={modalVisible}
           close={setModalVisible}

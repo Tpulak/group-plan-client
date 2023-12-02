@@ -32,7 +32,13 @@ export default function SignUpPage() {
     >
       <View style={SignUpPageStyles.container}>
         <View style={{ flexDirection: "row", marginLeft: 15 }}>
-          <Text style={SignUpPageStyles.SignUpPageTitle}>Become a</Text>
+          <Text
+            style={{
+              ...SignUpPageStyles.SignUpPageTitle,
+            }}
+          >
+            Become a
+          </Text>
         </View>
         <View
           style={{
@@ -42,7 +48,10 @@ export default function SignUpPage() {
           }}
         >
           <Text
-            style={{ ...SignUpPageStyles.SignUpPageTitle, textAlign: "right" }}
+            style={{
+              ...SignUpPageStyles.SignUpPageTitle,
+              textAlign: "right",
+            }}
           >
             Group Planner !!!
           </Text>
@@ -124,7 +133,13 @@ export default function SignUpPage() {
             navigation.goBack();
           }}
         >
-          <Text style={{ color: "white", fontSize: 18 }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 18,
+              fontFamily: "Poppins_400Regular",
+            }}
+          >
             Back to Landing Page
           </Text>
         </TouchableOpacity>
