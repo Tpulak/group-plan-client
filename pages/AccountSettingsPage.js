@@ -8,7 +8,7 @@ import {
   Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import BottomNav from "../components/BottomNav";
+
 import TopNav from "../components/TopNav";
 import { SettingsPageStyles } from "../styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";

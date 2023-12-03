@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import {
   View,
   Modal,
   Text,
   TouchableOpacity,
   TextInput,
-  Button,
   Alert,
   Platform,
 } from "react-native";

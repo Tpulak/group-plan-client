@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { HomePageStyles } from "../styles";
 import axios from "axios";
 import TopNav from "../components/TopNav";
-import BottomNav from "../components/BottomNav";
+
 import HomeRecipeCard from "../components/Cards/HomeRecipeCard";
 
 const HomePage = () => {

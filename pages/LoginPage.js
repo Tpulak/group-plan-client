@@ -18,6 +18,7 @@ export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [btnColor, setBtnColor] = useState(false);
+  const [invalidInputs, setInvalidInputs] = useState(false);
   const navigation = useNavigation();
 
   const storeUserData = async (value, key) => {
@@ -30,6 +31,11 @@ export default function LoginScreen() {
 
   const handleLogInPress = () => {
     setBtnColor(true);
+    if (username === "" || password === "") {
+      setBtnColor(false);
+      setInvalidInputs(true);
+      return;
+    }
     axios
       .post(
         `http://${
@@ -39,21 +45,21 @@ export default function LoginScreen() {
         (data = { username: username, password: password })
       )
       .then((response) => {
-        storeUserData(response.headers["set-cookie"][0], "sessionId");
-        storeUserData(response.data.pk, "userId");
         if ("pk" in response.data) {
+          storeUserData(response?.headers["set-cookie"][0], "sessionId");
+          storeUserData(response?.data?.pk, "userId");
           navigation.navigate("AppTabs");
           setUsername("");
           setPassword("");
           setBtnColor(false);
+          setInvalidInputs(false);
         } else {
           setBtnColor(false);
+          setInvalidInputs(true);
           Alert.alert("Log In Error", response.data["message"], [
             {
               text: "OK",
-              onPress: () => {
-                // do something
-              },
+              onPress: () => {},
             },
           ]);
         }
@@ -106,15 +112,20 @@ export default function LoginScreen() {
           style={{
             ...LoginPageStyles.LoginPageInput,
             ...LoginPageStyles.usernameInput,
+            borderColor: invalidInputs ? "red" : "black",
+            borderWidth: invalidInputs ? 3 : 1.5,
           }}
           placeholder="Username"
           value={username}
           onChangeText={(text) => setUsername(text)}
+          autoCapitalize="none"
         />
 
         <TextInput
           style={{
             ...LoginPageStyles.LoginPageInput,
+            borderColor: invalidInputs ? "red" : "black",
+            borderWidth: invalidInputs ? 3 : 1.5,
           }}
           placeholder="Password"
           secureTextEntry
@@ -150,7 +161,7 @@ export default function LoginScreen() {
             alignItems: "center",
           }}
           onPress={() => {
-            navigation.goBack();
+            navigation.navigate("LandingPage");
           }}
         >
           <Text

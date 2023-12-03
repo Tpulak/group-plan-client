@@ -175,7 +175,10 @@ export default function DetailedGroupPage({ route }) {
             <TouchableOpacity
               style={DetailedGroupPageStyles.currentPoll}
               onPress={() => {
-                navigation.navigate("Poll Page");
+                navigation.navigate("Poll Page", {
+                  pollSummary: pollSummary,
+                  groupID: route.params.group.pk,
+                });
               }}
             >
               <View

@@ -6,8 +6,9 @@ import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import CreateRecipePage from "./pages/CreateRecipePage";
 import DetailedGroupPage from "./pages/DetailedGroupPage";
+import PollPage from "./pages/PollPage";
 import AppTabs from "./AppTabs";
-import { Image } from "react-native";
+
 const Stack = createStackNavigator();
 import {
   useFonts,
@@ -70,6 +71,24 @@ const OnBoard = () => {
           component={DetailedGroupPage}
           options={({ route }) => ({
             headerTitle: route.params.group.fields.name,
+            headerStyle: {
+              backgroundColor: "#FFBA00",
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerBackTitle: "Back",
+            headerBackTitleStyle: {
+              color: "black",
+              fontWeight: "bold",
+            },
+            headerTintColor: "black",
+          })}
+        />
+        <Stack.Screen
+          name="Poll Page"
+          component={PollPage}
+          options={({ route }) => ({
             headerStyle: {
               backgroundColor: "#FFBA00",
             },
