@@ -8,14 +8,14 @@ import axios from "axios";
 
 export default function GroupCard(props) {
   // NAVIGATION
-  const handleJoin = async (groupId) => {
-    // const groupId = await x._dispatchInstances.memoizedProps.testID;
+  const handleJoin = async (x) => {
+    const groupId = await x._dispatchInstances.memoizedProps.testID;
     const userId = await AsyncStorage.getItem("userId");
     const info = await AsyncStorage.getItem("sessionId");
     axios
       .post(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.199" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/group/add`,
         {
           user_id: userId,
@@ -36,7 +36,11 @@ export default function GroupCard(props) {
         <Text style={GroupCardStyles.GroupName}>{props.group.fields.name}</Text>
       </View>
 
-      <TouchableOpacity style={GroupCardStyles.GroupBtn}>
+      <TouchableOpacity
+        style={GroupCardStyles.GroupBtn}
+        onPress={handleJoin}
+        testID={`${props.group.pk}`}
+      >
         {props.group.fields.privacy === "PUBLIC" ? (
           <Text style={{ textAlign: "center" }}>Join</Text>
         ) : (

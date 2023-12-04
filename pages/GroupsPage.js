@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Keyboard,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import SelectDropdown from "react-native-select-dropdown";
@@ -25,6 +25,7 @@ import CreateGroupModal from "../components/Modals/CreateGroupModal";
 export default function GroupPage() {
   // NAVIGATION
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   //CREATE GROUP
   const [modalVisible, setModalVisible] = useState(false);
@@ -97,8 +98,10 @@ export default function GroupPage() {
   };
 
   useEffect(() => {
-    getUserGroups();
-  }, []);
+    if (isFocused) {
+      getUserGroups();
+    }
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={GroupsPageStyles.container}>
