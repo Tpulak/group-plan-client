@@ -478,12 +478,6 @@ export const GroupCardStyles = StyleSheet.create({
     fontFamily: fonts.regular,
     // fontWeight: "bold",
   },
-  UserGroupImagePlaceholder: {
-    width: 80,
-    height: 80,
-    backgroundColor: "#88B361", // Gray color as a placeholder
-    borderRadius: 50,
-  },
 
   GroupContainer: {
     flexDirection: "row",
@@ -925,18 +919,17 @@ export const AddPollRecipeModalStyles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 5,
   },
   sectionHeader: {
-    fontSize: 20,
+    fontSize: 18,
     marginTop: 10,
     fontFamily: fonts.bold,
     textAlign: "left",
@@ -945,11 +938,22 @@ export const AddPollRecipeModalStyles = StyleSheet.create({
     textAlign: "left",
     fontFamily: fonts.regular,
   },
+  recipesContainer: {
+    width: "100%",
+    paddingVertical: 15,
+  },
+  listItemContainer: {
+    flexDirection: "row",
 
+    marginVertical: 15,
+  },
+  addButtonContainer: {
+    alignItems: "center",
+  },
   addButton: {
     backgroundColor: "#88B361",
     borderRadius: 10,
-
+    width: "50%",
     alignItems: "center",
     paddingHorizontal: 32,
     paddingVertical: 10,

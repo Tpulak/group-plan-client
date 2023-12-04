@@ -22,14 +22,12 @@ export default function PollPage({ route }) {
   const navigation = useNavigation();
   const [pollSummary, setPollSummary] = useState(route.params.pollSummary);
   const [recipeNames, setRecipeNames] = useState([]);
-  const [userRecipes, setUserRecipes] = useState([]);
   const [selected, setSelected] = useState(null);
   const [modalVisible, setmodalVisible] = useState(false);
   useEffect(() => {
     setRecipeNames(
       Object.keys(pollSummary).filter((element) => !element.includes("N/A"))
     );
-    getUserRecipes();
   }, []);
 
   const showModal = () => {
@@ -57,23 +55,7 @@ export default function PollPage({ route }) {
         navigation.goBack();
       });
   };
-  const getUserRecipes = async () => {
-    const info = await AsyncStorage.getItem("sessionId");
-    axios
-      .get(
-        `http://${
-          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-        }:8000/recipes/getUserRecipes/`,
-        {
-          withCredentials: true,
-          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
-        }
-      )
-      .then((response) => {
-        setUserRecipes(response.data);
-      })
-      .catch((error) => console.log(error));
-  };
+
   return (
     <SafeAreaView style={PollPageStyles.container}>
       <StatusBar barStyle="default" />
@@ -143,7 +125,6 @@ export default function PollPage({ route }) {
         visible={modalVisible}
         close={setmodalVisible}
         groupID={route.params.groupID}
-        userRecipes={userRecipes}
       />
     </SafeAreaView>
   );
