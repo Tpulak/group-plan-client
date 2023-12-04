@@ -16,22 +16,41 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import AddPollRecipeModal from "../components/Modals/AddPollRecipeModal";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 
 export default function PollPage({ route }) {
   const navigation = useNavigation();
-  const [pollSummary, setPollSummary] = useState(route.params.pollSummary);
-  const [recipeNames, setRecipeNames] = useState([]);
+  const isFocused = useIsFocused();
+  const [recipes, setRecipes] = useState([]);
   const [selected, setSelected] = useState(null);
   const [modalVisible, setmodalVisible] = useState(false);
+
   useEffect(() => {
-    setRecipeNames(
-      Object.keys(pollSummary).filter((element) => !element.includes("N/A"))
-    );
-  }, []);
+    if (isFocused) {
+      getPollRecipes();
+    }
+  }, [isFocused, modalVisible]);
 
   const showModal = () => {
     setmodalVisible(true);
+  };
+
+  const getPollRecipes = async () => {
+    const info = await AsyncStorage.getItem("sessionId");
+    axios
+      .get(
+        `http://${
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+        }:8000/recipes/getPoll/recipes/${route.params.groupID}`,
+        {
+          withCredentials: true,
+          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+        }
+      )
+      .then((response) => {
+        setRecipes(response.data);
+      })
+      .catch((error) => console.log(error));
   };
 
   const addUserVote = async () => {
@@ -43,7 +62,7 @@ export default function PollPage({ route }) {
           Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/addVote/${route.params.groupID}/`,
         {
-          recipe_id: pollSummary[recipeNames[selected]].id,
+          recipe_id: recipes[selected].recipe,
         },
         {
           withCredentials: true,
@@ -81,9 +100,12 @@ export default function PollPage({ route }) {
           </TouchableOpacity>
         </View>
         <ScrollView contentContainerStyle={PollPageStyles.recipesContainer}>
-          {recipeNames.map((name, index) => {
+          {recipes.map((recipe, index) => {
             return (
-              <View key={name} style={PollPageStyles.listItemContainer}>
+              <View
+                key={recipe.recipeName}
+                style={PollPageStyles.listItemContainer}
+              >
                 <BouncyCheckbox
                   size={25}
                   fillColor="#FFBA00"
@@ -96,7 +118,9 @@ export default function PollPage({ route }) {
                     selected === index ? setSelected(null) : setSelected(index)
                   }
                 />
-                <Text style={{ fontFamily: "Poppins_400Regular" }}>{name}</Text>
+                <Text style={{ fontFamily: "Poppins_400Regular" }}>
+                  {recipe.recipeName}
+                </Text>
               </View>
             );
           })}
