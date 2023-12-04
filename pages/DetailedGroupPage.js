@@ -19,21 +19,28 @@ import { DetailedGroupPageStyles, RecipeCardStyles } from "../styles";
 import { Bar } from "react-native-progress";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 
 export default function DetailedGroupPage({ route }) {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const { width } = useWindowDimensions();
   const [group, setGroup] = useState(route.params.group.fields);
   const [currentRecipe, setCurrentRecipe] = useState({});
   const [mealModalVisible, setMealModalVisible] = useState(false);
   const [memberModalsVisible, setMemberModalsVisible] = useState(false);
-  const [pollSummary, setPollSummary] = useState([]);
+  const [pollSummary, setPollSummary] = useState({
+    user_count: 0,
+    summary: {},
+  });
+  const [pollPreview, setPollPreview] = useState([]);
 
   useEffect(() => {
-    getcurrentRecipe();
-    pollPreview();
-  }, [group]);
+    if (isFocused) {
+      getcurrentRecipe();
+      _pollPreview();
+    }
+  }, [group, isFocused]);
 
   const getcurrentRecipe = () => {
     if (!group.current_recipe) {
@@ -104,7 +111,7 @@ export default function DetailedGroupPage({ route }) {
     }
     return preview.slice(0, 3);
   };
-  const pollPreview = async () => {
+  const _pollPreview = async () => {
     const info = await AsyncStorage.getItem("sessionId");
 
     axios
@@ -118,8 +125,8 @@ export default function DetailedGroupPage({ route }) {
         }
       )
       .then((response) => {
-        // console.log(response.data);
-        setPollSummary(generatePollPreview(response.data));
+        setPollSummary(response.data);
+        setPollPreview(generatePollPreview(response.data));
       })
       .catch((error) => console.log(error));
   };
@@ -206,7 +213,7 @@ export default function DetailedGroupPage({ route }) {
               style={DetailedGroupPageStyles.currentPoll}
               onPress={() => {
                 navigation.navigate("Poll Page", {
-                  pollSummary: pollSummary,
+                  pollSummary: pollSummary?.summary,
                   groupID: route.params.group.pk,
                 });
               }}
@@ -235,7 +242,7 @@ export default function DetailedGroupPage({ route }) {
               </View>
 
               <View>
-                {pollSummary.map((preview) => {
+                {pollPreview.map((preview) => {
                   return preview;
                 })}
               </View>

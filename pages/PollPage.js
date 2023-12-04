@@ -9,26 +9,71 @@ import {
   Text,
   ScrollView,
   Platform,
+  Alert,
 } from "react-native";
 import { PollPageStyles } from "../styles";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import AddPollRecipeModal from "../components/Modals/AddPollRecipeModal";
+import { useNavigation } from "@react-navigation/native";
 
 export default function PollPage({ route }) {
+  const navigation = useNavigation();
   const [pollSummary, setPollSummary] = useState(route.params.pollSummary);
   const [recipeNames, setRecipeNames] = useState([]);
+  const [userRecipes, setUserRecipes] = useState([]);
   const [selected, setSelected] = useState(null);
   const [modalVisible, setmodalVisible] = useState(false);
   useEffect(() => {
-    setRecipeNames(Object.keys(pollSummary));
+    setRecipeNames(
+      Object.keys(pollSummary).filter((element) => !element.includes("N/A"))
+    );
+    getUserRecipes();
   }, []);
 
   const showModal = () => {
     setmodalVisible(true);
   };
 
+  const addUserVote = async () => {
+    const info = await AsyncStorage.getItem("sessionId");
+
+    axios
+      .put(
+        `http://${
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+        }:8000/recipes/addVote/${route.params.groupID}/`,
+        {
+          recipe_id: pollSummary[recipeNames[selected]].id,
+        },
+        {
+          withCredentials: true,
+          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+        } // Assuming you want to send the 'group' data in the request
+      )
+      .then((response) => {
+        console.log(response.data);
+        navigation.goBack();
+      });
+  };
+  const getUserRecipes = async () => {
+    const info = await AsyncStorage.getItem("sessionId");
+    axios
+      .get(
+        `http://${
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+        }:8000/recipes/getUserRecipes/`,
+        {
+          withCredentials: true,
+          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+        }
+      )
+      .then((response) => {
+        setUserRecipes(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <SafeAreaView style={PollPageStyles.container}>
       <StatusBar barStyle="default" />
@@ -65,7 +110,9 @@ export default function PollPage({ route }) {
                   innerIconStyle={{ borderWidth: 2 }}
                   isChecked={selected == index ? true : false}
                   disableBuiltInState
-                  onPress={() => setSelected(index)}
+                  onPress={() =>
+                    selected === index ? setSelected(null) : setSelected(index)
+                  }
                 />
                 <Text style={{ fontFamily: "Poppins_400Regular" }}>{name}</Text>
               </View>
@@ -75,6 +122,18 @@ export default function PollPage({ route }) {
         <View style={PollPageStyles.pollPageBottomContainer}>
           <TouchableOpacity
             style={{ ...PollPageStyles.pollPageBtn, width: "90%" }}
+            onPress={() => {
+              if (selected == null) {
+                Alert.alert("Voting Error", "You must choose one recipe", [
+                  {
+                    text: "OK",
+                    onPress: () => {},
+                  },
+                ]);
+              } else {
+                addUserVote();
+              }
+            }}
           >
             <Text style={PollPageStyles.pollPageBtnText}>Vote</Text>
           </TouchableOpacity>
@@ -84,6 +143,7 @@ export default function PollPage({ route }) {
         visible={modalVisible}
         close={setmodalVisible}
         groupID={route.params.groupID}
+        userRecipes={userRecipes}
       />
     </SafeAreaView>
   );

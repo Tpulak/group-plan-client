@@ -46,15 +46,12 @@ export default function AddPollRecipeModal(props) {
         <Text style={AddPollRecipeModalStyles.sectionHeader}>
           Choose one from your Recipes
         </Text>
-        <View style={{ height: 100, width: "100%" }}>
-          <ScrollView>
-            {recipeNames.map((name) => {
-              <Text style={{ color: "black" }} key={name}>
-                {name}
-              </Text>;
-            })}
-          </ScrollView>
-        </View>
+
+        {recipeNames.map((name) => {
+          <Text style={{ color: "black" }} key={name}>
+            {name}
+          </Text>;
+        })}
 
         <TouchableOpacity
           style={AddPollRecipeModalStyles.addButton}

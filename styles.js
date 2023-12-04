@@ -946,12 +946,6 @@ export const AddPollRecipeModalStyles = StyleSheet.create({
     fontFamily: fonts.regular,
   },
 
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
-  },
-
   addButton: {
     backgroundColor: "#88B361",
     borderRadius: 10,
