@@ -17,12 +17,9 @@ import axios from "axios";
 export default function AccountSettingsPage() {
   const navigation = useNavigation();
 
-  const storeUserData = async (value, key) => {
-    try {
-      await AsyncStorage.setItem(key, JSON.stringify(value));
-    } catch (e) {
-      // saving error
-    }
+  const removeUserData = async (value, key) => {
+    await AsyncStorage.removeItem("sessionId");
+    await AsyncStorage.removeItem("userId");
   };
 
   const handleLogout = async () => {
@@ -38,8 +35,7 @@ export default function AccountSettingsPage() {
         }
       )
       .then((response) => {
-        storeUserData("", "sessionId");
-        storeUserData("", "userId");
+        removeUserData();
         navigation.navigate("LoginPage");
       })
       .catch((error) => console.log(error));
