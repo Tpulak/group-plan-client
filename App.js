@@ -9,6 +9,8 @@ import DetailedGroupPage from "./pages/DetailedGroupPage";
 import PollPage from "./pages/PollPage";
 import AppTabs from "./AppTabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { Platform } from "react-native";
 
 const Stack = createStackNavigator();
 import {
@@ -23,11 +25,19 @@ const OnBoard = () => {
   const isAuthorized = async () => {
     const user = await AsyncStorage.getItem("sessionId");
     if (user) {
-      setAuthorized(user);
-      console.log(user);
+      axios
+        .get(
+          `http://${
+            Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+          }:8000/users/user/authorized`
+        )
+        .then((response) => {
+          setAuthorized(user);
+        })
+        .catch((error) => console.log(error));
       return true;
     }
-    console.log(user);
+
     setAuthorized(null);
     return false;
   };
@@ -53,12 +63,12 @@ const OnBoard = () => {
         />
         <Stack.Screen
           name="LoginPage"
-          component={LoginPage}
+          component={authorized ? AppTabs : LoginPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name="SignUpPage"
-          component={SignUpPage}
+          component={authorized ? AppTabs : SignUpPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
