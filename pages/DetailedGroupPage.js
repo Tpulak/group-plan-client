@@ -19,41 +19,38 @@ import { DetailedGroupPageStyles, RecipeCardStyles } from "../styles";
 import { Bar } from "react-native-progress";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 
 export default function DetailedGroupPage({ route }) {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const { width } = useWindowDimensions();
   const [group, setGroup] = useState(route.params.group.fields);
   const [currentRecipe, setCurrentRecipe] = useState({});
   const [mealModalVisible, setMealModalVisible] = useState(false);
   const [memberModalsVisible, setMemberModalsVisible] = useState(false);
   const [pollSummary, setPollSummary] = useState({
-    Taco: { id: 28, votes: 10 },
-    "Fried Egg": { id: 41, votes: 3 },
-    "Recipe 1": { id: 37, votes: 6 },
-    Cake: { id: 40, votes: 2 },
+    user_count: 0,
+    summary: {},
   });
+  const [pollPreview, setPollPreview] = useState([]);
 
   useEffect(() => {
-    getcurrentRecipe();
-    pollPreview();
-  }, [group]);
+    if (isFocused) {
+      getcurrentRecipe();
+      _pollPreview();
+    }
+  }, [group, isFocused]);
 
-  const getcurrentRecipe = async () => {
-    const info = await AsyncStorage.getItem("sessionId");
+  const getcurrentRecipe = () => {
     if (!group.current_recipe) {
       return;
     }
     axios
       .get(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.199" : "10.0.2.2"
-        }:8000/recipes/getRecipe/${group.current_recipe}`,
-        {
-          withCredentials: true,
-          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
-        }
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+        }:8000/recipes/getRecipe/${group.current_recipe}`
       )
       .then((response) => {
         setCurrentRecipe(response.data[0].fields);
@@ -66,7 +63,7 @@ export default function DetailedGroupPage({ route }) {
     axios
       .put(
         `http://${
-          Platform.OS === "ios" ? "192.168.1.199" : "10.0.2.2"
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/startPoll/${route.params.group.pk}/`,
         {
           withCredentials: true,
@@ -81,14 +78,15 @@ export default function DetailedGroupPage({ route }) {
       .catch((error) => console.log(error));
   };
 
-  const pollPreview = () => {
-    const x = Object.entries(pollSummary);
-    x.sort((a, b) => b[1].votes - a[1].votes);
+  const generatePollPreview = (container) => {
     const preview = [];
+    const x = Object.entries(container.summary);
+    x.sort((a, b) => b[1].votes - a[1].votes);
+
     for (var element in Object.fromEntries(x)) {
       preview.push(
         <Bar
-          progress={pollSummary[element].votes / 21}
+          progress={container.summary[element].votes / container.user_count}
           width={Dimensions.get("window").width * 0.9}
           height={35}
           animated={true}
@@ -106,12 +104,51 @@ export default function DetailedGroupPage({ route }) {
               padding: 8,
             }}
           >
-            {element}
+            {element.includes("N/A") ? "N/A" : element}
           </Text>
         </Bar>
       );
     }
-    return preview.slice(-3);
+    return preview.slice(0, 3);
+  };
+  const _pollPreview = async () => {
+    const info = await AsyncStorage.getItem("sessionId");
+
+    axios
+      .get(
+        `http://${
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+        }:8000/recipes/getPoll/summary/${route.params.group.pk}`,
+        {
+          withCredentials: true,
+          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+        }
+      )
+      .then((response) => {
+        setPollSummary(response.data);
+        setPollPreview(generatePollPreview(response.data));
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleLeaveGroup = async (groupId) => {
+    const info = await AsyncStorage.getItem("sessionId");
+    axios
+      .put(
+        `http://${
+          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+        }:8000/recipes/group/removeUser`,
+        {
+          group_id: groupId,
+        },
+        {
+          withCredentials: true,
+          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+        } // Assuming you want to send the 'group' data in the request
+      )
+      .then(() => {
+        navigation.goBack();
+      });
   };
 
   return (
@@ -133,7 +170,7 @@ export default function DetailedGroupPage({ route }) {
               backgroundColor: "red",
             }}
             onPress={() => {
-              setMemberModalsVisible(true);
+              handleLeaveGroup(route.params.group.pk);
             }}
           >
             <Text style={DetailedGroupPageStyles.buttonText}>Leave Group</Text>
@@ -175,7 +212,10 @@ export default function DetailedGroupPage({ route }) {
             <TouchableOpacity
               style={DetailedGroupPageStyles.currentPoll}
               onPress={() => {
-                navigation.navigate("Poll Page");
+                navigation.navigate("Poll Page", {
+                  pollSummary: pollSummary?.summary,
+                  groupID: route.params.group.pk,
+                });
               }}
             >
               <View
@@ -202,7 +242,7 @@ export default function DetailedGroupPage({ route }) {
               </View>
 
               <View>
-                {pollPreview().map((preview) => {
+                {pollPreview.map((preview) => {
                   return preview;
                 })}
               </View>

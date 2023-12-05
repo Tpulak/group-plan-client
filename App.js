@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LandingPage from "./pages/LandingPage";
@@ -6,8 +6,10 @@ import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import CreateRecipePage from "./pages/CreateRecipePage";
 import DetailedGroupPage from "./pages/DetailedGroupPage";
+import PollPage from "./pages/PollPage";
 import AppTabs from "./AppTabs";
-import { Image } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const Stack = createStackNavigator();
 import {
   useFonts,
@@ -16,6 +18,23 @@ import {
 } from "@expo-google-fonts/poppins";
 
 const OnBoard = () => {
+  const [authorized, setAuthorized] = useState(null);
+
+  const isAuthorized = async () => {
+    const user = await AsyncStorage.getItem("sessionId");
+    if (user) {
+      setAuthorized(user);
+      console.log(user);
+      return true;
+    }
+    console.log(user);
+    setAuthorized(null);
+    return false;
+  };
+
+  useEffect(() => {
+    isAuthorized();
+  });
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_600SemiBold,
@@ -29,7 +48,7 @@ const OnBoard = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="LandingPage"
-          component={LandingPage}
+          component={authorized ? AppTabs : LandingPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -70,6 +89,24 @@ const OnBoard = () => {
           component={DetailedGroupPage}
           options={({ route }) => ({
             headerTitle: route.params.group.fields.name,
+            headerStyle: {
+              backgroundColor: "#FFBA00",
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerBackTitle: "Back",
+            headerBackTitleStyle: {
+              color: "black",
+              fontWeight: "bold",
+            },
+            headerTintColor: "black",
+          })}
+        />
+        <Stack.Screen
+          name="Poll Page"
+          component={PollPage}
+          options={({ route }) => ({
             headerStyle: {
               backgroundColor: "#FFBA00",
             },

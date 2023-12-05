@@ -458,7 +458,6 @@ export const GroupCardStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-
     borderRadius: 10,
     overflow: "hidden",
   },
@@ -478,12 +477,6 @@ export const GroupCardStyles = StyleSheet.create({
     fontFamily: fonts.regular,
     // fontWeight: "bold",
   },
-  UserGroupImagePlaceholder: {
-    width: 80,
-    height: 80,
-    backgroundColor: "#88B361", // Gray color as a placeholder
-    borderRadius: 50,
-  },
 
   GroupContainer: {
     flexDirection: "row",
@@ -495,8 +488,7 @@ export const GroupCardStyles = StyleSheet.create({
   GroupNameContainer: {
     flex: 1,
     padding: 10,
-    alignItems: "center",
-    backgroundColor: "#E0E0E0",
+
     marginLeft: 10,
     marginRight: 10,
   },
@@ -506,12 +498,18 @@ export const GroupCardStyles = StyleSheet.create({
     // fontWeight: "bold",
   },
   GroupBtn: {
-    width: 80,
-    height: "100%",
+    width: 125,
     backgroundColor: "#88B361",
-    borderRadius: 50,
+    borderRadius: 10,
     alignContent: "center",
     justifyContent: "center",
+    paddingVertical: 14,
+    maxWidth: 1000,
+  },
+  GroupBtnText: {
+    textAlign: "center",
+    fontFamily: fonts.regular,
+    fontSize: 16,
   },
 });
 
@@ -728,43 +726,53 @@ export const PollPageStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  middleContainer: {
-    flex: 3,
-    justifyContent: "center",
+  pollPageTopContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "white",
-    paddingHorizontal: 20,
-  },
-  pollPageBtnContainer: {
-    flex: 1,
-    alignItems: "center",
-    paddingTop: 10,
+    marginVertical: 15,
   },
   pollPageBtn: {
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 10,
     backgroundColor: "#88B361",
-    width: "90%",
+    paddingHorizontal: 32,
+    paddingVertical: 2,
   },
   pollPageBtnText: {
     textAlign: "center",
     color: "#fff",
     marginBottom: 10,
     marginTop: 10,
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: fonts.bold,
+  },
+  recipesContainer: {
+    height: 100,
+    paddingHorizontal: "10%",
+  },
+  listItemContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 15,
+  },
+  pollPageBottomContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginVertical: 15,
   },
 });
 
-export const TabBarStyles = {
+export const TabBarStyles = StyleSheet.create({
   tabBar: {
     position: "absolute",
-    bottom: 25,
-    left: 20,
-    right: 20,
+    bottom: 0,
     elevation: 0,
     backgroundColor: "#fff",
     borderRadius: 15,
-    height: 90,
+    height: 95,
+    width: "100%",
     shadow: {
       shadowColor: "#FFBA00",
       shadowOffset: {
@@ -782,11 +790,11 @@ export const TabBarStyles = {
     top: 10,
   },
   tabBarOptionIMG: {
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 35,
     resizeMode: "contain",
   },
-};
+});
 
 export const CreateGroupModalStyles = StyleSheet.create({
   //MODAL
@@ -905,5 +913,58 @@ export const RecipeCardStyles = StyleSheet.create({
     opacity: 1,
     elevation: 20,
     paddingLeft: 10,
+  },
+});
+
+export const AddPollRecipeModalStyles = StyleSheet.create({
+  modalView: {
+    margin: 20,
+    marginTop: 100,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  sectionHeader: {
+    fontSize: 18,
+    marginTop: 10,
+    fontFamily: fonts.bold,
+    textAlign: "left",
+  },
+  sectionContent: {
+    textAlign: "left",
+    fontFamily: fonts.regular,
+  },
+  recipesContainer: {
+    width: "100%",
+    paddingVertical: 15,
+  },
+  listItemContainer: {
+    flexDirection: "row",
+
+    marginVertical: 15,
+  },
+  addButtonContainer: {
+    alignItems: "center",
+  },
+  addButton: {
+    backgroundColor: "#88B361",
+    borderRadius: 10,
+    width: "50%",
+    alignItems: "center",
+    paddingHorizontal: 32,
+    paddingVertical: 10,
+  },
+  addButtonText: {
+    color: "white",
+    fontFamily: fonts.bold,
+    fontSize: 16,
   },
 });

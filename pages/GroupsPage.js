@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Keyboard,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import SelectDropdown from "react-native-select-dropdown";
@@ -25,14 +25,10 @@ import CreateGroupModal from "../components/Modals/CreateGroupModal";
 export default function GroupPage() {
   // NAVIGATION
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   //CREATE GROUP
   const [modalVisible, setModalVisible] = useState(false);
-
-  const handleGroupCreatePress = () => {
-    console.log("handleGroupCreatePress called");
-    setModalVisible(true);
-  };
 
   //PICKER
   const [selectedValue, setSelectedValue] = useState(0);
@@ -97,8 +93,10 @@ export default function GroupPage() {
   };
 
   useEffect(() => {
-    getUserGroups();
-  }, []);
+    if (isFocused) {
+      getUserGroups();
+    }
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={GroupsPageStyles.container}>
@@ -150,17 +148,33 @@ export default function GroupPage() {
                   return (
                     <MuiCIcon
                       name="chevron-down"
-                      size={20}
+                      size={30}
                       color="#FFBA00"
                       style={{
                         backgroundColor: "transparent",
                         borderRadius: 5,
                         padding: 5,
+                        position: "absolute",
                       }}
                     />
                   );
                 }}
-                buttonStyle={{ width: "100%" }}
+                buttonStyle={{
+                  width: "100%",
+                  borderWidth: 2,
+                  borderColor: "#FFBA00",
+                  backgroundColor: "white",
+                  borderRadius: 10,
+                }}
+                buttonTextStyle={{
+                  fontFamily: "Poppins_600SemiBold",
+                  fontSize: 18,
+                }}
+                selectedRowTextStyle={{
+                  fontFamily: "Poppins_400Regular",
+                  fontSize: 18,
+                }}
+                selectedRowStyle={{}}
                 onSelect={(selectedItem, index) => {
                   setSelectedValue(index);
                 }}
@@ -191,17 +205,4 @@ export default function GroupPage() {
       </View>
     </SafeAreaView>
   );
-}
-
-// Apply platform-specific GroupsPageStyles
-if (Platform.OS === "ios") {
-  GroupsPageStyles.pickerContainer = {
-    marginTop: 1,
-    backgroundColor: "white", // Adjust this value to control the space between the button and the Picker for iOS
-  };
-} else if (Platform.OS === "android") {
-  GroupsPageStyles.pickerContainer = {
-    marginTop: 20,
-    backgroundColor: "white", // Adjust this value to control the space between the button and the Picker for Android
-  };
 }

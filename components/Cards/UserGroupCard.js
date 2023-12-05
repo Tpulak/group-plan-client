@@ -14,7 +14,6 @@ export default function UserGroupCard(props) {
         navigation.navigate("Detailed Group Page", { group: props.group });
       }}
     >
-      <View style={GroupCardStyles.UserGroupImagePlaceholder}></View>
       <View style={GroupCardStyles.UserGroupNameContainer}>
         <Text style={GroupCardStyles.UserGroupName}>
           {props.group.fields.name}
