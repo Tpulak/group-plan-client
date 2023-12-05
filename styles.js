@@ -458,7 +458,6 @@ export const GroupCardStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-
     borderRadius: 10,
     overflow: "hidden",
   },
@@ -489,8 +488,7 @@ export const GroupCardStyles = StyleSheet.create({
   GroupNameContainer: {
     flex: 1,
     padding: 10,
-    alignItems: "center",
-    backgroundColor: "#E0E0E0",
+
     marginLeft: 10,
     marginRight: 10,
   },
@@ -500,12 +498,18 @@ export const GroupCardStyles = StyleSheet.create({
     // fontWeight: "bold",
   },
   GroupBtn: {
-    width: 80,
-    height: "100%",
+    width: 125,
     backgroundColor: "#88B361",
-    borderRadius: 50,
+    borderRadius: 10,
     alignContent: "center",
     justifyContent: "center",
+    paddingVertical: 14,
+    maxWidth: 1000,
+  },
+  GroupBtnText: {
+    textAlign: "center",
+    fontFamily: fonts.regular,
+    fontSize: 16,
   },
 });
 

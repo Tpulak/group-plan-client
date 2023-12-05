@@ -10,7 +10,6 @@ export default function GroupsCollection(props) {
     <ScrollView style={styles.topContainer}>
       {props.groups.map((group) => {
         if (props.showbtn) {
-          console.log(group);
           return (
             <GroupCard
               key={group.pk}

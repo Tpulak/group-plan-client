@@ -30,11 +30,6 @@ export default function GroupPage() {
   //CREATE GROUP
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleGroupCreatePress = () => {
-    console.log("handleGroupCreatePress called");
-    setModalVisible(true);
-  };
-
   //PICKER
   const [selectedValue, setSelectedValue] = useState(0);
 
@@ -153,17 +148,33 @@ export default function GroupPage() {
                   return (
                     <MuiCIcon
                       name="chevron-down"
-                      size={20}
+                      size={30}
                       color="#FFBA00"
                       style={{
                         backgroundColor: "transparent",
                         borderRadius: 5,
                         padding: 5,
+                        position: "absolute",
                       }}
                     />
                   );
                 }}
-                buttonStyle={{ width: "100%" }}
+                buttonStyle={{
+                  width: "100%",
+                  borderWidth: 2,
+                  borderColor: "#FFBA00",
+                  backgroundColor: "white",
+                  borderRadius: 10,
+                }}
+                buttonTextStyle={{
+                  fontFamily: "Poppins_600SemiBold",
+                  fontSize: 18,
+                }}
+                selectedRowTextStyle={{
+                  fontFamily: "Poppins_400Regular",
+                  fontSize: 18,
+                }}
+                selectedRowStyle={{}}
                 onSelect={(selectedItem, index) => {
                   setSelectedValue(index);
                 }}
@@ -194,17 +205,4 @@ export default function GroupPage() {
       </View>
     </SafeAreaView>
   );
-}
-
-// Apply platform-specific GroupsPageStyles
-if (Platform.OS === "ios") {
-  GroupsPageStyles.pickerContainer = {
-    marginTop: 1,
-    backgroundColor: "white", // Adjust this value to control the space between the button and the Picker for iOS
-  };
-} else if (Platform.OS === "android") {
-  GroupsPageStyles.pickerContainer = {
-    marginTop: 20,
-    backgroundColor: "white", // Adjust this value to control the space between the button and the Picker for Android
-  };
 }

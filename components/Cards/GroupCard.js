@@ -42,9 +42,9 @@ export default function GroupCard(props) {
         testID={`${props.group.pk}`}
       >
         {props.group.fields.privacy === "PUBLIC" ? (
-          <Text style={{ textAlign: "center" }}>Join</Text>
+          <Text style={GroupCardStyles.GroupBtnText}>Join</Text>
         ) : (
-          <Text style={{ textAlign: "center" }}>Request</Text>
+          <Text style={GroupCardStyles.GroupBtnText}>Request</Text>
         )}
       </TouchableOpacity>
     </View>
