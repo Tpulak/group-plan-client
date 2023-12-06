@@ -19,7 +19,7 @@ import {
   Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
 
-const OnBoard = () => {
+const OnBoard = (props) => {
   const [authorized, setAuthorized] = useState(null);
 
   const isAuthorized = async () => {
@@ -44,7 +44,7 @@ const OnBoard = () => {
 
   useEffect(() => {
     isAuthorized();
-  });
+  }, [props]);
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_600SemiBold,
@@ -98,7 +98,7 @@ const OnBoard = () => {
           name="Detailed Group Page"
           component={DetailedGroupPage}
           options={({ route }) => ({
-            headerTitle: route.params.group.fields.name,
+            headerTitle: route.params.group.name,
             headerStyle: {
               backgroundColor: "#FFBA00",
             },

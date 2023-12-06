@@ -54,7 +54,8 @@ export default function GroupPage() {
   };
 
   //------------------FOR DISPLAYING PUBLIC/PRIVATE GROUPS -------------------------------------------------------------------------
-  const getGroups = () => {
+  const getGroups = async () => {
+    const info = await AsyncStorage.getItem("sessionId");
     if (searchText === "") {
       return;
     }
@@ -62,7 +63,11 @@ export default function GroupPage() {
       .get(
         `http://${
           Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-        }:8000/recipes/searchGroups/${searchText}`
+        }:8000/recipes/searchGroups/${searchText}`,
+        {
+          withCredentials: true,
+          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
+        }
       )
       .then((response) => {
         setSearchedGroups(response.data);

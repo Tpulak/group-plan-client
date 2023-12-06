@@ -19,13 +19,13 @@ export default function GroupsCollection(props) {
           if (props.showbtn) {
             return (
               <GroupCard
-                key={group.pk}
+                key={group.id}
                 group={group}
                 updateUserGroups={props.updateUserGroups}
               />
             );
           } else {
-            return <UserGroupCard group={group} key={group.pk} />;
+            return <UserGroupCard group={group} key={group.id} />;
           }
         })}
       </ScrollView>

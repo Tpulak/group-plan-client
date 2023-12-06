@@ -18,6 +18,7 @@ import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
 import { DetailedGroupPageStyles, RecipeCardStyles } from "../styles";
 import { Bar } from "react-native-progress";
 import MuiCIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import CountdownTimer from "../components/CountDownTimer";
 
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 
@@ -25,7 +26,7 @@ export default function DetailedGroupPage({ route }) {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const { width } = useWindowDimensions();
-  const [group, setGroup] = useState(route.params.group.fields);
+  const [group, setGroup] = useState(route.params.group);
   const [currentRecipe, setCurrentRecipe] = useState({});
   const [mealModalVisible, setMealModalVisible] = useState(false);
   const [memberModalsVisible, setMemberModalsVisible] = useState(false);
@@ -39,6 +40,16 @@ export default function DetailedGroupPage({ route }) {
     if (isFocused) {
       getcurrentRecipe();
       _pollPreview();
+      // let now = moment();
+      // let targetDate = moment("2023-12-07T05:01:01.908Z");
+      // console.log(moment.duration(targetDate.diff(now).toString()));
+      // console.log(Math.floor(moment.duration(targetDate.diff(now)).asHours()));
+      // console.log(
+      //   Math.floor(moment.duration(targetDate.diff(now)).asMinutes()) % 60
+      // );
+      // console.log(
+      //   Math.floor(moment.duration(targetDate.diff(now)).asSeconds()) % 60
+      // );
     }
   }, [group, isFocused]);
 
@@ -64,7 +75,7 @@ export default function DetailedGroupPage({ route }) {
       .put(
         `http://${
           Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-        }:8000/recipes/startPoll/${route.params.group.pk}/`,
+        }:8000/recipes/startPoll/${route.params.group.id}/`,
         {
           withCredentials: true,
           headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
@@ -118,7 +129,7 @@ export default function DetailedGroupPage({ route }) {
       .get(
         `http://${
           Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-        }:8000/recipes/getPoll/summary/${route.params.group.pk}`,
+        }:8000/recipes/getPoll/summary/${route.params.group.id}`,
         {
           withCredentials: true,
           headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
@@ -170,7 +181,7 @@ export default function DetailedGroupPage({ route }) {
               backgroundColor: "red",
             }}
             onPress={() => {
-              handleLeaveGroup(route.params.group.pk);
+              handleLeaveGroup(route.params.group.id);
             }}
           >
             <Text style={DetailedGroupPageStyles.buttonText}>Leave Group</Text>
@@ -194,7 +205,9 @@ export default function DetailedGroupPage({ route }) {
             >
               <Image
                 source={{
-                  uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png",
+                  uri: currentRecipe.recipe_image
+                    ? currentRecipe.recipe_image
+                    : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png",
                 }}
                 style={{
                   height: 175,
@@ -203,7 +216,7 @@ export default function DetailedGroupPage({ route }) {
               />
               <View style={RecipeCardStyles.recipeBottomBox}></View>
               <Text style={RecipeCardStyles.recipeName}>
-                {currentRecipe?.name}
+                {currentRecipe.name ? currentRecipe.name : "N/A"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -214,7 +227,7 @@ export default function DetailedGroupPage({ route }) {
               onPress={() => {
                 navigation.navigate("Poll Page", {
                   pollSummary: pollSummary?.summary,
-                  groupID: route.params.group.pk,
+                  groupID: route.params.group.id,
                 });
               }}
             >
@@ -227,7 +240,8 @@ export default function DetailedGroupPage({ route }) {
                 }}
               >
                 <Text style={DetailedGroupPageStyles.sectionTitle}>
-                  Current Poll
+                  Current Poll{": "}
+                  <CountdownTimer pollDateTime={"2023-12-06T14:41:01.908Z"} />
                 </Text>
                 <Text
                   style={{
@@ -278,7 +292,7 @@ export default function DetailedGroupPage({ route }) {
           show={memberModalsVisible}
           close={setMemberModalsVisible}
           owner={group.owner}
-          groupID={route.params.group.pk}
+          groupID={route.params.group.id}
         />
       </View>
     </SafeAreaView>
