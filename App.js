@@ -44,7 +44,7 @@ const OnBoard = (props) => {
 
   useEffect(() => {
     isAuthorized();
-  }, [props]);
+  });
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_600SemiBold,
