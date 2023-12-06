@@ -17,7 +17,7 @@ import axios from "axios";
 export default function AccountSettingsPage() {
   const navigation = useNavigation();
 
-  const removeUserData = async (value, key) => {
+  const removeUserData = async () => {
     await AsyncStorage.removeItem("sessionId");
     await AsyncStorage.removeItem("userId");
   };

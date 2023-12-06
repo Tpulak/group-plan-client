@@ -63,12 +63,12 @@ const OnBoard = () => {
         />
         <Stack.Screen
           name="LoginPage"
-          component={authorized ? AppTabs : LoginPage}
+          component={LoginPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name="SignUpPage"
-          component={authorized ? AppTabs : SignUpPage}
+          component={SignUpPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen

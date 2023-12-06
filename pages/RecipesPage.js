@@ -16,7 +16,6 @@ import axios from "axios";
 import { RecipesPageStyles, RecipeCardStyles } from "../styles";
 import TopNav from "../components/TopNav";
 import RecipeDetailsModal from "../components/Modals/RecipeDetailsModal";
-import CreateRecipePage from "./CreateRecipePage";
 
 export default function RecipesPage(props) {
   const { width } = useWindowDimensions();
@@ -70,37 +69,50 @@ export default function RecipesPage(props) {
         <ScrollView
           // style={RecipesPageStyles.recipesList}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={RecipesPageStyles.recipesList}
+          contentContainerStyle={{
+            ...RecipesPageStyles.recipesList,
+            marginBottom: 65,
+          }}
         >
-          {recipes.map((recipe, index) => (
-            <TouchableOpacity
-              style={{
-                ...RecipeCardStyles.recipeContainer,
-                width: width * 0.9,
-              }}
-              key={recipe.pk}
-              onPress={() => {
-                openMealModal(index);
-              }}
-            >
-              <Image
-                source={{
-                  uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png",
-                }}
+          {recipes.map((recipe, index) => {
+            return (
+              <TouchableOpacity
                 style={{
-                  height: 175,
-
-                  borderRadius: 10,
-                  backgroundColor: "lightblue",
+                  ...RecipeCardStyles.recipeContainer,
+                  width: width * 0.9,
                 }}
-              />
-              <View style={RecipeCardStyles.recipeBottomBox}></View>
-              <Text style={RecipeCardStyles.recipeName}>
-                {recipe.fields.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
+                key={recipe.pk}
+                onPress={() => {
+                  openMealModal(index);
+                }}
+              >
+                <Image
+                  source={{
+                    uri: recipe.fields.recipe_image
+                      ? recipe.fields.recipe_image
+                      : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/310px-Placeholder_view_vector.svg.png",
+                  }}
+                  style={{
+                    height: 175,
+                    borderRadius: 10,
+                    backgroundColor: "lightblue",
+                  }}
+                />
+                <View style={RecipeCardStyles.recipeBottomBox}></View>
+                <Text style={RecipeCardStyles.recipeName}>
+                  {recipe.fields.name}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
         </ScrollView>
+        <View
+          style={{
+            height: 65,
+
+            backgroundColor: "transparent",
+          }}
+        />
 
         <RecipeDetailsModal
           show={modalVisible}

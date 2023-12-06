@@ -66,8 +66,13 @@ const HomePage = () => {
           })}
         </ScrollView>
 
-        {/* BOTTOM */}
-        {/* <BottomNav /> */}
+        <View
+          style={{
+            height: 65,
+
+            backgroundColor: "transparent",
+          }}
+        />
       </View>
     </SafeAreaView>
   );
