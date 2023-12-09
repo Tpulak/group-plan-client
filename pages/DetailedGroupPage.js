@@ -41,7 +41,7 @@ export default function DetailedGroupPage({ route }) {
       getcurrentRecipe();
       _pollPreview();
     }
-  }, [group, isFocused]);
+  }, [isFocused]);
 
   const getcurrentRecipe = () => {
     if (!group.current_recipe) {
@@ -75,6 +75,7 @@ export default function DetailedGroupPage({ route }) {
         setGroup((prev) => {
           return { ...prev, current_poll: true };
         });
+        _pollPreview();
       })
       .catch((error) => console.log(error));
   };
@@ -119,15 +120,30 @@ export default function DetailedGroupPage({ route }) {
       .get(
         `http://${
           Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-        }:8000/recipes/getPoll/summary/${route.params.group.id}`,
+        }:8000/recipes/getPoll/status/${route.params.group.id}`,
         {
           withCredentials: true,
           headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
         }
       )
       .then((response) => {
-        setPollSummary(response.data);
-        setPollPreview(generatePollPreview(response.data));
+        if(response.data.message){
+          return
+        }else{
+          if(response.data.recipe_image){
+            console.log(response.data)
+            setCurrentRecipe(response.data)
+            setGroup((prev)=>{
+              return{...prev, current_poll_time: "", current_poll: false}
+            });
+          }else{
+            setPollSummary(response.data);
+            setPollPreview(generatePollPreview({"summary":response.data.summary,"user_count":response.data.user_count}));
+            setGroup({...route.params.group, current_poll_time: response.data.poll_time, current_poll: true});
+          }
+
+        }
+
       })
       .catch((error) => console.log(error));
   };
