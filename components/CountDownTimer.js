@@ -18,9 +18,9 @@ const CountdownTimer = (props) => {
 
       // Check if the target date has passed
       if (duration.asSeconds() <= 0) {
+        props.updatePoll();
         clearInterval(interval);
         setDone(true);
-        console.log("Done!");
       } else {
         // Format the duration as hours:minutes:seconds
         setDone(false);

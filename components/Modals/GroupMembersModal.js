@@ -32,7 +32,6 @@ export default function GroupMembersModal(props) {
   };
 
   useEffect(() => {
-      console.log(props.owner)
     getMembers();
   }, []);
 
