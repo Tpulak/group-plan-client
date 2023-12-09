@@ -12,7 +12,7 @@ const CountdownTimer = (props) => {
 
     interval = setInterval(() => {
       const now = moment();
-      console.log(now.toString());
+      // console.log(now.toString());
       const targetDate = moment(props.pollDateTime);
       const duration = moment.duration(targetDate.diff(now));
 

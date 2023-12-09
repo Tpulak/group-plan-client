@@ -40,16 +40,6 @@ export default function DetailedGroupPage({ route }) {
     if (isFocused) {
       getcurrentRecipe();
       _pollPreview();
-      // let now = moment();
-      // let targetDate = moment("2023-12-07T05:01:01.908Z");
-      // console.log(moment.duration(targetDate.diff(now).toString()));
-      // console.log(Math.floor(moment.duration(targetDate.diff(now)).asHours()));
-      // console.log(
-      //   Math.floor(moment.duration(targetDate.diff(now)).asMinutes()) % 60
-      // );
-      // console.log(
-      //   Math.floor(moment.duration(targetDate.diff(now)).asSeconds()) % 60
-      // );
     }
   }, [group, isFocused]);
 
@@ -241,7 +231,7 @@ export default function DetailedGroupPage({ route }) {
               >
                 <Text style={DetailedGroupPageStyles.sectionTitle}>
                   Current Poll{": "}
-                  <CountdownTimer pollDateTime={"2023-12-06T14:41:01.908Z"} />
+                  <CountdownTimer pollDateTime={group.current_poll_time} />
                 </Text>
                 <Text
                   style={{
