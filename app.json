@@ -4,11 +4,11 @@
     "slug": "GroupPlan",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icons/Onboarding.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/icons/smallerlogo.png",
-      "resizeMode": "contain",
+      "image": "./assets/icons/Onboarding.png",
+      "resizeMode": "center",
       "backgroundColor": "#FFBA00"
     },
     "assetBundlePatterns": [
