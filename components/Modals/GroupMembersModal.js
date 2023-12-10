@@ -64,7 +64,7 @@ export default function GroupMembersModal(props) {
               fontFamily: "Poppins_400Regular",
             }}
           >
-            {owner.username}
+            {owner?.username}
           </Text>
 
           <Text style={{ fontWeight: "bold", fontSize: 18 }}>Members</Text>

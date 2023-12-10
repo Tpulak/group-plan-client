@@ -10,7 +10,6 @@ export default function GroupCard(props) {
   // NAVIGATION
   const handleJoin = async (x) => {
     const groupId = await x._dispatchInstances.memoizedProps.testID;
-    const userId = await AsyncStorage.getItem("userId");
     const info = await AsyncStorage.getItem("sessionId");
     axios
       .post(
@@ -18,7 +17,6 @@ export default function GroupCard(props) {
           Platform.OS === "ios" ? "localhost" : "10.0.2.2"
         }:8000/recipes/group/add`,
         {
-          user_id: userId,
           group_id: groupId,
         },
         {

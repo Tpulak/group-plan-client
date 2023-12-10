@@ -9,6 +9,8 @@ import DetailedGroupPage from "./pages/DetailedGroupPage";
 import PollPage from "./pages/PollPage";
 import AppTabs from "./AppTabs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { Platform } from "react-native";
 
 const Stack = createStackNavigator();
 import {
@@ -17,24 +19,43 @@ import {
   Poppins_600SemiBold,
 } from "@expo-google-fonts/poppins";
 
-const OnBoard = () => {
-  const [authorized, setAuthorized] = useState(null);
+const OnBoard = (props) => {
+  const [authorized, setAuthorized] = useState(false);
 
   const isAuthorized = async () => {
-    const user = await AsyncStorage.getItem("sessionId");
-    if (user) {
-      setAuthorized(user);
-      console.log(user);
-      return true;
-    }
-    console.log(user);
-    setAuthorized(null);
-    return false;
+
+      try {
+          const user = await AsyncStorage.getItem("sessionId");
+
+          if (user) {
+              const response = await axios
+                  .post(
+                      `http://${
+                          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+                      }:8000/users/user/authorized`,
+                      {
+                          withCredentials: true,
+                          headers: { Cookie: user.split(";")[0].replace(/"/g, "") },
+                      }
+                  );
+              if (response.data) {
+                  setAuthorized(true)
+
+              }
+          }else{
+              setAuthorized(false);
+
+          }
+      } catch (error) {
+          console.log(error);
+      }
   };
 
   useEffect(() => {
-    isAuthorized();
-  });
+      setAuthorized(false);
+      isAuthorized();
+  },[props]);
+
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_600SemiBold,
@@ -88,7 +109,7 @@ const OnBoard = () => {
           name="Detailed Group Page"
           component={DetailedGroupPage}
           options={({ route }) => ({
-            headerTitle: route.params.group.fields.name,
+            headerTitle: route.params.group.name,
             headerStyle: {
               backgroundColor: "#FFBA00",
             },
