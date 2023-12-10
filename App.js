@@ -20,31 +20,42 @@ import {
 } from "@expo-google-fonts/poppins";
 
 const OnBoard = (props) => {
-  const [authorized, setAuthorized] = useState(null);
+  const [authorized, setAuthorized] = useState(false);
 
   const isAuthorized = async () => {
-    const user = await AsyncStorage.getItem("sessionId");
-    if (user) {
-      axios
-        .get(
-          `http://${
-            Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-          }:8000/users/user/authorized`
-        )
-        .then((response) => {
-          setAuthorized(user);
-        })
-        .catch((error) => console.log(error));
-      return true;
-    }
 
-    setAuthorized(null);
-    return false;
+      try {
+          const user = await AsyncStorage.getItem("sessionId");
+
+          if (user) {
+              const response = await axios
+                  .post(
+                      `http://${
+                          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+                      }:8000/users/user/authorized`,
+                      {
+                          withCredentials: true,
+                          headers: { Cookie: user.split(";")[0].replace(/"/g, "") },
+                      }
+                  );
+              if (response.data) {
+                  setAuthorized(true)
+
+              }
+          }else{
+              setAuthorized(false);
+
+          }
+      } catch (error) {
+          console.log(error);
+      }
   };
 
   useEffect(() => {
-    isAuthorized();
-  });
+      setAuthorized(false);
+      isAuthorized();
+  },[props]);
+
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_600SemiBold,
