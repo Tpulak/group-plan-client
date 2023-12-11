@@ -556,47 +556,7 @@ export const CartPageStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  topContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "green",
-    padding: 25,
-  },
-  iconContainer: {
-    flex: 1,
-    alignItems: "center",
-    width: 50,
-    height: 50,
-  },
-  title: {
-    flex: 2,
-    textAlign: "center",
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "white",
-  },
-
-  recommendedMeals: {
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  imageContainer: {
-    width: 200,
-    height: 200,
-    backgroundColor: "#f0f0f0",
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  bottomContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "green",
-    width: "100%",
-    padding: 25,
-  },
-
+ 
   middleContainer: {
     flex: 3,
     justifyContent: "center",
@@ -612,31 +572,23 @@ export const CartPageStyles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 30,
   },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderWidth: 1,
-    borderColor: "black",
-    marginRight: 10,
-  },
-  checkboxChecked: {
-    width: 20,
-    height: 20,
-    backgroundColor: "green",
-    marginRight: 10,
-  },
+
+ 
   ingredientName: {
     fontSize: 18,
     fontWeight: "bold",
   },
-
+ 
+ 
   importButton: {
+    alignSelf: "center",
     backgroundColor: "#88B361",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
     marginBottom: 30,
     marginTop: 30,
+    marginRight: 50,
   },
   importButtonText: {
     color: "white",
@@ -644,10 +596,74 @@ export const CartPageStyles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  Icontxt: {
+
+  closeModalButton: {
+    alignSelf: 'center',
+    backgroundColor: "#9e4f4c",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 30,
+    marginTop: 30,
+  },
+  closeModalButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
     textAlign: "center",
   },
-});
+
+  modalTitle: {
+    fontSize: 25,
+    textAlign: "center",
+    fontWeight: "bold",
+    marginTop: 10,
+    marginBottom: 10,
+  },
+
+  mealContainer: {
+    alignSelf: "center",
+    // alignContent: "center",
+    height: 100,
+    width: 350,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  mealNameContainer: {
+    flex: 1,
+    padding: 10,
+  },
+  mealName: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  mealImagePlaceholder: {
+    width: 100,
+    height: 100,
+    backgroundColor: "#ccc", // Gray color as a placeholder
+  },
+
+  clearButton: {
+    backgroundColor: "#9e4f4c",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 30,
+    marginTop: 30,
+  },
+  clearButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+   
+ });
+ 
 
 export const DetailedGroupPageStyles = StyleSheet.create({
   container: {
