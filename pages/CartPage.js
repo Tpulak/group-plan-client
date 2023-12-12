@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   StatusBar,
   Alert,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -38,7 +39,7 @@ export default function CartPage(props) {
         }:8000/recipes/getUserRecipes/`,
         {
           withCredentials: true,
-          headers: { Cookie: info.split(";")[0].replace(/"/g, "") },
+          headers: { Coookie: info.split(";")[0].replace(/"/g, "") },
         }
       )
       .then((response) => {
@@ -49,7 +50,8 @@ export default function CartPage(props) {
 
   const handleCheckboxToggle = (mealIndex, ingredientIndex) => {
     const updatedMeals = [...chosenMealIngredients];
-    updatedMeals[mealIndex].ingredients[ingredientIndex].checked = !updatedMeals[mealIndex].ingredients[ingredientIndex].checked;
+    updatedMeals[mealIndex].ingredients[ingredientIndex].checked =
+      !updatedMeals[mealIndex].ingredients[ingredientIndex].checked;
     setChosenMealIngredients(updatedMeals);
     saveLocalMeals(updatedMeals);
   };
@@ -78,27 +80,32 @@ export default function CartPage(props) {
 
     setIngredients([]);
     setModalVisible(false);
-    saveLocalMeals([...chosenMealIngredients, { mealName: recipe.fields.name, ingredients: ingredientsArray.map((ingredient) => ({ name: ingredient, checked: false })) }]);
+    saveLocalMeals([
+      ...chosenMealIngredients,
+      {
+        mealName: recipe.fields.name,
+        ingredients: ingredientsArray.map((ingredient) => ({
+          name: ingredient,
+          checked: false,
+        })),
+      },
+    ]);
   };
 
   const handleClearIngredients = () => {
-    Alert.alert(
-      "Clear ALL Meals and Ingredients",
-      null,
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
+    Alert.alert("Clear ALL Meals and Ingredients", null, [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          setChosenMealIngredients([]);
+          clearLocalMeals();
         },
-        {
-          text: "OK",
-          onPress: () => {
-            setChosenMealIngredients([]);
-            clearLocalMeals();
-          },
-        },
-      ]
-    );
+      },
+    ]);
   };
 
   const saveLocalMeals = async (meals) => {
@@ -135,8 +142,7 @@ export default function CartPage(props) {
         <TopNav />
 
         <View style={CartPageStyles.middleContainer}>
-          <View style={{ flexDirection: 'row' }}>
-
+          <View style={{ flexDirection: "row" }}>
             {/* IMPORT BUTTON */}
             <TouchableOpacity
               style={CartPageStyles.importButton}
@@ -155,29 +161,74 @@ export default function CartPage(props) {
               <Text style={CartPageStyles.clearButtonText}>Clear</Text>
             </TouchableOpacity>
           </View>
-          
+
           {/* MODAL */}
+
+          {/* CHECKLIST */}
+          <ScrollView style={CartPageStyles.checklistContainer}>
+            {chosenMealIngredients.map((meal, mealIndex) => (
+              <View
+                key={mealIndex}
+                style={CartPageStyles.checklistItemContainer}
+              >
+                <Text
+                  style={{
+                    alignSelf: "flex-start",
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    marginBottom: 15,
+                  }}
+                >
+                  {meal.mealName}
+                </Text>
+
+                {meal.ingredients &&
+                  meal.ingredients.map((ingredient, ingredientIndex) => (
+                    <View
+                      style={CartPageStyles.checklistItem}
+                      key={ingredientIndex}
+                    >
+                      <BouncyCheckbox
+                        size={25}
+                        fillColor="#FFBA00"
+                        unfillColor="#FFFFFF"
+                        iconStyle={{ borderColor: "red", borderRadius: 5 }}
+                        innerIconStyle={{ borderWidth: 2 }}
+                        isChecked={ingredient.checked}
+                        onPress={() =>
+                          handleCheckboxToggle(mealIndex, ingredientIndex)
+                        }
+                      />
+                      <Text style={CartPageStyles.ingredientName}>
+                        {ingredient.name}
+                      </Text>
+                    </View>
+                  ))}
+              </View>
+            ))}
+          </ScrollView>
           <Modal
             animationType="slide"
             visible={isModalVisible}
             onRequestClose={() => setModalVisible(false)}
+            style={{ opacity: 0.5 }}
+            transparent
           >
-            <TopNav />
-            <View style={CartPageStyles.modalContainer}>
-              <Text style={CartPageStyles.modalTitle}>Import Ingredients</Text>
-              <ScrollView style={CartPageStyles.mealList}>
+            <View style={CartPageStyles.modalView}>
+              <Text style={CartPageStyles.modalTitle}>
+                Import Recipe Ingredients
+              </Text>
+              <ScrollView contentContainerStyle={CartPageStyles.mealList}>
                 {recipes.map((recipe) => (
                   <TouchableOpacity
                     style={CartPageStyles.mealContainer}
                     key={recipe.pk}
                     onPress={() => handleRecipeSelection(recipe)}
                   >
-                    <View style={CartPageStyles.mealNameContainer}>
-                      <Text style={CartPageStyles.mealName}>
-                        {recipe.fields.name}
-                      </Text>
-                    </View>
-                    {/* <View style={CartPageStyles.mealImagePlaceholder}></View> */}
+                    <View style={CartPageStyles.recipeBottomBox}></View>
+                    <Text style={CartPageStyles.recipeName}>
+                      {recipe.fields.name}
+                    </Text>
                   </TouchableOpacity>
                 ))}
               </ScrollView>
@@ -190,32 +241,6 @@ export default function CartPage(props) {
               </TouchableOpacity>
             </View>
           </Modal>
-          
-          {/* CHECKLIST */}
-          <ScrollView style={CartPageStyles.checklistContainer}>
-            {chosenMealIngredients.map((meal, mealIndex) => (
-              <View key={mealIndex} style={CartPageStyles.checklistItemContainer}>
-                <Text style={{ alignSelf: "flex-start", fontSize: 20, fontWeight: "bold", marginBottom: 15 }}>
-                  {meal.mealName}
-                </Text>
-
-                {meal.ingredients && meal.ingredients.map((ingredient, ingredientIndex) => (
-                  <View style={CartPageStyles.checklistItem} key={ingredientIndex}>
-                    <BouncyCheckbox
-                      size={25}
-                      fillColor="#FFBA00"
-                      unfillColor="#FFFFFF"
-                      iconStyle={{ borderColor: "red", borderRadius: 5 }}
-                      innerIconStyle={{ borderWidth: 2 }}
-                      isChecked={ingredient.checked}
-                      onPress={() => handleCheckboxToggle(mealIndex, ingredientIndex)}
-                    />
-                    <Text style={CartPageStyles.ingredientName}>{ingredient.name}</Text>
-                  </View>
-                ))}
-              </View>
-            ))}
-          </ScrollView>
         </View>
       </View>
     </SafeAreaView>

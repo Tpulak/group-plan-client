@@ -20,41 +20,37 @@ import {
 } from "@expo-google-fonts/poppins";
 
 const OnBoard = (props) => {
-  const [authorized, setAuthorized] = useState(false);
+  // const [authorized, setAuthorized] = useState(false);
 
-  const isAuthorized = async () => {
+  // const isAuthorized = async () => {
+  //   try {
+  //     const user = await AsyncStorage.getItem("sessionId");
 
-      try {
-          const user = await AsyncStorage.getItem("sessionId");
+  //     if (user) {
+  //       const response = await axios.post(
+  //         `http://${
+  //           Platform.OS === "ios" ? "localhost" : "10.0.2.2"
+  //         }:8000/users/user/authorized`,
+  //         {
+  //           withCredentials: true,
+  //           headers: { Cookie: user.split(";")[0].replace(/"/g, "") },
+  //         }
+  //       );
+  //       if (response.data) {
+  //         setAuthorized(true);
+  //       }
+  //     } else {
+  //       setAuthorized(false);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-          if (user) {
-              const response = await axios
-                  .post(
-                      `http://${
-                          Platform.OS === "ios" ? "localhost" : "10.0.2.2"
-                      }:8000/users/user/authorized`,
-                      {
-                          withCredentials: true,
-                          headers: { Cookie: user.split(";")[0].replace(/"/g, "") },
-                      }
-                  );
-              if (response.data) {
-                  setAuthorized(true)
-
-              }
-          }else{
-              setAuthorized(false);
-
-          }
-      } catch (error) {
-          console.log(error);
-      }
-  };
-
-  useEffect(() => {
-      setAuthorized(false);
-      isAuthorized();
-  },[props]);
+  // useEffect(() => {
+  //   setAuthorized(false);
+  //   isAuthorized();
+  // }, [props]);
 
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -69,7 +65,7 @@ const OnBoard = (props) => {
       <Stack.Navigator>
         <Stack.Screen
           name="LandingPage"
-          component={authorized ? AppTabs : LandingPage}
+          component={LandingPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
