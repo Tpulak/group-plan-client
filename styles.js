@@ -661,6 +661,22 @@ export const CartPageStyles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+
+  modalContainer: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+
+  mealList: {
+    flex: 1,
+    marginTop: 20,
+  },
+
+  checklistItemContainer: {
+    marginBottom: 20,
+  },
+
    
  });
  

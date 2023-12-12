@@ -162,6 +162,7 @@ export default function CartPage(props) {
             visible={isModalVisible}
             onRequestClose={() => setModalVisible(false)}
           >
+            <TopNav />
             <View style={CartPageStyles.modalContainer}>
               <Text style={CartPageStyles.modalTitle}>Import Ingredients</Text>
               <ScrollView style={CartPageStyles.mealList}>
@@ -176,16 +177,16 @@ export default function CartPage(props) {
                         {recipe.fields.name}
                       </Text>
                     </View>
-                    <View style={CartPageStyles.mealImagePlaceholder}></View>
+                    {/* <View style={CartPageStyles.mealImagePlaceholder}></View> */}
                   </TouchableOpacity>
                 ))}
               </ScrollView>
 
               <TouchableOpacity
-                style={CartPageStyles.importButton}
+                style={CartPageStyles.closeModalButton}
                 onPress={() => setModalVisible(false)}
               >
-                <Text style={CartPageStyles.importButtonText}>Close</Text>
+                <Text style={CartPageStyles.closeModalButtonText}>Close</Text>
               </TouchableOpacity>
             </View>
           </Modal>
@@ -220,4 +221,3 @@ export default function CartPage(props) {
     </SafeAreaView>
   );
 }
-
