@@ -556,11 +556,27 @@ export const MembersModalStyles = StyleSheet.create({
 });
 
 export const CartPageStyles = StyleSheet.create({
+  modalView: {
+    margin: 20,
+    marginTop: 100,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    height: 700,
+  },
   container: {
     flex: 1,
     backgroundColor: "white",
   },
- 
+
   middleContainer: {
     flex: 3,
     justifyContent: "center",
@@ -577,13 +593,11 @@ export const CartPageStyles = StyleSheet.create({
     marginBottom: 30,
   },
 
- 
   ingredientName: {
     fontSize: 18,
     fontWeight: "bold",
   },
- 
- 
+
   importButton: {
     alignSelf: "center",
     backgroundColor: "#88B361",
@@ -602,7 +616,7 @@ export const CartPageStyles = StyleSheet.create({
   },
 
   closeModalButton: {
-    alignSelf: 'center',
+    alignSelf: "center",
     backgroundColor: "#9e4f4c",
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -613,37 +627,46 @@ export const CartPageStyles = StyleSheet.create({
   closeModalButtonText: {
     color: "white",
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: fonts.bold,
     textAlign: "center",
   },
 
   modalTitle: {
-    fontSize: 25,
+    fontSize: 23,
     textAlign: "center",
-    fontWeight: "bold",
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 25,
+    fontFamily: fonts.bold,
+  },
+  recipeBottomBox: {
+    backgroundColor: "lightgrey",
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    height: 40,
+    justifyContent: "center",
+    paddingVertical: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+  recipeName: {
+    bottom: 5,
+    color: "black",
+    fontSize: 20,
+    fontFamily: fonts.bold,
+    width: "100%",
+    paddingLeft: 10,
+    textAlign: "center",
   },
 
   mealContainer: {
-    alignSelf: "center",
-    // alignContent: "center",
-    height: 100,
-    width: 350,
+    height: 40,
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 20,
     backgroundColor: "#f0f0f0",
     borderRadius: 10,
     overflow: "hidden",
-  },
-  mealNameContainer: {
-    flex: 1,
-    padding: 10,
-  },
-  mealName: {
-    fontSize: 18,
-    fontWeight: "bold",
   },
   mealImagePlaceholder: {
     width: 100,
@@ -665,9 +688,22 @@ export const CartPageStyles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-   
- });
- 
+
+  modalContainer: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+
+  mealList: {
+    paddingBottom: 15,
+    width: "100%",
+  },
+
+  checklistItemContainer: {
+    marginBottom: 20,
+  },
+});
 
 export const DetailedGroupPageStyles = StyleSheet.create({
   container: {
