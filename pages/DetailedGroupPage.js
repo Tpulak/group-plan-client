@@ -30,7 +30,7 @@ export default function DetailedGroupPage({ route }) {
   const [currentRecipe, setCurrentRecipe] = useState({});
   const [mealModalVisible, setMealModalVisible] = useState(false);
   const [memberModalsVisible, setMemberModalsVisible] = useState(false);
-  const [enablePollPage, setEnablePollPage] =useState(false)
+  const [enablePollPage, setEnablePollPage] = useState(false);
   const [pollSummary, setPollSummary] = useState({
     user_count: 0,
     summary: {},
@@ -117,7 +117,7 @@ export default function DetailedGroupPage({ route }) {
   };
   const _pollPreview = async () => {
     const info = await AsyncStorage.getItem("sessionId");
-    setEnablePollPage(false)
+    setEnablePollPage(false);
 
     axios
       .get(
@@ -130,26 +130,33 @@ export default function DetailedGroupPage({ route }) {
         }
       )
       .then((response) => {
-        if(response.data.message){
-          setEnablePollPage(false)
-        }else{
-          if(response.data.recipe_image){
-            setEnablePollPage(false)
-            setCurrentRecipe(response.data)
-            setGroup((prev)=>{
-              return{...prev, current_poll_time: "", current_poll: false}
+        if (response.data.message) {
+          setEnablePollPage(false);
+        } else {
+          if (response.data.recipe_image) {
+            setEnablePollPage(false);
+            setCurrentRecipe(response.data);
+            setGroup((prev) => {
+              return { ...prev, current_poll_time: "", current_poll: false };
             });
-          }else{
-            setEnablePollPage(true)
+          } else {
+            setEnablePollPage(true);
             setPollSummary(response.data);
-            setPollPreview(generatePollPreview({"summary":response.data.summary,"user_count":response.data.user_count}));
-            setGroup((prev)=>{
-              return {...prev, current_poll_time: response.data.poll_time, current_poll: true}
+            setPollPreview(
+              generatePollPreview({
+                summary: response.data.summary,
+                user_count: response.data.user_count,
+              })
+            );
+            setGroup((prev) => {
+              return {
+                ...prev,
+                current_poll_time: response.data.poll_time,
+                current_poll: true,
+              };
             });
           }
-
         }
-
       })
       .catch((error) => console.log(error));
   };
@@ -214,6 +221,9 @@ export default function DetailedGroupPage({ route }) {
                 width: width * 0.9,
               }}
               key={currentRecipe?.pk}
+              onPress={() => {
+                setMealModalVisible(true);
+              }}
             >
               <Image
                 source={{
@@ -237,13 +247,12 @@ export default function DetailedGroupPage({ route }) {
             <TouchableOpacity
               style={DetailedGroupPageStyles.currentPoll}
               onPress={() => {
-                if(enablePollPage){
+                if (enablePollPage) {
                   navigation.navigate("Poll Page", {
                     pollSummary: pollSummary?.summary,
                     groupID: route.params.group.id,
                   });
                 }
-
               }}
             >
               <View
@@ -256,7 +265,10 @@ export default function DetailedGroupPage({ route }) {
               >
                 <Text style={DetailedGroupPageStyles.sectionTitle}>
                   Current Poll{": "}
-                  <CountdownTimer pollDateTime={group.current_poll_time} updatePoll={_pollPreview}/>
+                  <CountdownTimer
+                    pollDateTime={group.current_poll_time}
+                    updatePoll={_pollPreview}
+                  />
                 </Text>
                 <Text
                   style={{
@@ -301,7 +313,7 @@ export default function DetailedGroupPage({ route }) {
         <RecipeDetailsModal
           show={mealModalVisible}
           close={setMealModalVisible}
-          meal={currentRecipe}
+          meal={{ fields: currentRecipe }}
         />
         <GroupMembersModal
           show={memberModalsVisible}
