@@ -10,7 +10,7 @@ import {
   Alert,
   Platform,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import TopNav from "../components/TopNav";
@@ -24,11 +24,14 @@ export default function CartPage(props) {
   const [ingredients, setIngredients] = useState([]);
   const [isModalVisible, setModalVisible] = useState(false);
   const [selected, setSelected] = useState(null);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    getUserRecipes();
-    loadLocalMeals();
-  }, []);
+    if (isFocused) {
+      getUserRecipes();
+      loadLocalMeals();
+    }
+  }, [isFocused]);
 
   const getUserRecipes = async () => {
     const info = await AsyncStorage.getItem("sessionId");
