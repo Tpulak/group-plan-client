@@ -1,8 +1,10 @@
-# Group-Plan-Server
-
-This is the backend server for the Group Plan application. It is build with Django, Mssql, and Azure blob storage.
+<div style="text-align:center">
+    <h1 align="center">Group Plan</h1>
+    <Image style="border-radius:15px" width=200 src="assets/images/AppIcon.jpeg"/>
+</div>
 
 ### Table of Contents
+
 1. [Intro](#intro)
 2. [Technology and Packages used](#technology-and-packages-used)
 3. [Installation](#installation)
@@ -10,18 +12,92 @@ This is the backend server for the Group Plan application. It is build with Djan
 5. [Deployment](#deployment)
 
 ## Intro
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+This is the Repository for the frontend client of the Group Plan application.
+
+Group plan is intended to be a mobile platform that will make meal planning easier, more fun, and less stressful for its Users.To get started on our Group Plan platform, you have two options: either create a new Group Plan account or simply log in using your Google credentials for seamless access. Once you're in, you can begin by creating your own groups, tailoring them to your specific taste or preferences in food, and then invite friends, colleagues, or like-minded individuals to join. Groups can be public and private. Public groups are open to all users on the platform, making it easy for anyone who shares your preference or taste to hop on board. On the other hand, private groups provide a more exclusive environment, with membership approval solely at the discretion of the group owner, ensuring a more controlled and private experience.
+
+Our platform also brings a group search feature, allowing you to discover and join public or private groups that align with your interests and objectives. Group Plan enables you to propose meal suggestions for the upcoming week, providing a space for your group members to vote on their favorite choices. It's based on a collective approach to meal planning that ensures everyone's preferences are considered. With Group Plan, you can effortlessly create, connect, and collaborate, making every aspect of meal planning an enjoyable and seamless experience.
 
 ## Technology and Packages used
-Tempor id eu nisl nunc mi ipsum. Vitae semper quis lectus nulla at volutpat diam. Sociis natoque penatibus et magnis dis parturient montes nascetur. Elit ut aliquam purus sit. Risus commodo viverra maecenas accumsan lacus vel facilisis volutpat est. Sapien eget mi proin sed libero enim sed. Aliquam sem et tortor consequat id porta. Eget nunc lobortis mattis aliquam faucibus purus. Commodo viverra maecenas accumsan lacus vel facilisis volutpat. Montes nascetur ridiculus mus mauris. Malesuada fames ac turpis egestas integer eget aliquet nibh. Morbi blandit cursus risus at ultrices mi tempus imperdiet. Cursus sit amet dictum sit amet justo donec enim diam. Diam vel quam elementum pulvinar etiam. Ullamcorper sit amet risus nullam eget.
+
+<p style="font-size:16px;">
+    <a href="https://reactnative.dev/">React Native</a>
+    <Image width=25 src="assets/images/React-icon.svg.png"/>
+    : The framework to build and power the entire frontend
+</p>
+<p style="font-size:16px;">
+    <a href="https://expo.dev/">Expo</a>
+    <Image width=25 src="assets/images/expo-logo.png"/>
+    : Ecosystem for testing the app and deployment
+</p>
+<p style="font-size:16px;">
+    <a href="https://developer.apple.com/documentation/xcode/running-your-app-in-simulator-or-on-a-device">Xcode Simulators</a>
+    <Image width=25 src="assets/images/xcode-simulator.png"/>
+    : To run/test the Group Plan frontend on ios
+</p>
+<p style="font-size:16px;">
+    <a href="https://developer.android.com/studio/run/emulator">Android Emulators</a>
+    <Image width=25 src="assets/images/android-logo.png"/>
+    : To run/test the Group Plan frontend on android
+</p>
 
 ## Installation
-Vestibulum morbi blandit cursus risus at ultrices. Phasellus vestibulum lorem sed risus ultricies tristique. Commodo viverra maecenas accumsan lacus vel facilisis volutpat. Risus sed vulputate odio ut enim blandit volutpat. Amet aliquam id diam maecenas ultricies. Est pellentesque elit ullamcorper dignissim cras. Scelerisque viverra mauris in aliquam sem fringilla ut. Rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant. Malesuada fames ac turpis egestas integer eget aliquet. Sit amet mauris commodo quis. Dolor morbi non arcu risus quis varius quam quisque id. Quis auctor elit sed vulputate mi sit amet. Integer malesuada nunc vel risus. Id venenatis a condimentum vitae. Nibh mauris cursus mattis molestie a iaculis at erat.
+
+Travel to the directory you wish to store the Group-Plan-Client repo and run:
+
+```bash
+$ git clone https://github.com/HansChaudry/Group-Plan-Client.git
+```
+
+Navigate into the directory for the group plan client then run:
+
+```bash
+$ npm install
+```
+
+<p>If you don't have node installed follow these <a href="https://nodejs.org/en/download/current">instructions</a> and you will able to install all the packages using npm and run the app.</p>
+
+Switch to the expo-demo branch:
+
+```bash
+$ git checkout expo-demo
+```
+
+<p>Open an ios simulator or android emulator</p>
+Start the app:
+
+```bash
+$ npx expo start
+```
+
+Follow the instructions in your terminal to open the app on the iphone or android simulators. Running the app from the expo-demo branch removes the requirement for running the backend locally as it communicates with the deployed backend.
 
 ## Usage
-Vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Sed augue lacus viverra vitae congue eu consequat ac felis. Mi eget mauris pharetra et ultrices neque. Velit scelerisque in dictum non consectetur a erat. Neque gravida in fermentum et sollicitudin. Laoreet id donec ultrices tincidunt arcu non sodales. Enim tortor at auctor urna nunc id cursus metus aliquam. Mauris vitae ultricies leo integer malesuada nunc. Ornare quam viverra orci sagittis eu volutpat odio facilisis mauris. Eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada. Urna molestie at elementum eu facilisis sed. In aliquam sem fringilla ut morbi tincidunt augue interdum. Et netus et malesuada fames ac turpis.
+
+Steps to use Group Plan:
+
+<ol>
+    <li>Step 1</li>
+    <li>Step 2</li>
+</ol>
 
 ## Deployment
-Lorem mollis aliquam ut porttitor leo. Egestas quis ipsum suspendisse ultrices gravida dictum. Natoque penatibus et magnis dis parturient montes nascetur ridiculus. Pellentesque id nibh tortor id aliquet lectus. Pellentesque habitant morbi tristique senectus et netus. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non. Ut etiam sit amet nisl purus. Elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus. Nascetur ridiculus mus mauris vitae ultricies leo integer. Justo nec ultrices dui sapien. At consectetur lorem donec massa sapien faucibus et molestie ac. Vel fringilla est ullamcorper eget. Facilisi cras fermentum odio eu. Ut consequat semper viverra nam libero justo laoreet. Nunc congue nisi vitae suscipit tellus mauris a diam maecenas.
 
+The Group Plan application is fully deployed with Expo. To use the app on your physical device:
 
+<ol>
+    <li>Download the <a href="https://expo.dev/client">Expo Go app</a> from the App Store or Play Store.</li>
+    <li>Scan the the QR code for your device</li>
+</ol>
+
+<div style="display: flex; justify-content: space-around;">
+   <div style="flex:1; text-align:center;">
+        <p>iOS</p>
+        <Image style="border-radius:15px" width=200 src="assets/images/eas-update-ios.svg"/>
+    </div>
+    <div style="flex:1; text-align:center;">
+        <p>Android</p>
+        <Image style="border-radius:15px" width=200 src="assets/images/eas-update-android.svg"/>
+    </div> 
+</div>
