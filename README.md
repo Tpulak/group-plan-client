@@ -13,7 +13,7 @@
 
 ## Intro
 
-This is the Repository for the frontend client of the Group Plan application.
+This repository was developed as part of my CSCI 49900 capstone class. It was initially cloned from the main repository and includes the completed frontend for the Group Plan application.
 
 Group plan is intended to be a mobile platform that will make meal planning easier, more fun, and less stressful for its Users.To get started on our Group Plan platform, you have two options: either create a new Group Plan account or simply log in using your Google credentials for seamless access. Once you're in, you can begin by creating your own groups, tailoring them to your specific taste or preferences in food, and then invite friends, colleagues, or like-minded individuals to join. Groups can be public and private. Public groups are open to all users on the platform, making it easy for anyone who shares your preference or taste to hop on board. On the other hand, private groups provide a more exclusive environment, with membership approval solely at the discretion of the group owner, ensuring a more controlled and private experience.
 
